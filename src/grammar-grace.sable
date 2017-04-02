@@ -1,36 +1,83 @@
 Package sablecc;
 
 Helpers
-
-  newline = 10;
-  space = ' ';
   tab = 9;
+  cr = 13;
+  lf = 10;
+  eos = 0;
+  sq = 39;
+  dq = 34;
+  lowercase_ch = ['a'..'z'];
+  uppercase_ch = ['A'..'Z'];
+  number = ['0'..'9'];
+  backslash = '\';
+  underscore = '_';
+  alpha_num = lowercase_ch | uppercase_ch | number;
+  any = [0..127];
+  escape_char = eos|sq|dq|tab|cr|lf;
 
 Tokens
-
-  whitespace = (newline | space | tab)+;
-
-  number = (['0'..'9'])+;
-  plus   = '+';
-  minus  = '-';
-  times  = '*';
-  over   = '/';
-
+  fun = 'fun';
+  var = 'var';
+  char = 'char';
+  int = 'int';
+  do = 'do';
+  while = 'while';
+  if = 'if';
+  else = 'else';
+  then = 'then';
+  ref = 'ref';
+  nothing = 'nothing';
+  return = 'return';
+  lbrace = '{';
+  rbrace = '}';
   lparen = '(';
   rparen = ')';
+  lbracket = '[';
+  rbracket = ']';
+  comma = ',';
+  semicolon = ';';
+  colon = ':';
+  assign = '<-';
+  plus = '+';
+  minus = '-';
+  mult = '*';
+  division = '/';
+  mod = 'mod';
+  div = 'div';
+  and = 'and';
+  or = 'or';
+  not_equal = '#';
+  equals = '=';
+  less_than = '<';
+  less_than_equal = '<=';
+  greater_than = '>';
+  greater_than_equal = '>=';
+  not = 'not';
+  identifier = (lowercase_ch|uppercase_ch) (alpha_num|underscore)*;
+  int_const = (number)*;
+  char_const = sq (escape_char | alpha_num) sq;
+  string_literal = dq (escape_char | alpha_num | any)* dq;
+  whitespace = ' ' | cr | lf | tab;
 
 Ignored Tokens
-
   whitespace;
 
 Productions
-
-  expr = {term} term |
-         {add}  expr plus term |
-         {sub}  expr minus term;
-  term = {fact} fact |
-         {mult} term times fact |
-         {div}  term over fact;
-  fact = {number} number |
-		 {parens} lparen expr rparen;
-
+  program = function_definition;
+  function_definition = header local_definition block;
+  header = fun identifier lparen fpar_definition (semicolon fpar_definition)* rparen colon ret_type;
+  fpar_definition = ref identifier  (comma identifier)* colon fpar_type;
+  data_type = int|char;
+  type = data_type (lbracket int_const rbracket)*;
+  ret_type = data_type | nothing;
+  fpar_type = data_type (lbracket rbracket)? (lbracket int_const rbracket)*;
+  local_definition = function_definition | function_declaration | var_definition;
+  var_definition = var identifier (comma identifier)* colon type semicolon;
+  function_declaration = header semicolon;
+  statement = semicolon | l_value assign expression semicolon | block | func_call semicolon | if condition then statement (else statement)? | while condition do statement | return (expression) semicolon;
+  block = lbrace (statement)* rbrace;
+  func_call = identifier lparen (expression (comma expression)*)? rparen;
+  l_value = identifier | string_literal | l_value lbracket (expression)? rbracket;
+  expression = int_const | char_const | l_value | func_call | lparen expression rparen | (plus|minus) expression | expression (plus | minus | mult | div | mod) expression;
+  condition = lparen condition rparen | not condition | condition (and|or) condition | expression (equals|not_equal|less_than|greater_than|greater_than_equal|less_than_equal) expression;
