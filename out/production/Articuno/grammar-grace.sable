@@ -1,0 +1,36 @@
+Package sablecc;
+
+Helpers
+
+  newline = 10;
+  space = ' ';
+  tab = 9;
+
+Tokens
+
+  whitespace = (newline | space | tab)+;
+
+  number = (['0'..'9'])+;
+  plus   = '+';
+  minus  = '-';
+  times  = '*';
+  over   = '/';
+
+  lparen = '(';
+  rparen = ')';
+
+Ignored Tokens
+
+  whitespace;
+
+Productions
+
+  expr = {term} term |
+         {add}  expr plus term |
+         {sub}  expr minus term;
+  term = {fact} fact |
+         {mult} term times fact |
+         {div}  term over fact;
+  fact = {number} number |
+		 {parens} lparen expr rparen;
+
