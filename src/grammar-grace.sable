@@ -36,7 +36,7 @@ Tokens
   lbracket = '[';
   rbracket = ']';
   comma = ',';
-  semicolon = ';';
+  semicolon = 59;
   colon = ':';
   assign = '<-';
   plus = '+';
@@ -60,24 +60,41 @@ Tokens
   string_literal = dq (escape_char | alpha_num | any)* dq;
   whitespace = ' ' | cr | lf | tab;
 
+
 Ignored Tokens
   whitespace;
 
 Productions
   program = function_definition;
-  function_definition = header local_definition block;
-  header = fun identifier lparen fpar_definition (semicolon fpar_definition)* rparen colon ret_type;
-  fpar_definition = ref identifier  (comma identifier)* colon fpar_type;
-  data_type = int|char;
-  type = data_type (lbracket int_const rbracket)*;
-  ret_type = data_type | nothing;
-  fpar_type = data_type (lbracket rbracket)? (lbracket int_const rbracket)*;
-  local_definition = function_definition | function_declaration | var_definition;
-  var_definition = var identifier (comma identifier)* colon type semicolon;
+  function_definition = header local_definition* block;
+  header = fun identifier lparen fpar_definition next_fpar_definition* rparen colon ret_type;
+  fpar_definition = ref identifier  next_identifier* colon fpar_type;
+  data_type = {integer} int| {character} char;
+  type = data_type array_size*;
+  ret_type = {data_type} data_type |{nothing} nothing;
+  fpar_type = data_type empty_brackets? array_size*;
+  local_definition ={f_def} function_definition |{f_decl} function_declaration |{var_def} var_definition;
+  var_definition = var identifier next_identifier* colon type semicolon;
   function_declaration = header semicolon;
-  statement = semicolon | l_value assign expression semicolon | block | func_call semicolon | if condition then statement (else statement)? | while condition do statement | return (expression) semicolon;
-  block = lbrace (statement)* rbrace;
-  func_call = identifier lparen (expression (comma expression)*)? rparen;
-  l_value = identifier | string_literal | l_value lbracket (expression)? rbracket;
-  expression = int_const | char_const | l_value | func_call | lparen expression rparen | (plus|minus) expression | expression (plus | minus | mult | div | mod) expression;
-  condition = lparen condition rparen | not condition | condition (and|or) condition | expression (equals|not_equal|less_than|greater_than|greater_than_equal|less_than_equal) expression;
+  statement = {semicolon} semicolon |{assignment} l_value assign expression semicolon |{block} block |{f_call} func_call semicolon |{if_stmt} if_stmt |{while_do} while condition do statement |{return} return expression? semicolon;
+  block = lbrace statement* rbrace;
+  func_call = identifier lparen multiple_expressions? rparen;
+  l_value = {identifier} identifier |{string_lit} string_literal |{array_assign} l_value lbracket expression? rbracket;
+  expression = {int_const} int_const |{char_const} char_const |{l_value} l_value |{f_call} func_call |{paren_expression} lparen expression rparen |{signed_expression} sign expression |{num_operation} [first]:expression num_operations [second]:expression;
+  condition ={paren_cond} lparen condition rparen |{not_condition} not condition |{logic_operation} [first]:condition logic_operations [second]:condition |{comparison} [first]:expression comparison_symbols [second]:expression;
+
+
+
+  next_fpar_definition = semicolon fpar_definition;
+  next_identifier = comma identifier;
+  next_expression = comma expression;
+  multiple_expressions = expression next_expression*;
+  array_size = lbracket int_const rbracket;
+  empty_brackets = lbracket rbracket;
+  if_stmt ={matched} matched |{unmatched} unmatched;
+  unmatched = {if_simple}if condition statement |{if_m_else_u} if condition matched else unmatched;
+  matched = {if_m_else_m}if condition [if_matched]:matched else [else_matched]:matched|{statement}statement;
+  sign = {plus} plus |{minus} minus;
+  num_operations ={plus} plus |{minus} minus |{mult} mult |{mod} mod |{div} div ;
+  logic_operations = {or} or | {and} and ;
+  comparison_symbols = {equals} equals|{not_equals} not_equal|{less_than} less_than|{greater_than} greater_than|{greater_or_equal} greater_than_equal|{less_or_equal} less_than_equal;
