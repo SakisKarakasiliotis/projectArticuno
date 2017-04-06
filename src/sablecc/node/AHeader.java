@@ -8,7 +8,7 @@ import sablecc.analysis.*;
 @SuppressWarnings("nls")
 public final class AHeader extends PHeader
 {
-    private TFun _fun_;
+    private TKwFun _kwFun_;
     private TIdentifier _identifier_;
     private TLparen _lparen_;
     private PFparDefinition _fparDefinition_;
@@ -23,7 +23,7 @@ public final class AHeader extends PHeader
     }
 
     public AHeader(
-        @SuppressWarnings("hiding") TFun _fun_,
+        @SuppressWarnings("hiding") TKwFun _kwFun_,
         @SuppressWarnings("hiding") TIdentifier _identifier_,
         @SuppressWarnings("hiding") TLparen _lparen_,
         @SuppressWarnings("hiding") PFparDefinition _fparDefinition_,
@@ -33,7 +33,7 @@ public final class AHeader extends PHeader
         @SuppressWarnings("hiding") PRetType _retType_)
     {
         // Constructor
-        setFun(_fun_);
+        setKwFun(_kwFun_);
 
         setIdentifier(_identifier_);
 
@@ -55,7 +55,7 @@ public final class AHeader extends PHeader
     public Object clone()
     {
         return new AHeader(
-            cloneNode(this._fun_),
+            cloneNode(this._kwFun_),
             cloneNode(this._identifier_),
             cloneNode(this._lparen_),
             cloneNode(this._fparDefinition_),
@@ -71,16 +71,16 @@ public final class AHeader extends PHeader
         ((Analysis) sw).caseAHeader(this);
     }
 
-    public TFun getFun()
+    public TKwFun getKwFun()
     {
-        return this._fun_;
+        return this._kwFun_;
     }
 
-    public void setFun(TFun node)
+    public void setKwFun(TKwFun node)
     {
-        if(this._fun_ != null)
+        if(this._kwFun_ != null)
         {
-            this._fun_.parent(null);
+            this._kwFun_.parent(null);
         }
 
         if(node != null)
@@ -93,7 +93,7 @@ public final class AHeader extends PHeader
             node.parent(this);
         }
 
-        this._fun_ = node;
+        this._kwFun_ = node;
     }
 
     public TIdentifier getIdentifier()
@@ -276,7 +276,7 @@ public final class AHeader extends PHeader
     public String toString()
     {
         return ""
-            + toString(this._fun_)
+            + toString(this._kwFun_)
             + toString(this._identifier_)
             + toString(this._lparen_)
             + toString(this._fparDefinition_)
@@ -290,9 +290,9 @@ public final class AHeader extends PHeader
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._fun_ == child)
+        if(this._kwFun_ == child)
         {
-            this._fun_ = null;
+            this._kwFun_ = null;
             return;
         }
 
@@ -344,9 +344,9 @@ public final class AHeader extends PHeader
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._fun_ == oldChild)
+        if(this._kwFun_ == oldChild)
         {
-            setFun((TFun) newChild);
+            setKwFun((TKwFun) newChild);
             return;
         }
 

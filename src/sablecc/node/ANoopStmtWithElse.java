@@ -5,46 +5,46 @@ package sablecc.node;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class ADivNumOperations extends PNumOperations
+public final class ANoopStmtWithElse extends PStmtWithElse
 {
-    private TKwDiv _kwDiv_;
+    private TSemicolon _semicolon_;
 
-    public ADivNumOperations()
+    public ANoopStmtWithElse()
     {
         // Constructor
     }
 
-    public ADivNumOperations(
-        @SuppressWarnings("hiding") TKwDiv _kwDiv_)
+    public ANoopStmtWithElse(
+        @SuppressWarnings("hiding") TSemicolon _semicolon_)
     {
         // Constructor
-        setKwDiv(_kwDiv_);
+        setSemicolon(_semicolon_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new ADivNumOperations(
-            cloneNode(this._kwDiv_));
+        return new ANoopStmtWithElse(
+            cloneNode(this._semicolon_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseADivNumOperations(this);
+        ((Analysis) sw).caseANoopStmtWithElse(this);
     }
 
-    public TKwDiv getKwDiv()
+    public TSemicolon getSemicolon()
     {
-        return this._kwDiv_;
+        return this._semicolon_;
     }
 
-    public void setKwDiv(TKwDiv node)
+    public void setSemicolon(TSemicolon node)
     {
-        if(this._kwDiv_ != null)
+        if(this._semicolon_ != null)
         {
-            this._kwDiv_.parent(null);
+            this._semicolon_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class ADivNumOperations extends PNumOperations
             node.parent(this);
         }
 
-        this._kwDiv_ = node;
+        this._semicolon_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._kwDiv_);
+            + toString(this._semicolon_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._kwDiv_ == child)
+        if(this._semicolon_ == child)
         {
-            this._kwDiv_ = null;
+            this._semicolon_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class ADivNumOperations extends PNumOperations
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._kwDiv_ == oldChild)
+        if(this._semicolon_ == oldChild)
         {
-            setKwDiv((TKwDiv) newChild);
+            setSemicolon((TSemicolon) newChild);
             return;
         }
 

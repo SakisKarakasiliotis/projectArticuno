@@ -7,19 +7,22 @@ import sablecc.parser.Parser;
 import sablecc.parser.ParserException;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PushbackReader;
-
+import java.io.FileReader;
+import java.io.BufferedReader;
+import sablecc.analysis.DepthFirstAdapter;
 public class Main {
 
     public static void main(String[] args) {
         Start tree = null;
 
-        PushbackReader reader = new PushbackReader(new InputStreamReader(System.in), 1024);
+
         try {
-            Parser p = new Parser(new Lexer(reader));
+            FileReader infile = new FileReader(args[0]);
+            Lexer l = new Lexer(new PushbackReader(new BufferedReader(infile),1024));
+            Parser p = new Parser(l);
             tree = p.parse();
-            System.out.println(Evaluator.eval(tree));
+            System.out.println(tree.toString());
         } catch (LexerException e) {
             System.err.printf("Lexing error: %s\n", e.getMessage());
         } catch (IOException e) {
@@ -28,5 +31,6 @@ public class Main {
         } catch (ParserException e) {
             System.err.printf("Parsing error: %s\n", e.getMessage());
         }
+
     }
 }

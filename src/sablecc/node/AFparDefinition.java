@@ -8,7 +8,7 @@ import sablecc.analysis.*;
 @SuppressWarnings("nls")
 public final class AFparDefinition extends PFparDefinition
 {
-    private TRef _ref_;
+    private TKwRef _kwRef_;
     private TIdentifier _identifier_;
     private final LinkedList<PNextIdentifier> _nextIdentifier_ = new LinkedList<PNextIdentifier>();
     private TColon _colon_;
@@ -20,14 +20,14 @@ public final class AFparDefinition extends PFparDefinition
     }
 
     public AFparDefinition(
-        @SuppressWarnings("hiding") TRef _ref_,
+        @SuppressWarnings("hiding") TKwRef _kwRef_,
         @SuppressWarnings("hiding") TIdentifier _identifier_,
         @SuppressWarnings("hiding") List<?> _nextIdentifier_,
         @SuppressWarnings("hiding") TColon _colon_,
         @SuppressWarnings("hiding") PFparType _fparType_)
     {
         // Constructor
-        setRef(_ref_);
+        setKwRef(_kwRef_);
 
         setIdentifier(_identifier_);
 
@@ -43,7 +43,7 @@ public final class AFparDefinition extends PFparDefinition
     public Object clone()
     {
         return new AFparDefinition(
-            cloneNode(this._ref_),
+            cloneNode(this._kwRef_),
             cloneNode(this._identifier_),
             cloneList(this._nextIdentifier_),
             cloneNode(this._colon_),
@@ -56,16 +56,16 @@ public final class AFparDefinition extends PFparDefinition
         ((Analysis) sw).caseAFparDefinition(this);
     }
 
-    public TRef getRef()
+    public TKwRef getKwRef()
     {
-        return this._ref_;
+        return this._kwRef_;
     }
 
-    public void setRef(TRef node)
+    public void setKwRef(TKwRef node)
     {
-        if(this._ref_ != null)
+        if(this._kwRef_ != null)
         {
-            this._ref_.parent(null);
+            this._kwRef_.parent(null);
         }
 
         if(node != null)
@@ -78,7 +78,7 @@ public final class AFparDefinition extends PFparDefinition
             node.parent(this);
         }
 
-        this._ref_ = node;
+        this._kwRef_ = node;
     }
 
     public TIdentifier getIdentifier()
@@ -186,7 +186,7 @@ public final class AFparDefinition extends PFparDefinition
     public String toString()
     {
         return ""
-            + toString(this._ref_)
+            + toString(this._kwRef_)
             + toString(this._identifier_)
             + toString(this._nextIdentifier_)
             + toString(this._colon_)
@@ -197,9 +197,9 @@ public final class AFparDefinition extends PFparDefinition
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._ref_ == child)
+        if(this._kwRef_ == child)
         {
-            this._ref_ = null;
+            this._kwRef_ = null;
             return;
         }
 
@@ -233,9 +233,9 @@ public final class AFparDefinition extends PFparDefinition
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._ref_ == oldChild)
+        if(this._kwRef_ == oldChild)
         {
-            setRef((TRef) newChild);
+            setKwRef((TKwRef) newChild);
             return;
         }
 

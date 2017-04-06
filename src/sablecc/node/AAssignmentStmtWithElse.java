@@ -5,24 +5,28 @@ package sablecc.node;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AReturnStatement extends PStatement
+public final class AAssignmentStmtWithElse extends PStmtWithElse
 {
-    private TKwReturn _kwReturn_;
+    private PLValue _lValue_;
+    private TAssign _assign_;
     private PExpression _expression_;
     private TSemicolon _semicolon_;
 
-    public AReturnStatement()
+    public AAssignmentStmtWithElse()
     {
         // Constructor
     }
 
-    public AReturnStatement(
-        @SuppressWarnings("hiding") TKwReturn _kwReturn_,
+    public AAssignmentStmtWithElse(
+        @SuppressWarnings("hiding") PLValue _lValue_,
+        @SuppressWarnings("hiding") TAssign _assign_,
         @SuppressWarnings("hiding") PExpression _expression_,
         @SuppressWarnings("hiding") TSemicolon _semicolon_)
     {
         // Constructor
-        setKwReturn(_kwReturn_);
+        setLValue(_lValue_);
+
+        setAssign(_assign_);
 
         setExpression(_expression_);
 
@@ -33,8 +37,9 @@ public final class AReturnStatement extends PStatement
     @Override
     public Object clone()
     {
-        return new AReturnStatement(
-            cloneNode(this._kwReturn_),
+        return new AAssignmentStmtWithElse(
+            cloneNode(this._lValue_),
+            cloneNode(this._assign_),
             cloneNode(this._expression_),
             cloneNode(this._semicolon_));
     }
@@ -42,19 +47,19 @@ public final class AReturnStatement extends PStatement
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAReturnStatement(this);
+        ((Analysis) sw).caseAAssignmentStmtWithElse(this);
     }
 
-    public TKwReturn getKwReturn()
+    public PLValue getLValue()
     {
-        return this._kwReturn_;
+        return this._lValue_;
     }
 
-    public void setKwReturn(TKwReturn node)
+    public void setLValue(PLValue node)
     {
-        if(this._kwReturn_ != null)
+        if(this._lValue_ != null)
         {
-            this._kwReturn_.parent(null);
+            this._lValue_.parent(null);
         }
 
         if(node != null)
@@ -67,7 +72,32 @@ public final class AReturnStatement extends PStatement
             node.parent(this);
         }
 
-        this._kwReturn_ = node;
+        this._lValue_ = node;
+    }
+
+    public TAssign getAssign()
+    {
+        return this._assign_;
+    }
+
+    public void setAssign(TAssign node)
+    {
+        if(this._assign_ != null)
+        {
+            this._assign_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._assign_ = node;
     }
 
     public PExpression getExpression()
@@ -124,7 +154,8 @@ public final class AReturnStatement extends PStatement
     public String toString()
     {
         return ""
-            + toString(this._kwReturn_)
+            + toString(this._lValue_)
+            + toString(this._assign_)
             + toString(this._expression_)
             + toString(this._semicolon_);
     }
@@ -133,9 +164,15 @@ public final class AReturnStatement extends PStatement
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._kwReturn_ == child)
+        if(this._lValue_ == child)
         {
-            this._kwReturn_ = null;
+            this._lValue_ = null;
+            return;
+        }
+
+        if(this._assign_ == child)
+        {
+            this._assign_ = null;
             return;
         }
 
@@ -158,9 +195,15 @@ public final class AReturnStatement extends PStatement
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._kwReturn_ == oldChild)
+        if(this._lValue_ == oldChild)
         {
-            setKwReturn((TKwReturn) newChild);
+            setLValue((PLValue) newChild);
+            return;
+        }
+
+        if(this._assign_ == oldChild)
+        {
+            setAssign((TAssign) newChild);
             return;
         }
 

@@ -7,7 +7,7 @@ import sablecc.analysis.*;
 @SuppressWarnings("nls")
 public final class AAndLogicOperations extends PLogicOperations
 {
-    private TAnd _and_;
+    private TKwAnd _kwAnd_;
 
     public AAndLogicOperations()
     {
@@ -15,10 +15,10 @@ public final class AAndLogicOperations extends PLogicOperations
     }
 
     public AAndLogicOperations(
-        @SuppressWarnings("hiding") TAnd _and_)
+        @SuppressWarnings("hiding") TKwAnd _kwAnd_)
     {
         // Constructor
-        setAnd(_and_);
+        setKwAnd(_kwAnd_);
 
     }
 
@@ -26,7 +26,7 @@ public final class AAndLogicOperations extends PLogicOperations
     public Object clone()
     {
         return new AAndLogicOperations(
-            cloneNode(this._and_));
+            cloneNode(this._kwAnd_));
     }
 
     @Override
@@ -35,16 +35,16 @@ public final class AAndLogicOperations extends PLogicOperations
         ((Analysis) sw).caseAAndLogicOperations(this);
     }
 
-    public TAnd getAnd()
+    public TKwAnd getKwAnd()
     {
-        return this._and_;
+        return this._kwAnd_;
     }
 
-    public void setAnd(TAnd node)
+    public void setKwAnd(TKwAnd node)
     {
-        if(this._and_ != null)
+        if(this._kwAnd_ != null)
         {
-            this._and_.parent(null);
+            this._kwAnd_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class AAndLogicOperations extends PLogicOperations
             node.parent(this);
         }
 
-        this._and_ = node;
+        this._kwAnd_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._and_);
+            + toString(this._kwAnd_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._and_ == child)
+        if(this._kwAnd_ == child)
         {
-            this._and_ = null;
+            this._kwAnd_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class AAndLogicOperations extends PLogicOperations
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._and_ == oldChild)
+        if(this._kwAnd_ == oldChild)
         {
-            setAnd((TAnd) newChild);
+            setKwAnd((TKwAnd) newChild);
             return;
         }
 

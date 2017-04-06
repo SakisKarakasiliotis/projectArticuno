@@ -7,7 +7,7 @@ import sablecc.analysis.*;
 @SuppressWarnings("nls")
 public final class AOrLogicOperations extends PLogicOperations
 {
-    private TOr _or_;
+    private TKwOr _kwOr_;
 
     public AOrLogicOperations()
     {
@@ -15,10 +15,10 @@ public final class AOrLogicOperations extends PLogicOperations
     }
 
     public AOrLogicOperations(
-        @SuppressWarnings("hiding") TOr _or_)
+        @SuppressWarnings("hiding") TKwOr _kwOr_)
     {
         // Constructor
-        setOr(_or_);
+        setKwOr(_kwOr_);
 
     }
 
@@ -26,7 +26,7 @@ public final class AOrLogicOperations extends PLogicOperations
     public Object clone()
     {
         return new AOrLogicOperations(
-            cloneNode(this._or_));
+            cloneNode(this._kwOr_));
     }
 
     @Override
@@ -35,16 +35,16 @@ public final class AOrLogicOperations extends PLogicOperations
         ((Analysis) sw).caseAOrLogicOperations(this);
     }
 
-    public TOr getOr()
+    public TKwOr getKwOr()
     {
-        return this._or_;
+        return this._kwOr_;
     }
 
-    public void setOr(TOr node)
+    public void setKwOr(TKwOr node)
     {
-        if(this._or_ != null)
+        if(this._kwOr_ != null)
         {
-            this._or_.parent(null);
+            this._kwOr_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class AOrLogicOperations extends PLogicOperations
             node.parent(this);
         }
 
-        this._or_ = node;
+        this._kwOr_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._or_);
+            + toString(this._kwOr_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._or_ == child)
+        if(this._kwOr_ == child)
         {
-            this._or_ = null;
+            this._kwOr_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class AOrLogicOperations extends PLogicOperations
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._or_ == oldChild)
+        if(this._kwOr_ == oldChild)
         {
-            setOr((TOr) newChild);
+            setKwOr((TKwOr) newChild);
             return;
         }
 

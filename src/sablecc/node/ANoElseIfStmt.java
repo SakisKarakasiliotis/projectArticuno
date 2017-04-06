@@ -5,61 +5,61 @@ package sablecc.node;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AWhileDoStatement extends PStatement
+public final class ANoElseIfStmt extends PIfStmt
 {
-    private TKwWhile _kwWhile_;
+    private TKwIf _kwIf_;
     private PCondition _condition_;
-    private TKwDo _kwDo_;
-    private PStatement _statement_;
+    private TKwThen _kwThen_;
+    private PStatement _thenStmt_;
 
-    public AWhileDoStatement()
+    public ANoElseIfStmt()
     {
         // Constructor
     }
 
-    public AWhileDoStatement(
-        @SuppressWarnings("hiding") TKwWhile _kwWhile_,
+    public ANoElseIfStmt(
+        @SuppressWarnings("hiding") TKwIf _kwIf_,
         @SuppressWarnings("hiding") PCondition _condition_,
-        @SuppressWarnings("hiding") TKwDo _kwDo_,
-        @SuppressWarnings("hiding") PStatement _statement_)
+        @SuppressWarnings("hiding") TKwThen _kwThen_,
+        @SuppressWarnings("hiding") PStatement _thenStmt_)
     {
         // Constructor
-        setKwWhile(_kwWhile_);
+        setKwIf(_kwIf_);
 
         setCondition(_condition_);
 
-        setKwDo(_kwDo_);
+        setKwThen(_kwThen_);
 
-        setStatement(_statement_);
+        setThenStmt(_thenStmt_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AWhileDoStatement(
-            cloneNode(this._kwWhile_),
+        return new ANoElseIfStmt(
+            cloneNode(this._kwIf_),
             cloneNode(this._condition_),
-            cloneNode(this._kwDo_),
-            cloneNode(this._statement_));
+            cloneNode(this._kwThen_),
+            cloneNode(this._thenStmt_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAWhileDoStatement(this);
+        ((Analysis) sw).caseANoElseIfStmt(this);
     }
 
-    public TKwWhile getKwWhile()
+    public TKwIf getKwIf()
     {
-        return this._kwWhile_;
+        return this._kwIf_;
     }
 
-    public void setKwWhile(TKwWhile node)
+    public void setKwIf(TKwIf node)
     {
-        if(this._kwWhile_ != null)
+        if(this._kwIf_ != null)
         {
-            this._kwWhile_.parent(null);
+            this._kwIf_.parent(null);
         }
 
         if(node != null)
@@ -72,7 +72,7 @@ public final class AWhileDoStatement extends PStatement
             node.parent(this);
         }
 
-        this._kwWhile_ = node;
+        this._kwIf_ = node;
     }
 
     public PCondition getCondition()
@@ -100,16 +100,16 @@ public final class AWhileDoStatement extends PStatement
         this._condition_ = node;
     }
 
-    public TKwDo getKwDo()
+    public TKwThen getKwThen()
     {
-        return this._kwDo_;
+        return this._kwThen_;
     }
 
-    public void setKwDo(TKwDo node)
+    public void setKwThen(TKwThen node)
     {
-        if(this._kwDo_ != null)
+        if(this._kwThen_ != null)
         {
-            this._kwDo_.parent(null);
+            this._kwThen_.parent(null);
         }
 
         if(node != null)
@@ -122,19 +122,19 @@ public final class AWhileDoStatement extends PStatement
             node.parent(this);
         }
 
-        this._kwDo_ = node;
+        this._kwThen_ = node;
     }
 
-    public PStatement getStatement()
+    public PStatement getThenStmt()
     {
-        return this._statement_;
+        return this._thenStmt_;
     }
 
-    public void setStatement(PStatement node)
+    public void setThenStmt(PStatement node)
     {
-        if(this._statement_ != null)
+        if(this._thenStmt_ != null)
         {
-            this._statement_.parent(null);
+            this._thenStmt_.parent(null);
         }
 
         if(node != null)
@@ -147,26 +147,26 @@ public final class AWhileDoStatement extends PStatement
             node.parent(this);
         }
 
-        this._statement_ = node;
+        this._thenStmt_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._kwWhile_)
+            + toString(this._kwIf_)
             + toString(this._condition_)
-            + toString(this._kwDo_)
-            + toString(this._statement_);
+            + toString(this._kwThen_)
+            + toString(this._thenStmt_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._kwWhile_ == child)
+        if(this._kwIf_ == child)
         {
-            this._kwWhile_ = null;
+            this._kwIf_ = null;
             return;
         }
 
@@ -176,15 +176,15 @@ public final class AWhileDoStatement extends PStatement
             return;
         }
 
-        if(this._kwDo_ == child)
+        if(this._kwThen_ == child)
         {
-            this._kwDo_ = null;
+            this._kwThen_ = null;
             return;
         }
 
-        if(this._statement_ == child)
+        if(this._thenStmt_ == child)
         {
-            this._statement_ = null;
+            this._thenStmt_ = null;
             return;
         }
 
@@ -195,9 +195,9 @@ public final class AWhileDoStatement extends PStatement
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._kwWhile_ == oldChild)
+        if(this._kwIf_ == oldChild)
         {
-            setKwWhile((TKwWhile) newChild);
+            setKwIf((TKwIf) newChild);
             return;
         }
 
@@ -207,15 +207,15 @@ public final class AWhileDoStatement extends PStatement
             return;
         }
 
-        if(this._kwDo_ == oldChild)
+        if(this._kwThen_ == oldChild)
         {
-            setKwDo((TKwDo) newChild);
+            setKwThen((TKwThen) newChild);
             return;
         }
 
-        if(this._statement_ == oldChild)
+        if(this._thenStmt_ == oldChild)
         {
-            setStatement((PStatement) newChild);
+            setThenStmt((PStatement) newChild);
             return;
         }
 

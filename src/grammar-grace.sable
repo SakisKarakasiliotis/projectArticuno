@@ -1,6 +1,8 @@
 Package sablecc;
 
 Helpers
+  dollar = '$';
+  doubledollar = '$$';
   tab = 9;
   cr = 13;
   lf = 10;
@@ -13,22 +15,24 @@ Helpers
   backslash = '\';
   underscore = '_';
   alpha_num = lowercase_ch | uppercase_ch | number;
-  any = [0..127];
+  any = [0 .. 0xFFFF];
   escape_char = eos|sq|dq|tab|cr|lf;
-
+  eol = cr lf | cr | lf;
+  not_cr_lf = [any - [cr + lf]];
+  not_dollar = [not_cr_lf - dollar];
 Tokens
-  fun = 'fun';
-  var = 'var';
-  char = 'char';
-  int = 'int';
-  do = 'do';
-  while = 'while';
-  if = 'if';
-  else = 'else';
-  then = 'then';
-  ref = 'ref';
-  nothing = 'nothing';
-  return = 'return';
+  kw_fun = 'fun';
+  kw_var = 'var';
+  kw_char = 'char';
+  kw_int = 'int';
+  kw_do = 'do';
+  kw_while = 'while';
+  kw_if = 'if';
+  kw_else = 'else';
+  kw_then = 'then';
+  kw_ref = 'ref';
+  kw_nothing = 'nothing';
+  kw_return = 'return';
   lbrace = '{';
   rbrace = '}';
   lparen = '(';
@@ -43,58 +47,129 @@ Tokens
   minus = '-';
   mult = '*';
   division = '/';
-  mod = 'mod';
-  div = 'div';
-  and = 'and';
-  or = 'or';
+  kw_mod = 'mod';
+  kw_div = 'div';
+  kw_and = 'and';
+  kw_or = 'or';
   not_equal = '#';
   equals = '=';
   less_than = '<';
   less_than_equal = '<=';
   greater_than = '>';
   greater_than_equal = '>=';
-  not = 'not';
+  kw_not = 'not';
   identifier = (lowercase_ch|uppercase_ch) (alpha_num|underscore)*;
   int_const = (number)*;
   char_const = sq (escape_char | alpha_num) sq;
-  string_literal = dq (escape_char | alpha_num | any)* dq;
+  string_literal = dq (escape_char | alpha_num | any)+ dq;
   whitespace = ' ' | cr | lf | tab;
-
-
+  comment = dollar not_dollar not_cr_lf* eol;
+  comments = doubledollar any* doubledollar;
 Ignored Tokens
-  whitespace;
+  whitespace,
+  comment,
+  comments;
 
 Productions
   program = function_definition;
+
   function_definition = header local_definition* block;
-  header = fun identifier lparen fpar_definition next_fpar_definition* rparen colon ret_type;
-  fpar_definition = ref identifier  next_identifier* colon fpar_type;
-  data_type = {integer} int| {character} char;
-  type = data_type array_size*;
-  ret_type = {data_type} data_type |{nothing} nothing;
-  fpar_type = data_type empty_brackets? array_size*;
-  local_definition ={f_def} function_definition |{f_decl} function_declaration |{var_def} var_definition;
-  var_definition = var identifier next_identifier* colon type semicolon;
-  function_declaration = header semicolon;
-  statement = {semicolon} semicolon |{assignment} l_value assign expression semicolon |{block} block |{f_call} func_call semicolon |{if_stmt} if_stmt |{while_do} while condition do statement |{return} return expression? semicolon;
+
+  header = kw_fun identifier lparen fpar_definition next_fpar_definition* rparen colon ret_type;
+
+  local_definition =    {f_def} function_definition |
+                        {f_decl} function_declaration |
+                        {var_def} var_definition;
+
   block = lbrace statement* rbrace;
-  func_call = identifier lparen multiple_expressions? rparen;
-  l_value = {identifier} identifier |{string_lit} string_literal |{array_assign} l_value lbracket expression? rbracket;
-  expression = {int_const} int_const |{char_const} char_const |{l_value} l_value |{f_call} func_call |{paren_expression} lparen expression rparen |{signed_expression} sign expression |{num_operation} [first]:expression num_operations [second]:expression;
-  condition ={paren_cond} lparen condition rparen |{not_condition} not condition |{logic_operation} [first]:condition logic_operations [second]:condition |{comparison} [first]:expression comparison_symbols [second]:expression;
 
-
+  fpar_definition = kw_ref identifier  next_identifier* colon fpar_type;
 
   next_fpar_definition = semicolon fpar_definition;
+
+  ret_type = {data_type} data_type |{nothing} kw_nothing;
+
+  data_type =   {integer} kw_int|
+                {character} kw_char;
+
+  type = data_type array_size*;
+
+  function_declaration = header semicolon;
+
+  fpar_type = data_type empty_brackets? array_size*;
+
+  var_definition = kw_var identifier next_identifier* colon type semicolon;
+
   next_identifier = comma identifier;
+
+  statement = {noop} semicolon
+           | {assignment} l_value assign expression semicolon
+           | {if} if_stmt
+           | {block} block
+           |  {f_call} func_call semicolon |
+                             {while_do} kw_while condition kw_do statement |
+             {return} kw_return expression? semicolon;
+
+      if_stmt = {no_else} kw_if condition kw_then [then_stmt]:statement
+              | {with_else} kw_if condition kw_then [then_stmt]:stmt_with_else kw_else [else_stmt]:statement;
+
+      stmt_with_else = {noop} semicolon
+                     | {assignment} l_value assign expression semicolon
+                     | {if} if_else_stmt
+                     | {block} block |
+                                                    {f_call} func_call semicolon |
+                                                    {while_do} kw_while condition kw_do stmt_with_else |
+                                    {return} kw_return expression? semicolon;
+      if_else_stmt = kw_if condition kw_then [then_stmt]:stmt_with_else kw_else [else_stmt]:stmt_with_else;
+
+  func_call = identifier lparen multiple_expressions? rparen;
+
+  l_value = {identifier} identifier |
+            {string_lit} string_literal |
+            {array_assign} l_value lbracket expression? rbracket;
+
+  expression =  {int_const} int_const |
+                {char_const} char_const |
+                {l_value} l_value |
+                {f_call} func_call |
+                {paren_expression} lparen expression rparen |
+                {signed_expression} sign expression ;
+                //{num_operation} [first]:expression num_operations [second]:expression;
+
+  condition =   {paren_cond} lparen condition rparen |
+                {not_condition} kw_not condition |
+      //         {logic_operation} [first]:condition logic_operations [second]:condition |
+                {comparison} [first]:expression comparison_symbols [second]:expression;
+
+
+
+
+
   next_expression = comma expression;
+
   multiple_expressions = expression next_expression*;
+
   array_size = lbracket int_const rbracket;
+
   empty_brackets = lbracket rbracket;
-  if_stmt ={matched} matched |{unmatched} unmatched;
-  unmatched = {if_simple}if condition statement |{if_m_else_u} if condition matched else unmatched;
-  matched = {if_m_else_m}if condition [if_matched]:matched else [else_matched]:matched|{statement}statement;
-  sign = {plus} plus |{minus} minus;
-  num_operations ={plus} plus |{minus} minus |{mult} mult |{mod} mod |{div} div ;
-  logic_operations = {or} or | {and} and ;
-  comparison_symbols = {equals} equals|{not_equals} not_equal|{less_than} less_than|{greater_than} greater_than|{greater_or_equal} greater_than_equal|{less_or_equal} less_than_equal;
+
+
+
+  sign =    {plus} plus |
+            {minus} minus;
+
+  num_operations =      {plus} plus |
+                        {minus} minus |
+                        {mult} mult |
+                        {mod} kw_mod |
+                        {div} kw_div ;
+
+  logic_operations   =  {or} kw_or |
+                        {and} kw_and ;
+
+  comparison_symbols =  {equals} equals|
+                        {not_equals} not_equal|
+                        {less_than} less_than|
+                        {greater_than} greater_than|
+                        {greater_or_equal} greater_than_equal|
+                        {less_or_equal} less_than_equal;

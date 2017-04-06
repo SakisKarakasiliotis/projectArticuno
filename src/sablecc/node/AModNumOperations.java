@@ -7,7 +7,7 @@ import sablecc.analysis.*;
 @SuppressWarnings("nls")
 public final class AModNumOperations extends PNumOperations
 {
-    private TMod _mod_;
+    private TKwMod _kwMod_;
 
     public AModNumOperations()
     {
@@ -15,10 +15,10 @@ public final class AModNumOperations extends PNumOperations
     }
 
     public AModNumOperations(
-        @SuppressWarnings("hiding") TMod _mod_)
+        @SuppressWarnings("hiding") TKwMod _kwMod_)
     {
         // Constructor
-        setMod(_mod_);
+        setKwMod(_kwMod_);
 
     }
 
@@ -26,7 +26,7 @@ public final class AModNumOperations extends PNumOperations
     public Object clone()
     {
         return new AModNumOperations(
-            cloneNode(this._mod_));
+            cloneNode(this._kwMod_));
     }
 
     @Override
@@ -35,16 +35,16 @@ public final class AModNumOperations extends PNumOperations
         ((Analysis) sw).caseAModNumOperations(this);
     }
 
-    public TMod getMod()
+    public TKwMod getKwMod()
     {
-        return this._mod_;
+        return this._kwMod_;
     }
 
-    public void setMod(TMod node)
+    public void setKwMod(TKwMod node)
     {
-        if(this._mod_ != null)
+        if(this._kwMod_ != null)
         {
-            this._mod_.parent(null);
+            this._kwMod_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class AModNumOperations extends PNumOperations
             node.parent(this);
         }
 
-        this._mod_ = node;
+        this._kwMod_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._mod_);
+            + toString(this._kwMod_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._mod_ == child)
+        if(this._kwMod_ == child)
         {
-            this._mod_ = null;
+            this._kwMod_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class AModNumOperations extends PNumOperations
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._mod_ == oldChild)
+        if(this._kwMod_ == oldChild)
         {
-            setMod((TMod) newChild);
+            setKwMod((TKwMod) newChild);
             return;
         }
 

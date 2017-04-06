@@ -7,7 +7,7 @@ import sablecc.analysis.*;
 @SuppressWarnings("nls")
 public final class ANothingRetType extends PRetType
 {
-    private TNothing _nothing_;
+    private TKwNothing _kwNothing_;
 
     public ANothingRetType()
     {
@@ -15,10 +15,10 @@ public final class ANothingRetType extends PRetType
     }
 
     public ANothingRetType(
-        @SuppressWarnings("hiding") TNothing _nothing_)
+        @SuppressWarnings("hiding") TKwNothing _kwNothing_)
     {
         // Constructor
-        setNothing(_nothing_);
+        setKwNothing(_kwNothing_);
 
     }
 
@@ -26,7 +26,7 @@ public final class ANothingRetType extends PRetType
     public Object clone()
     {
         return new ANothingRetType(
-            cloneNode(this._nothing_));
+            cloneNode(this._kwNothing_));
     }
 
     @Override
@@ -35,16 +35,16 @@ public final class ANothingRetType extends PRetType
         ((Analysis) sw).caseANothingRetType(this);
     }
 
-    public TNothing getNothing()
+    public TKwNothing getKwNothing()
     {
-        return this._nothing_;
+        return this._kwNothing_;
     }
 
-    public void setNothing(TNothing node)
+    public void setKwNothing(TKwNothing node)
     {
-        if(this._nothing_ != null)
+        if(this._kwNothing_ != null)
         {
-            this._nothing_.parent(null);
+            this._kwNothing_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class ANothingRetType extends PRetType
             node.parent(this);
         }
 
-        this._nothing_ = node;
+        this._kwNothing_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._nothing_);
+            + toString(this._kwNothing_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._nothing_ == child)
+        if(this._kwNothing_ == child)
         {
-            this._nothing_ = null;
+            this._kwNothing_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class ANothingRetType extends PRetType
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._nothing_ == oldChild)
+        if(this._kwNothing_ == oldChild)
         {
-            setNothing((TNothing) newChild);
+            setKwNothing((TKwNothing) newChild);
             return;
         }
 

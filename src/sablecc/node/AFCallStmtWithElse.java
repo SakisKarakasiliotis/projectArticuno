@@ -5,26 +5,22 @@ package sablecc.node;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AReturnStatement extends PStatement
+public final class AFCallStmtWithElse extends PStmtWithElse
 {
-    private TKwReturn _kwReturn_;
-    private PExpression _expression_;
+    private PFuncCall _funcCall_;
     private TSemicolon _semicolon_;
 
-    public AReturnStatement()
+    public AFCallStmtWithElse()
     {
         // Constructor
     }
 
-    public AReturnStatement(
-        @SuppressWarnings("hiding") TKwReturn _kwReturn_,
-        @SuppressWarnings("hiding") PExpression _expression_,
+    public AFCallStmtWithElse(
+        @SuppressWarnings("hiding") PFuncCall _funcCall_,
         @SuppressWarnings("hiding") TSemicolon _semicolon_)
     {
         // Constructor
-        setKwReturn(_kwReturn_);
-
-        setExpression(_expression_);
+        setFuncCall(_funcCall_);
 
         setSemicolon(_semicolon_);
 
@@ -33,28 +29,27 @@ public final class AReturnStatement extends PStatement
     @Override
     public Object clone()
     {
-        return new AReturnStatement(
-            cloneNode(this._kwReturn_),
-            cloneNode(this._expression_),
+        return new AFCallStmtWithElse(
+            cloneNode(this._funcCall_),
             cloneNode(this._semicolon_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAReturnStatement(this);
+        ((Analysis) sw).caseAFCallStmtWithElse(this);
     }
 
-    public TKwReturn getKwReturn()
+    public PFuncCall getFuncCall()
     {
-        return this._kwReturn_;
+        return this._funcCall_;
     }
 
-    public void setKwReturn(TKwReturn node)
+    public void setFuncCall(PFuncCall node)
     {
-        if(this._kwReturn_ != null)
+        if(this._funcCall_ != null)
         {
-            this._kwReturn_.parent(null);
+            this._funcCall_.parent(null);
         }
 
         if(node != null)
@@ -67,32 +62,7 @@ public final class AReturnStatement extends PStatement
             node.parent(this);
         }
 
-        this._kwReturn_ = node;
-    }
-
-    public PExpression getExpression()
-    {
-        return this._expression_;
-    }
-
-    public void setExpression(PExpression node)
-    {
-        if(this._expression_ != null)
-        {
-            this._expression_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._expression_ = node;
+        this._funcCall_ = node;
     }
 
     public TSemicolon getSemicolon()
@@ -124,8 +94,7 @@ public final class AReturnStatement extends PStatement
     public String toString()
     {
         return ""
-            + toString(this._kwReturn_)
-            + toString(this._expression_)
+            + toString(this._funcCall_)
             + toString(this._semicolon_);
     }
 
@@ -133,15 +102,9 @@ public final class AReturnStatement extends PStatement
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._kwReturn_ == child)
+        if(this._funcCall_ == child)
         {
-            this._kwReturn_ = null;
-            return;
-        }
-
-        if(this._expression_ == child)
-        {
-            this._expression_ = null;
+            this._funcCall_ = null;
             return;
         }
 
@@ -158,15 +121,9 @@ public final class AReturnStatement extends PStatement
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._kwReturn_ == oldChild)
+        if(this._funcCall_ == oldChild)
         {
-            setKwReturn((TKwReturn) newChild);
-            return;
-        }
-
-        if(this._expression_ == oldChild)
-        {
-            setExpression((PExpression) newChild);
+            setFuncCall((PFuncCall) newChild);
             return;
         }
 

@@ -8,7 +8,7 @@ import sablecc.analysis.*;
 @SuppressWarnings("nls")
 public final class AVarDefinition extends PVarDefinition
 {
-    private TVar _var_;
+    private TKwVar _kwVar_;
     private TIdentifier _identifier_;
     private final LinkedList<PNextIdentifier> _nextIdentifier_ = new LinkedList<PNextIdentifier>();
     private TColon _colon_;
@@ -21,7 +21,7 @@ public final class AVarDefinition extends PVarDefinition
     }
 
     public AVarDefinition(
-        @SuppressWarnings("hiding") TVar _var_,
+        @SuppressWarnings("hiding") TKwVar _kwVar_,
         @SuppressWarnings("hiding") TIdentifier _identifier_,
         @SuppressWarnings("hiding") List<?> _nextIdentifier_,
         @SuppressWarnings("hiding") TColon _colon_,
@@ -29,7 +29,7 @@ public final class AVarDefinition extends PVarDefinition
         @SuppressWarnings("hiding") TSemicolon _semicolon_)
     {
         // Constructor
-        setVar(_var_);
+        setKwVar(_kwVar_);
 
         setIdentifier(_identifier_);
 
@@ -47,7 +47,7 @@ public final class AVarDefinition extends PVarDefinition
     public Object clone()
     {
         return new AVarDefinition(
-            cloneNode(this._var_),
+            cloneNode(this._kwVar_),
             cloneNode(this._identifier_),
             cloneList(this._nextIdentifier_),
             cloneNode(this._colon_),
@@ -61,16 +61,16 @@ public final class AVarDefinition extends PVarDefinition
         ((Analysis) sw).caseAVarDefinition(this);
     }
 
-    public TVar getVar()
+    public TKwVar getKwVar()
     {
-        return this._var_;
+        return this._kwVar_;
     }
 
-    public void setVar(TVar node)
+    public void setKwVar(TKwVar node)
     {
-        if(this._var_ != null)
+        if(this._kwVar_ != null)
         {
-            this._var_.parent(null);
+            this._kwVar_.parent(null);
         }
 
         if(node != null)
@@ -83,7 +83,7 @@ public final class AVarDefinition extends PVarDefinition
             node.parent(this);
         }
 
-        this._var_ = node;
+        this._kwVar_ = node;
     }
 
     public TIdentifier getIdentifier()
@@ -216,7 +216,7 @@ public final class AVarDefinition extends PVarDefinition
     public String toString()
     {
         return ""
-            + toString(this._var_)
+            + toString(this._kwVar_)
             + toString(this._identifier_)
             + toString(this._nextIdentifier_)
             + toString(this._colon_)
@@ -228,9 +228,9 @@ public final class AVarDefinition extends PVarDefinition
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._var_ == child)
+        if(this._kwVar_ == child)
         {
-            this._var_ = null;
+            this._kwVar_ = null;
             return;
         }
 
@@ -270,9 +270,9 @@ public final class AVarDefinition extends PVarDefinition
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._var_ == oldChild)
+        if(this._kwVar_ == oldChild)
         {
-            setVar((TVar) newChild);
+            setKwVar((TKwVar) newChild);
             return;
         }
 

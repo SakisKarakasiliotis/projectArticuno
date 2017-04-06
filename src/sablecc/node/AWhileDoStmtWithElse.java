@@ -5,23 +5,23 @@ package sablecc.node;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AWhileDoStatement extends PStatement
+public final class AWhileDoStmtWithElse extends PStmtWithElse
 {
     private TKwWhile _kwWhile_;
     private PCondition _condition_;
     private TKwDo _kwDo_;
-    private PStatement _statement_;
+    private PStmtWithElse _stmtWithElse_;
 
-    public AWhileDoStatement()
+    public AWhileDoStmtWithElse()
     {
         // Constructor
     }
 
-    public AWhileDoStatement(
+    public AWhileDoStmtWithElse(
         @SuppressWarnings("hiding") TKwWhile _kwWhile_,
         @SuppressWarnings("hiding") PCondition _condition_,
         @SuppressWarnings("hiding") TKwDo _kwDo_,
-        @SuppressWarnings("hiding") PStatement _statement_)
+        @SuppressWarnings("hiding") PStmtWithElse _stmtWithElse_)
     {
         // Constructor
         setKwWhile(_kwWhile_);
@@ -30,24 +30,24 @@ public final class AWhileDoStatement extends PStatement
 
         setKwDo(_kwDo_);
 
-        setStatement(_statement_);
+        setStmtWithElse(_stmtWithElse_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AWhileDoStatement(
+        return new AWhileDoStmtWithElse(
             cloneNode(this._kwWhile_),
             cloneNode(this._condition_),
             cloneNode(this._kwDo_),
-            cloneNode(this._statement_));
+            cloneNode(this._stmtWithElse_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAWhileDoStatement(this);
+        ((Analysis) sw).caseAWhileDoStmtWithElse(this);
     }
 
     public TKwWhile getKwWhile()
@@ -125,16 +125,16 @@ public final class AWhileDoStatement extends PStatement
         this._kwDo_ = node;
     }
 
-    public PStatement getStatement()
+    public PStmtWithElse getStmtWithElse()
     {
-        return this._statement_;
+        return this._stmtWithElse_;
     }
 
-    public void setStatement(PStatement node)
+    public void setStmtWithElse(PStmtWithElse node)
     {
-        if(this._statement_ != null)
+        if(this._stmtWithElse_ != null)
         {
-            this._statement_.parent(null);
+            this._stmtWithElse_.parent(null);
         }
 
         if(node != null)
@@ -147,7 +147,7 @@ public final class AWhileDoStatement extends PStatement
             node.parent(this);
         }
 
-        this._statement_ = node;
+        this._stmtWithElse_ = node;
     }
 
     @Override
@@ -157,7 +157,7 @@ public final class AWhileDoStatement extends PStatement
             + toString(this._kwWhile_)
             + toString(this._condition_)
             + toString(this._kwDo_)
-            + toString(this._statement_);
+            + toString(this._stmtWithElse_);
     }
 
     @Override
@@ -182,9 +182,9 @@ public final class AWhileDoStatement extends PStatement
             return;
         }
 
-        if(this._statement_ == child)
+        if(this._stmtWithElse_ == child)
         {
-            this._statement_ = null;
+            this._stmtWithElse_ = null;
             return;
         }
 
@@ -213,9 +213,9 @@ public final class AWhileDoStatement extends PStatement
             return;
         }
 
-        if(this._statement_ == oldChild)
+        if(this._stmtWithElse_ == oldChild)
         {
-            setStatement((PStatement) newChild);
+            setStmtWithElse((PStmtWithElse) newChild);
             return;
         }
 

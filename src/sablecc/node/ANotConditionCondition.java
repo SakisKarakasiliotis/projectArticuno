@@ -7,7 +7,7 @@ import sablecc.analysis.*;
 @SuppressWarnings("nls")
 public final class ANotConditionCondition extends PCondition
 {
-    private TNot _not_;
+    private TKwNot _kwNot_;
     private PCondition _condition_;
 
     public ANotConditionCondition()
@@ -16,11 +16,11 @@ public final class ANotConditionCondition extends PCondition
     }
 
     public ANotConditionCondition(
-        @SuppressWarnings("hiding") TNot _not_,
+        @SuppressWarnings("hiding") TKwNot _kwNot_,
         @SuppressWarnings("hiding") PCondition _condition_)
     {
         // Constructor
-        setNot(_not_);
+        setKwNot(_kwNot_);
 
         setCondition(_condition_);
 
@@ -30,7 +30,7 @@ public final class ANotConditionCondition extends PCondition
     public Object clone()
     {
         return new ANotConditionCondition(
-            cloneNode(this._not_),
+            cloneNode(this._kwNot_),
             cloneNode(this._condition_));
     }
 
@@ -40,16 +40,16 @@ public final class ANotConditionCondition extends PCondition
         ((Analysis) sw).caseANotConditionCondition(this);
     }
 
-    public TNot getNot()
+    public TKwNot getKwNot()
     {
-        return this._not_;
+        return this._kwNot_;
     }
 
-    public void setNot(TNot node)
+    public void setKwNot(TKwNot node)
     {
-        if(this._not_ != null)
+        if(this._kwNot_ != null)
         {
-            this._not_.parent(null);
+            this._kwNot_.parent(null);
         }
 
         if(node != null)
@@ -62,7 +62,7 @@ public final class ANotConditionCondition extends PCondition
             node.parent(this);
         }
 
-        this._not_ = node;
+        this._kwNot_ = node;
     }
 
     public PCondition getCondition()
@@ -94,7 +94,7 @@ public final class ANotConditionCondition extends PCondition
     public String toString()
     {
         return ""
-            + toString(this._not_)
+            + toString(this._kwNot_)
             + toString(this._condition_);
     }
 
@@ -102,9 +102,9 @@ public final class ANotConditionCondition extends PCondition
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._not_ == child)
+        if(this._kwNot_ == child)
         {
-            this._not_ = null;
+            this._kwNot_ = null;
             return;
         }
 
@@ -121,9 +121,9 @@ public final class ANotConditionCondition extends PCondition
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._not_ == oldChild)
+        if(this._kwNot_ == oldChild)
         {
-            setNot((TNot) newChild);
+            setKwNot((TKwNot) newChild);
             return;
         }
 

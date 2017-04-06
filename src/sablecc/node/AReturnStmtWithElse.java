@@ -5,18 +5,18 @@ package sablecc.node;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AReturnStatement extends PStatement
+public final class AReturnStmtWithElse extends PStmtWithElse
 {
     private TKwReturn _kwReturn_;
     private PExpression _expression_;
     private TSemicolon _semicolon_;
 
-    public AReturnStatement()
+    public AReturnStmtWithElse()
     {
         // Constructor
     }
 
-    public AReturnStatement(
+    public AReturnStmtWithElse(
         @SuppressWarnings("hiding") TKwReturn _kwReturn_,
         @SuppressWarnings("hiding") PExpression _expression_,
         @SuppressWarnings("hiding") TSemicolon _semicolon_)
@@ -33,7 +33,7 @@ public final class AReturnStatement extends PStatement
     @Override
     public Object clone()
     {
-        return new AReturnStatement(
+        return new AReturnStmtWithElse(
             cloneNode(this._kwReturn_),
             cloneNode(this._expression_),
             cloneNode(this._semicolon_));
@@ -42,7 +42,7 @@ public final class AReturnStatement extends PStatement
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAReturnStatement(this);
+        ((Analysis) sw).caseAReturnStmtWithElse(this);
     }
 
     public TKwReturn getKwReturn()
