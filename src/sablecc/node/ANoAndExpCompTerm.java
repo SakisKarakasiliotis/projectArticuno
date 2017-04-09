@@ -5,46 +5,46 @@ package sablecc.node;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class APlusNumOperations extends PNumOperations
+public final class ANoAndExpCompTerm extends PCompTerm
 {
-    private TPlus _plus_;
+    private PCompFun _compFun_;
 
-    public APlusNumOperations()
+    public ANoAndExpCompTerm()
     {
         // Constructor
     }
 
-    public APlusNumOperations(
-        @SuppressWarnings("hiding") TPlus _plus_)
+    public ANoAndExpCompTerm(
+        @SuppressWarnings("hiding") PCompFun _compFun_)
     {
         // Constructor
-        setPlus(_plus_);
+        setCompFun(_compFun_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new APlusNumOperations(
-            cloneNode(this._plus_));
+        return new ANoAndExpCompTerm(
+            cloneNode(this._compFun_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAPlusNumOperations(this);
+        ((Analysis) sw).caseANoAndExpCompTerm(this);
     }
 
-    public TPlus getPlus()
+    public PCompFun getCompFun()
     {
-        return this._plus_;
+        return this._compFun_;
     }
 
-    public void setPlus(TPlus node)
+    public void setCompFun(PCompFun node)
     {
-        if(this._plus_ != null)
+        if(this._compFun_ != null)
         {
-            this._plus_.parent(null);
+            this._compFun_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class APlusNumOperations extends PNumOperations
             node.parent(this);
         }
 
-        this._plus_ = node;
+        this._compFun_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._plus_);
+            + toString(this._compFun_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._plus_ == child)
+        if(this._compFun_ == child)
         {
-            this._plus_ = null;
+            this._compFun_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class APlusNumOperations extends PNumOperations
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._plus_ == oldChild)
+        if(this._compFun_ == oldChild)
         {
-            setPlus((TPlus) newChild);
+            setCompFun((PCompFun) newChild);
             return;
         }
 

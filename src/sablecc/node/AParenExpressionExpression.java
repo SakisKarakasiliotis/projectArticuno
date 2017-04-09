@@ -8,7 +8,7 @@ import sablecc.analysis.*;
 public final class AParenExpressionExpression extends PExpression
 {
     private TLparen _lparen_;
-    private PExpression _expression_;
+    private PExpressionB _expressionB_;
     private TRparen _rparen_;
 
     public AParenExpressionExpression()
@@ -18,13 +18,13 @@ public final class AParenExpressionExpression extends PExpression
 
     public AParenExpressionExpression(
         @SuppressWarnings("hiding") TLparen _lparen_,
-        @SuppressWarnings("hiding") PExpression _expression_,
+        @SuppressWarnings("hiding") PExpressionB _expressionB_,
         @SuppressWarnings("hiding") TRparen _rparen_)
     {
         // Constructor
         setLparen(_lparen_);
 
-        setExpression(_expression_);
+        setExpressionB(_expressionB_);
 
         setRparen(_rparen_);
 
@@ -35,7 +35,7 @@ public final class AParenExpressionExpression extends PExpression
     {
         return new AParenExpressionExpression(
             cloneNode(this._lparen_),
-            cloneNode(this._expression_),
+            cloneNode(this._expressionB_),
             cloneNode(this._rparen_));
     }
 
@@ -70,16 +70,16 @@ public final class AParenExpressionExpression extends PExpression
         this._lparen_ = node;
     }
 
-    public PExpression getExpression()
+    public PExpressionB getExpressionB()
     {
-        return this._expression_;
+        return this._expressionB_;
     }
 
-    public void setExpression(PExpression node)
+    public void setExpressionB(PExpressionB node)
     {
-        if(this._expression_ != null)
+        if(this._expressionB_ != null)
         {
-            this._expression_.parent(null);
+            this._expressionB_.parent(null);
         }
 
         if(node != null)
@@ -92,7 +92,7 @@ public final class AParenExpressionExpression extends PExpression
             node.parent(this);
         }
 
-        this._expression_ = node;
+        this._expressionB_ = node;
     }
 
     public TRparen getRparen()
@@ -125,7 +125,7 @@ public final class AParenExpressionExpression extends PExpression
     {
         return ""
             + toString(this._lparen_)
-            + toString(this._expression_)
+            + toString(this._expressionB_)
             + toString(this._rparen_);
     }
 
@@ -139,9 +139,9 @@ public final class AParenExpressionExpression extends PExpression
             return;
         }
 
-        if(this._expression_ == child)
+        if(this._expressionB_ == child)
         {
-            this._expression_ = null;
+            this._expressionB_ = null;
             return;
         }
 
@@ -164,9 +164,9 @@ public final class AParenExpressionExpression extends PExpression
             return;
         }
 
-        if(this._expression_ == oldChild)
+        if(this._expressionB_ == oldChild)
         {
-            setExpression((PExpression) newChild);
+            setExpressionB((PExpressionB) newChild);
             return;
         }
 

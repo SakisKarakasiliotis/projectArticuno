@@ -5,46 +5,46 @@ package sablecc.node;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AMinusNumOperations extends PNumOperations
+public final class ATermNExp extends PNExp
 {
-    private TMinus _minus_;
+    private PTerm _term_;
 
-    public AMinusNumOperations()
+    public ATermNExp()
     {
         // Constructor
     }
 
-    public AMinusNumOperations(
-        @SuppressWarnings("hiding") TMinus _minus_)
+    public ATermNExp(
+        @SuppressWarnings("hiding") PTerm _term_)
     {
         // Constructor
-        setMinus(_minus_);
+        setTerm(_term_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AMinusNumOperations(
-            cloneNode(this._minus_));
+        return new ATermNExp(
+            cloneNode(this._term_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAMinusNumOperations(this);
+        ((Analysis) sw).caseATermNExp(this);
     }
 
-    public TMinus getMinus()
+    public PTerm getTerm()
     {
-        return this._minus_;
+        return this._term_;
     }
 
-    public void setMinus(TMinus node)
+    public void setTerm(PTerm node)
     {
-        if(this._minus_ != null)
+        if(this._term_ != null)
         {
-            this._minus_.parent(null);
+            this._term_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class AMinusNumOperations extends PNumOperations
             node.parent(this);
         }
 
-        this._minus_ = node;
+        this._term_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._minus_);
+            + toString(this._term_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._minus_ == child)
+        if(this._term_ == child)
         {
-            this._minus_ = null;
+            this._term_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class AMinusNumOperations extends PNumOperations
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._minus_ == oldChild)
+        if(this._term_ == oldChild)
         {
-            setMinus((TMinus) newChild);
+            setTerm((PTerm) newChild);
             return;
         }
 

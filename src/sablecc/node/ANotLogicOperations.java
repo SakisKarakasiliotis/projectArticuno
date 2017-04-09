@@ -5,39 +5,34 @@ package sablecc.node;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class ANotConditionCondition extends PCondition
+public final class ANotLogicOperations extends PLogicOperations
 {
     private TKwNot _kwNot_;
-    private PCondition _condition_;
 
-    public ANotConditionCondition()
+    public ANotLogicOperations()
     {
         // Constructor
     }
 
-    public ANotConditionCondition(
-        @SuppressWarnings("hiding") TKwNot _kwNot_,
-        @SuppressWarnings("hiding") PCondition _condition_)
+    public ANotLogicOperations(
+        @SuppressWarnings("hiding") TKwNot _kwNot_)
     {
         // Constructor
         setKwNot(_kwNot_);
-
-        setCondition(_condition_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new ANotConditionCondition(
-            cloneNode(this._kwNot_),
-            cloneNode(this._condition_));
+        return new ANotLogicOperations(
+            cloneNode(this._kwNot_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseANotConditionCondition(this);
+        ((Analysis) sw).caseANotLogicOperations(this);
     }
 
     public TKwNot getKwNot()
@@ -65,37 +60,11 @@ public final class ANotConditionCondition extends PCondition
         this._kwNot_ = node;
     }
 
-    public PCondition getCondition()
-    {
-        return this._condition_;
-    }
-
-    public void setCondition(PCondition node)
-    {
-        if(this._condition_ != null)
-        {
-            this._condition_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._condition_ = node;
-    }
-
     @Override
     public String toString()
     {
         return ""
-            + toString(this._kwNot_)
-            + toString(this._condition_);
+            + toString(this._kwNot_);
     }
 
     @Override
@@ -105,12 +74,6 @@ public final class ANotConditionCondition extends PCondition
         if(this._kwNot_ == child)
         {
             this._kwNot_ = null;
-            return;
-        }
-
-        if(this._condition_ == child)
-        {
-            this._condition_ = null;
             return;
         }
 
@@ -124,12 +87,6 @@ public final class ANotConditionCondition extends PCondition
         if(this._kwNot_ == oldChild)
         {
             setKwNot((TKwNot) newChild);
-            return;
-        }
-
-        if(this._condition_ == oldChild)
-        {
-            setCondition((PCondition) newChild);
             return;
         }
 

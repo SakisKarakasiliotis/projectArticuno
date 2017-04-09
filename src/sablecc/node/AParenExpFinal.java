@@ -5,26 +5,26 @@ package sablecc.node;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AParenCondCondition extends PCondition
+public final class AParenExpFinal extends PFinal
 {
     private TLparen _lparen_;
-    private PCondition _condition_;
+    private PNExp _nExp_;
     private TRparen _rparen_;
 
-    public AParenCondCondition()
+    public AParenExpFinal()
     {
         // Constructor
     }
 
-    public AParenCondCondition(
+    public AParenExpFinal(
         @SuppressWarnings("hiding") TLparen _lparen_,
-        @SuppressWarnings("hiding") PCondition _condition_,
+        @SuppressWarnings("hiding") PNExp _nExp_,
         @SuppressWarnings("hiding") TRparen _rparen_)
     {
         // Constructor
         setLparen(_lparen_);
 
-        setCondition(_condition_);
+        setNExp(_nExp_);
 
         setRparen(_rparen_);
 
@@ -33,16 +33,16 @@ public final class AParenCondCondition extends PCondition
     @Override
     public Object clone()
     {
-        return new AParenCondCondition(
+        return new AParenExpFinal(
             cloneNode(this._lparen_),
-            cloneNode(this._condition_),
+            cloneNode(this._nExp_),
             cloneNode(this._rparen_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAParenCondCondition(this);
+        ((Analysis) sw).caseAParenExpFinal(this);
     }
 
     public TLparen getLparen()
@@ -70,16 +70,16 @@ public final class AParenCondCondition extends PCondition
         this._lparen_ = node;
     }
 
-    public PCondition getCondition()
+    public PNExp getNExp()
     {
-        return this._condition_;
+        return this._nExp_;
     }
 
-    public void setCondition(PCondition node)
+    public void setNExp(PNExp node)
     {
-        if(this._condition_ != null)
+        if(this._nExp_ != null)
         {
-            this._condition_.parent(null);
+            this._nExp_.parent(null);
         }
 
         if(node != null)
@@ -92,7 +92,7 @@ public final class AParenCondCondition extends PCondition
             node.parent(this);
         }
 
-        this._condition_ = node;
+        this._nExp_ = node;
     }
 
     public TRparen getRparen()
@@ -125,7 +125,7 @@ public final class AParenCondCondition extends PCondition
     {
         return ""
             + toString(this._lparen_)
-            + toString(this._condition_)
+            + toString(this._nExp_)
             + toString(this._rparen_);
     }
 
@@ -139,9 +139,9 @@ public final class AParenCondCondition extends PCondition
             return;
         }
 
-        if(this._condition_ == child)
+        if(this._nExp_ == child)
         {
-            this._condition_ = null;
+            this._nExp_ = null;
             return;
         }
 
@@ -164,9 +164,9 @@ public final class AParenCondCondition extends PCondition
             return;
         }
 
-        if(this._condition_ == oldChild)
+        if(this._nExp_ == oldChild)
         {
-            setCondition((PCondition) newChild);
+            setNExp((PNExp) newChild);
             return;
         }
 

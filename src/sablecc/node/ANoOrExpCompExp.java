@@ -5,46 +5,46 @@ package sablecc.node;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AModNumOperations extends PNumOperations
+public final class ANoOrExpCompExp extends PCompExp
 {
-    private TKwMod _kwMod_;
+    private PCompTerm _compTerm_;
 
-    public AModNumOperations()
+    public ANoOrExpCompExp()
     {
         // Constructor
     }
 
-    public AModNumOperations(
-        @SuppressWarnings("hiding") TKwMod _kwMod_)
+    public ANoOrExpCompExp(
+        @SuppressWarnings("hiding") PCompTerm _compTerm_)
     {
         // Constructor
-        setKwMod(_kwMod_);
+        setCompTerm(_compTerm_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AModNumOperations(
-            cloneNode(this._kwMod_));
+        return new ANoOrExpCompExp(
+            cloneNode(this._compTerm_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAModNumOperations(this);
+        ((Analysis) sw).caseANoOrExpCompExp(this);
     }
 
-    public TKwMod getKwMod()
+    public PCompTerm getCompTerm()
     {
-        return this._kwMod_;
+        return this._compTerm_;
     }
 
-    public void setKwMod(TKwMod node)
+    public void setCompTerm(PCompTerm node)
     {
-        if(this._kwMod_ != null)
+        if(this._compTerm_ != null)
         {
-            this._kwMod_.parent(null);
+            this._compTerm_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class AModNumOperations extends PNumOperations
             node.parent(this);
         }
 
-        this._kwMod_ = node;
+        this._compTerm_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._kwMod_);
+            + toString(this._compTerm_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._kwMod_ == child)
+        if(this._compTerm_ == child)
         {
-            this._kwMod_ = null;
+            this._compTerm_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class AModNumOperations extends PNumOperations
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._kwMod_ == oldChild)
+        if(this._compTerm_ == oldChild)
         {
-            setKwMod((TKwMod) newChild);
+            setCompTerm((PCompTerm) newChild);
             return;
         }
 

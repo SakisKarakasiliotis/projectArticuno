@@ -5,46 +5,46 @@ package sablecc.node;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class ALValueExpression extends PExpression
+public final class ANumOperExpression extends PExpression
 {
-    private PLValue _lValue_;
+    private PNExp _nExp_;
 
-    public ALValueExpression()
+    public ANumOperExpression()
     {
         // Constructor
     }
 
-    public ALValueExpression(
-        @SuppressWarnings("hiding") PLValue _lValue_)
+    public ANumOperExpression(
+        @SuppressWarnings("hiding") PNExp _nExp_)
     {
         // Constructor
-        setLValue(_lValue_);
+        setNExp(_nExp_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new ALValueExpression(
-            cloneNode(this._lValue_));
+        return new ANumOperExpression(
+            cloneNode(this._nExp_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseALValueExpression(this);
+        ((Analysis) sw).caseANumOperExpression(this);
     }
 
-    public PLValue getLValue()
+    public PNExp getNExp()
     {
-        return this._lValue_;
+        return this._nExp_;
     }
 
-    public void setLValue(PLValue node)
+    public void setNExp(PNExp node)
     {
-        if(this._lValue_ != null)
+        if(this._nExp_ != null)
         {
-            this._lValue_.parent(null);
+            this._nExp_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class ALValueExpression extends PExpression
             node.parent(this);
         }
 
-        this._lValue_ = node;
+        this._nExp_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._lValue_);
+            + toString(this._nExp_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._lValue_ == child)
+        if(this._nExp_ == child)
         {
-            this._lValue_ = null;
+            this._nExp_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class ALValueExpression extends PExpression
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._lValue_ == oldChild)
+        if(this._nExp_ == oldChild)
         {
-            setLValue((PLValue) newChild);
+            setNExp((PNExp) newChild);
             return;
         }
 

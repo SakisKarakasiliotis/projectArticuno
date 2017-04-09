@@ -5,46 +5,46 @@ package sablecc.node;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AMultNumOperations extends PNumOperations
+public final class ACondExpCondition extends PCondition
 {
-    private TMult _mult_;
+    private PCompExp _compExp_;
 
-    public AMultNumOperations()
+    public ACondExpCondition()
     {
         // Constructor
     }
 
-    public AMultNumOperations(
-        @SuppressWarnings("hiding") TMult _mult_)
+    public ACondExpCondition(
+        @SuppressWarnings("hiding") PCompExp _compExp_)
     {
         // Constructor
-        setMult(_mult_);
+        setCompExp(_compExp_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AMultNumOperations(
-            cloneNode(this._mult_));
+        return new ACondExpCondition(
+            cloneNode(this._compExp_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAMultNumOperations(this);
+        ((Analysis) sw).caseACondExpCondition(this);
     }
 
-    public TMult getMult()
+    public PCompExp getCompExp()
     {
-        return this._mult_;
+        return this._compExp_;
     }
 
-    public void setMult(TMult node)
+    public void setCompExp(PCompExp node)
     {
-        if(this._mult_ != null)
+        if(this._compExp_ != null)
         {
-            this._mult_.parent(null);
+            this._compExp_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class AMultNumOperations extends PNumOperations
             node.parent(this);
         }
 
-        this._mult_ = node;
+        this._compExp_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._mult_);
+            + toString(this._compExp_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._mult_ == child)
+        if(this._compExp_ == child)
         {
-            this._mult_ = null;
+            this._compExp_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class AMultNumOperations extends PNumOperations
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._mult_ == oldChild)
+        if(this._compExp_ == oldChild)
         {
-            setMult((TMult) newChild);
+            setCompExp((PCompExp) newChild);
             return;
         }
 

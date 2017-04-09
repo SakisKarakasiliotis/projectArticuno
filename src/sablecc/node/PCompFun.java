@@ -2,7 +2,7 @@
 
 package sablecc.node;
 
-public abstract class PNumOperations extends Node
+public abstract class PCompFun extends Node
 {
     // Empty body
 }

@@ -5,46 +5,46 @@ package sablecc.node;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AIntConstExpression extends PExpression
+public final class ANoCompExpCompVal extends PCompVal
 {
-    private TIntConst _intConst_;
+    private PCompFinal _compFinal_;
 
-    public AIntConstExpression()
+    public ANoCompExpCompVal()
     {
         // Constructor
     }
 
-    public AIntConstExpression(
-        @SuppressWarnings("hiding") TIntConst _intConst_)
+    public ANoCompExpCompVal(
+        @SuppressWarnings("hiding") PCompFinal _compFinal_)
     {
         // Constructor
-        setIntConst(_intConst_);
+        setCompFinal(_compFinal_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AIntConstExpression(
-            cloneNode(this._intConst_));
+        return new ANoCompExpCompVal(
+            cloneNode(this._compFinal_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAIntConstExpression(this);
+        ((Analysis) sw).caseANoCompExpCompVal(this);
     }
 
-    public TIntConst getIntConst()
+    public PCompFinal getCompFinal()
     {
-        return this._intConst_;
+        return this._compFinal_;
     }
 
-    public void setIntConst(TIntConst node)
+    public void setCompFinal(PCompFinal node)
     {
-        if(this._intConst_ != null)
+        if(this._compFinal_ != null)
         {
-            this._intConst_.parent(null);
+            this._compFinal_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class AIntConstExpression extends PExpression
             node.parent(this);
         }
 
-        this._intConst_ = node;
+        this._compFinal_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._intConst_);
+            + toString(this._compFinal_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._intConst_ == child)
+        if(this._compFinal_ == child)
         {
-            this._intConst_ = null;
+            this._compFinal_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class AIntConstExpression extends PExpression
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._intConst_ == oldChild)
+        if(this._compFinal_ == oldChild)
         {
-            setIntConst((TIntConst) newChild);
+            setCompFinal((PCompFinal) newChild);
             return;
         }
 
