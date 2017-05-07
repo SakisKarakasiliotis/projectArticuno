@@ -36,19 +36,10 @@ public class Parser
         this.lexer = lexer;
     }
 
-    protected void filter() throws ParserException, LexerException, IOException
-    {
-        // Empty body
-    }
-
-    private void push(int numstate, ArrayList<Object> listNode, boolean hidden) throws ParserException, LexerException, IOException
+    @SuppressWarnings({"unchecked","unused"})
+    private void push(int numstate, ArrayList<Object> listNode) throws ParserException, LexerException, IOException
     {
         this.nodeList = listNode;
-
-        if(!hidden)
-        {
-            filter();
-        }
 
         if(!this.stack.hasNext())
         {
@@ -113,7 +104,7 @@ public class Parser
     @SuppressWarnings("unchecked")
     public Start parse() throws ParserException, LexerException, IOException
     {
-        push(0, null, true);
+        push(0, null);
         List<Node> ign = null;
         while(true)
         {
@@ -170,7 +161,7 @@ public class Parser
 		    {
 		        ArrayList<Object> list = new ArrayList<Object>();
 		        list.add(this.lexer.next());
-                        push(this.action[1], list, false);
+                        push(this.action[1], list);
                     }
 		    break;
                 case REDUCE:
@@ -201,757 +192,757 @@ public class Parser
             case 0: /* reduce AProgram */
             {
                 ArrayList<Object> list = new0();
-                push(goTo(0), list, false);
+                push(goTo(0), list);
             }
             break;
             case 1: /* reduce AAfunctiondefinition1FunctionDefinition */
             {
                 ArrayList<Object> list = new1();
-                push(goTo(1), list, false);
+                push(goTo(1), list);
             }
             break;
             case 2: /* reduce AAfunctiondefinition2FunctionDefinition */
             {
                 ArrayList<Object> list = new2();
-                push(goTo(1), list, false);
+                push(goTo(1), list);
             }
             break;
             case 3: /* reduce AAheader1Header */
             {
                 ArrayList<Object> list = new3();
-                push(goTo(2), list, false);
+                push(goTo(2), list);
             }
             break;
             case 4: /* reduce AAheader2Header */
             {
                 ArrayList<Object> list = new4();
-                push(goTo(2), list, false);
+                push(goTo(2), list);
             }
             break;
             case 5: /* reduce AAheader3Header */
             {
                 ArrayList<Object> list = new5();
-                push(goTo(2), list, false);
+                push(goTo(2), list);
             }
             break;
             case 6: /* reduce AAheader4Header */
             {
                 ArrayList<Object> list = new6();
-                push(goTo(2), list, false);
+                push(goTo(2), list);
             }
             break;
             case 7: /* reduce AFDefLocalDefinition */
             {
                 ArrayList<Object> list = new7();
-                push(goTo(3), list, false);
+                push(goTo(3), list);
             }
             break;
             case 8: /* reduce AFDeclLocalDefinition */
             {
                 ArrayList<Object> list = new8();
-                push(goTo(3), list, false);
+                push(goTo(3), list);
             }
             break;
             case 9: /* reduce AVarDefLocalDefinition */
             {
                 ArrayList<Object> list = new9();
-                push(goTo(3), list, false);
+                push(goTo(3), list);
             }
             break;
             case 10: /* reduce AAblock1Block */
             {
                 ArrayList<Object> list = new10();
-                push(goTo(4), list, false);
+                push(goTo(4), list);
             }
             break;
             case 11: /* reduce AAblock2Block */
             {
                 ArrayList<Object> list = new11();
-                push(goTo(4), list, false);
+                push(goTo(4), list);
             }
             break;
             case 12: /* reduce AAfpardefinition1FparDefinition */
             {
                 ArrayList<Object> list = new12();
-                push(goTo(5), list, false);
+                push(goTo(5), list);
             }
             break;
             case 13: /* reduce AAfpardefinition2FparDefinition */
             {
                 ArrayList<Object> list = new13();
-                push(goTo(5), list, false);
+                push(goTo(5), list);
             }
             break;
             case 14: /* reduce AAfpardefinition3FparDefinition */
             {
                 ArrayList<Object> list = new14();
-                push(goTo(5), list, false);
+                push(goTo(5), list);
             }
             break;
             case 15: /* reduce AAfpardefinition4FparDefinition */
             {
                 ArrayList<Object> list = new15();
-                push(goTo(5), list, false);
+                push(goTo(5), list);
             }
             break;
             case 16: /* reduce ANextFparDefinition */
             {
                 ArrayList<Object> list = new16();
-                push(goTo(6), list, false);
+                push(goTo(6), list);
             }
             break;
             case 17: /* reduce ADataTypeRetType */
             {
                 ArrayList<Object> list = new17();
-                push(goTo(7), list, false);
+                push(goTo(7), list);
             }
             break;
             case 18: /* reduce ANothingRetType */
             {
                 ArrayList<Object> list = new18();
-                push(goTo(7), list, false);
+                push(goTo(7), list);
             }
             break;
             case 19: /* reduce AIntegerDataType */
             {
                 ArrayList<Object> list = new19();
-                push(goTo(8), list, false);
+                push(goTo(8), list);
             }
             break;
             case 20: /* reduce ACharacterDataType */
             {
                 ArrayList<Object> list = new20();
-                push(goTo(8), list, false);
+                push(goTo(8), list);
             }
             break;
             case 21: /* reduce AAtype1Type */
             {
                 ArrayList<Object> list = new21();
-                push(goTo(9), list, false);
+                push(goTo(9), list);
             }
             break;
             case 22: /* reduce AAtype2Type */
             {
                 ArrayList<Object> list = new22();
-                push(goTo(9), list, false);
+                push(goTo(9), list);
             }
             break;
             case 23: /* reduce AFunctionDeclaration */
             {
                 ArrayList<Object> list = new23();
-                push(goTo(10), list, false);
+                push(goTo(10), list);
             }
             break;
             case 24: /* reduce AAfpartype1FparType */
             {
                 ArrayList<Object> list = new24();
-                push(goTo(11), list, false);
+                push(goTo(11), list);
             }
             break;
             case 25: /* reduce AAfpartype2FparType */
             {
                 ArrayList<Object> list = new25();
-                push(goTo(11), list, false);
+                push(goTo(11), list);
             }
             break;
             case 26: /* reduce AAfpartype3FparType */
             {
                 ArrayList<Object> list = new26();
-                push(goTo(11), list, false);
+                push(goTo(11), list);
             }
             break;
             case 27: /* reduce AAfpartype4FparType */
             {
                 ArrayList<Object> list = new27();
-                push(goTo(11), list, false);
+                push(goTo(11), list);
             }
             break;
             case 28: /* reduce AAvardefinition1VarDefinition */
             {
                 ArrayList<Object> list = new28();
-                push(goTo(12), list, false);
+                push(goTo(12), list);
             }
             break;
             case 29: /* reduce AAvardefinition2VarDefinition */
             {
                 ArrayList<Object> list = new29();
-                push(goTo(12), list, false);
+                push(goTo(12), list);
             }
             break;
             case 30: /* reduce ANextIdentifier */
             {
                 ArrayList<Object> list = new30();
-                push(goTo(13), list, false);
+                push(goTo(13), list);
             }
             break;
             case 31: /* reduce ANoopStatement */
             {
                 ArrayList<Object> list = new31();
-                push(goTo(14), list, false);
+                push(goTo(14), list);
             }
             break;
             case 32: /* reduce AAssignmentStatement */
             {
                 ArrayList<Object> list = new32();
-                push(goTo(14), list, false);
+                push(goTo(14), list);
             }
             break;
             case 33: /* reduce AIfStatement */
             {
                 ArrayList<Object> list = new33();
-                push(goTo(14), list, false);
+                push(goTo(14), list);
             }
             break;
             case 34: /* reduce ABlockStatement */
             {
                 ArrayList<Object> list = new34();
-                push(goTo(14), list, false);
+                push(goTo(14), list);
             }
             break;
             case 35: /* reduce AFCallStatement */
             {
                 ArrayList<Object> list = new35();
-                push(goTo(14), list, false);
+                push(goTo(14), list);
             }
             break;
             case 36: /* reduce AWhileDoStatement */
             {
                 ArrayList<Object> list = new36();
-                push(goTo(14), list, false);
+                push(goTo(14), list);
             }
             break;
             case 37: /* reduce AAreturnstatement1Statement */
             {
                 ArrayList<Object> list = new37();
-                push(goTo(14), list, false);
+                push(goTo(14), list);
             }
             break;
             case 38: /* reduce AAreturnstatement2Statement */
             {
                 ArrayList<Object> list = new38();
-                push(goTo(14), list, false);
+                push(goTo(14), list);
             }
             break;
             case 39: /* reduce ANoElseIfStmt */
             {
                 ArrayList<Object> list = new39();
-                push(goTo(15), list, false);
+                push(goTo(15), list);
             }
             break;
             case 40: /* reduce AWithElseIfStmt */
             {
                 ArrayList<Object> list = new40();
-                push(goTo(15), list, false);
+                push(goTo(15), list);
             }
             break;
             case 41: /* reduce ANoopStmtWithElse */
             {
                 ArrayList<Object> list = new41();
-                push(goTo(16), list, false);
+                push(goTo(16), list);
             }
             break;
             case 42: /* reduce AAssignmentStmtWithElse */
             {
                 ArrayList<Object> list = new42();
-                push(goTo(16), list, false);
+                push(goTo(16), list);
             }
             break;
             case 43: /* reduce AIfStmtWithElse */
             {
                 ArrayList<Object> list = new43();
-                push(goTo(16), list, false);
+                push(goTo(16), list);
             }
             break;
             case 44: /* reduce ABlockStmtWithElse */
             {
                 ArrayList<Object> list = new44();
-                push(goTo(16), list, false);
+                push(goTo(16), list);
             }
             break;
             case 45: /* reduce AFCallStmtWithElse */
             {
                 ArrayList<Object> list = new45();
-                push(goTo(16), list, false);
+                push(goTo(16), list);
             }
             break;
             case 46: /* reduce AWhileDoStmtWithElse */
             {
                 ArrayList<Object> list = new46();
-                push(goTo(16), list, false);
+                push(goTo(16), list);
             }
             break;
             case 47: /* reduce AAreturnstmtwithelse1StmtWithElse */
             {
                 ArrayList<Object> list = new47();
-                push(goTo(16), list, false);
+                push(goTo(16), list);
             }
             break;
             case 48: /* reduce AAreturnstmtwithelse2StmtWithElse */
             {
                 ArrayList<Object> list = new48();
-                push(goTo(16), list, false);
+                push(goTo(16), list);
             }
             break;
             case 49: /* reduce AIfElseStmt */
             {
                 ArrayList<Object> list = new49();
-                push(goTo(17), list, false);
+                push(goTo(17), list);
             }
             break;
             case 50: /* reduce AAfunccall1FuncCall */
             {
                 ArrayList<Object> list = new50();
-                push(goTo(18), list, false);
+                push(goTo(18), list);
             }
             break;
             case 51: /* reduce AAfunccall2FuncCall */
             {
                 ArrayList<Object> list = new51();
-                push(goTo(18), list, false);
+                push(goTo(18), list);
             }
             break;
             case 52: /* reduce AIdentifierLValue */
             {
                 ArrayList<Object> list = new52();
-                push(goTo(19), list, false);
+                push(goTo(19), list);
             }
             break;
             case 53: /* reduce AStringLitLValue */
             {
                 ArrayList<Object> list = new53();
-                push(goTo(19), list, false);
+                push(goTo(19), list);
             }
             break;
             case 54: /* reduce AAarrayassignlvalue1LValue */
             {
                 ArrayList<Object> list = new54();
-                push(goTo(19), list, false);
+                push(goTo(19), list);
             }
             break;
             case 55: /* reduce AAarrayassignlvalue2LValue */
             {
                 ArrayList<Object> list = new55();
-                push(goTo(19), list, false);
+                push(goTo(19), list);
             }
             break;
             case 56: /* reduce AArrayExpression */
             {
                 ArrayList<Object> list = new56();
-                push(goTo(20), list, false);
+                push(goTo(20), list);
             }
             break;
             case 57: /* reduce AStringExpression */
             {
                 ArrayList<Object> list = new57();
-                push(goTo(20), list, false);
+                push(goTo(20), list);
             }
             break;
             case 58: /* reduce ACharConstExpression */
             {
                 ArrayList<Object> list = new58();
-                push(goTo(20), list, false);
+                push(goTo(20), list);
             }
             break;
             case 59: /* reduce AFCallExpression */
             {
                 ArrayList<Object> list = new59();
-                push(goTo(20), list, false);
+                push(goTo(20), list);
             }
             break;
             case 60: /* reduce AParenExpressionExpression */
             {
                 ArrayList<Object> list = new60();
-                push(goTo(20), list, false);
+                push(goTo(20), list);
             }
             break;
             case 61: /* reduce ASignedExpressionExpression */
             {
                 ArrayList<Object> list = new61();
-                push(goTo(20), list, false);
+                push(goTo(20), list);
             }
             break;
             case 62: /* reduce ANumOperExpression */
             {
                 ArrayList<Object> list = new62();
-                push(goTo(20), list, false);
+                push(goTo(20), list);
             }
             break;
             case 63: /* reduce AArrayExpressionB */
             {
                 ArrayList<Object> list = new63();
-                push(goTo(21), list, false);
+                push(goTo(21), list);
             }
             break;
             case 64: /* reduce AStringExpressionB */
             {
                 ArrayList<Object> list = new64();
-                push(goTo(21), list, false);
+                push(goTo(21), list);
             }
             break;
             case 65: /* reduce ACharConstExpressionB */
             {
                 ArrayList<Object> list = new65();
-                push(goTo(21), list, false);
+                push(goTo(21), list);
             }
             break;
             case 66: /* reduce AFCallExpressionB */
             {
                 ArrayList<Object> list = new66();
-                push(goTo(21), list, false);
+                push(goTo(21), list);
             }
             break;
             case 67: /* reduce ASignedExpressionExpressionB */
             {
                 ArrayList<Object> list = new67();
-                push(goTo(21), list, false);
+                push(goTo(21), list);
             }
             break;
             case 68: /* reduce ACondExpCondition */
             {
                 ArrayList<Object> list = new68();
-                push(goTo(22), list, false);
+                push(goTo(22), list);
             }
             break;
             case 69: /* reduce APlusSign */
             {
                 ArrayList<Object> list = new69();
-                push(goTo(23), list, false);
+                push(goTo(23), list);
             }
             break;
             case 70: /* reduce AMinusSign */
             {
                 ArrayList<Object> list = new70();
-                push(goTo(23), list, false);
+                push(goTo(23), list);
             }
             break;
             case 71: /* reduce ANextExpression */
             {
                 ArrayList<Object> list = new71();
-                push(goTo(24), list, false);
+                push(goTo(24), list);
             }
             break;
             case 72: /* reduce AAmultipleexpressions1MultipleExpressions */
             {
                 ArrayList<Object> list = new72();
-                push(goTo(25), list, false);
+                push(goTo(25), list);
             }
             break;
             case 73: /* reduce AAmultipleexpressions2MultipleExpressions */
             {
                 ArrayList<Object> list = new73();
-                push(goTo(25), list, false);
+                push(goTo(25), list);
             }
             break;
             case 74: /* reduce AArraySize */
             {
                 ArrayList<Object> list = new74();
-                push(goTo(26), list, false);
+                push(goTo(26), list);
             }
             break;
             case 75: /* reduce AEmptyBrackets */
             {
                 ArrayList<Object> list = new75();
-                push(goTo(27), list, false);
+                push(goTo(27), list);
             }
             break;
             case 76: /* reduce AArray */
             {
                 ArrayList<Object> list = new76();
-                push(goTo(28), list, false);
+                push(goTo(28), list);
             }
             break;
             case 77: /* reduce AArrayPosition */
             {
                 ArrayList<Object> list = new77();
-                push(goTo(29), list, false);
+                push(goTo(29), list);
             }
             break;
             case 78: /* reduce AOrLogicOperations */
             {
                 ArrayList<Object> list = new78();
-                push(goTo(30), list, false);
+                push(goTo(30), list);
             }
             break;
             case 79: /* reduce AAndLogicOperations */
             {
                 ArrayList<Object> list = new79();
-                push(goTo(30), list, false);
+                push(goTo(30), list);
             }
             break;
             case 80: /* reduce ANotLogicOperations */
             {
                 ArrayList<Object> list = new80();
-                push(goTo(30), list, false);
+                push(goTo(30), list);
             }
             break;
             case 81: /* reduce AEqualsComparisonSymbols */
             {
                 ArrayList<Object> list = new81();
-                push(goTo(31), list, false);
+                push(goTo(31), list);
             }
             break;
             case 82: /* reduce ANotEqualsComparisonSymbols */
             {
                 ArrayList<Object> list = new82();
-                push(goTo(31), list, false);
+                push(goTo(31), list);
             }
             break;
             case 83: /* reduce ALessThanComparisonSymbols */
             {
                 ArrayList<Object> list = new83();
-                push(goTo(31), list, false);
+                push(goTo(31), list);
             }
             break;
             case 84: /* reduce AGreaterThanComparisonSymbols */
             {
                 ArrayList<Object> list = new84();
-                push(goTo(31), list, false);
+                push(goTo(31), list);
             }
             break;
             case 85: /* reduce AGreaterOrEqualComparisonSymbols */
             {
                 ArrayList<Object> list = new85();
-                push(goTo(31), list, false);
+                push(goTo(31), list);
             }
             break;
             case 86: /* reduce ALessOrEqualComparisonSymbols */
             {
                 ArrayList<Object> list = new86();
-                push(goTo(31), list, false);
+                push(goTo(31), list);
             }
             break;
             case 87: /* reduce APlusExpNExp */
             {
                 ArrayList<Object> list = new87();
-                push(goTo(32), list, false);
+                push(goTo(32), list);
             }
             break;
             case 88: /* reduce AMinusExpNExp */
             {
                 ArrayList<Object> list = new88();
-                push(goTo(32), list, false);
+                push(goTo(32), list);
             }
             break;
             case 89: /* reduce ATermNExp */
             {
                 ArrayList<Object> list = new89();
-                push(goTo(32), list, false);
+                push(goTo(32), list);
             }
             break;
             case 90: /* reduce ATermMultTerm */
             {
                 ArrayList<Object> list = new90();
-                push(goTo(33), list, false);
+                push(goTo(33), list);
             }
             break;
             case 91: /* reduce ATermDivTerm */
             {
                 ArrayList<Object> list = new91();
-                push(goTo(33), list, false);
+                push(goTo(33), list);
             }
             break;
             case 92: /* reduce ATermModTerm */
             {
                 ArrayList<Object> list = new92();
-                push(goTo(33), list, false);
+                push(goTo(33), list);
             }
             break;
             case 93: /* reduce AExponentTerm */
             {
                 ArrayList<Object> list = new93();
-                push(goTo(33), list, false);
+                push(goTo(33), list);
             }
             break;
             case 94: /* reduce AUnsignedExponent */
             {
                 ArrayList<Object> list = new94();
-                push(goTo(34), list, false);
+                push(goTo(34), list);
             }
             break;
             case 95: /* reduce ANonParenFinal */
             {
                 ArrayList<Object> list = new95();
-                push(goTo(35), list, false);
+                push(goTo(35), list);
             }
             break;
             case 96: /* reduce AParenExpFinal */
             {
                 ArrayList<Object> list = new96();
-                push(goTo(35), list, false);
+                push(goTo(35), list);
             }
             break;
             case 97: /* reduce AIdenFinal */
             {
                 ArrayList<Object> list = new97();
-                push(goTo(35), list, false);
+                push(goTo(35), list);
             }
             break;
             case 98: /* reduce AOrExpCompExp */
             {
                 ArrayList<Object> list = new98();
-                push(goTo(36), list, false);
+                push(goTo(36), list);
             }
             break;
             case 99: /* reduce ANoOrExpCompExp */
             {
                 ArrayList<Object> list = new99();
-                push(goTo(36), list, false);
+                push(goTo(36), list);
             }
             break;
             case 100: /* reduce AAndExprCompTerm */
             {
                 ArrayList<Object> list = new100();
-                push(goTo(37), list, false);
+                push(goTo(37), list);
             }
             break;
             case 101: /* reduce ANoAndExpCompTerm */
             {
                 ArrayList<Object> list = new101();
-                push(goTo(37), list, false);
+                push(goTo(37), list);
             }
             break;
             case 102: /* reduce ANotExpCompFun */
             {
                 ArrayList<Object> list = new102();
-                push(goTo(38), list, false);
+                push(goTo(38), list);
             }
             break;
-            case 103: /* reduce ANoNotExpCompFun */
+            case 103: /* reduce APlainExpCompFun */
             {
                 ArrayList<Object> list = new103();
-                push(goTo(38), list, false);
+                push(goTo(38), list);
             }
             break;
             case 104: /* reduce AEqualsCompVal */
             {
                 ArrayList<Object> list = new104();
-                push(goTo(39), list, false);
+                push(goTo(39), list);
             }
             break;
             case 105: /* reduce ANotEqualsCompVal */
             {
                 ArrayList<Object> list = new105();
-                push(goTo(39), list, false);
+                push(goTo(39), list);
             }
             break;
             case 106: /* reduce ALessThanCompVal */
             {
                 ArrayList<Object> list = new106();
-                push(goTo(39), list, false);
+                push(goTo(39), list);
             }
             break;
             case 107: /* reduce AGreaterThanCompVal */
             {
                 ArrayList<Object> list = new107();
-                push(goTo(39), list, false);
+                push(goTo(39), list);
             }
             break;
             case 108: /* reduce AGreaterOrEqualCompVal */
             {
                 ArrayList<Object> list = new108();
-                push(goTo(39), list, false);
+                push(goTo(39), list);
             }
             break;
             case 109: /* reduce ALessOrEqualCompVal */
             {
                 ArrayList<Object> list = new109();
-                push(goTo(39), list, false);
+                push(goTo(39), list);
             }
             break;
-            case 110: /* reduce ANoCompExpCompVal */
+            case 110: /* reduce ACompFinalCompVal */
             {
                 ArrayList<Object> list = new110();
-                push(goTo(39), list, false);
+                push(goTo(39), list);
             }
             break;
             case 111: /* reduce AExprCompFinal */
             {
                 ArrayList<Object> list = new111();
-                push(goTo(40), list, false);
+                push(goTo(40), list);
             }
             break;
             case 112: /* reduce ATerminal$LocalDefinition */
             {
                 ArrayList<Object> list = new112();
-                push(goTo(41), list, true);
+                push(goTo(41), list);
             }
             break;
             case 113: /* reduce ANonTerminal$LocalDefinition */
             {
                 ArrayList<Object> list = new113();
-                push(goTo(41), list, true);
+                push(goTo(41), list);
             }
             break;
             case 114: /* reduce ATerminal$NextFparDefinition */
             {
                 ArrayList<Object> list = new114();
-                push(goTo(42), list, true);
+                push(goTo(42), list);
             }
             break;
             case 115: /* reduce ANonTerminal$NextFparDefinition */
             {
                 ArrayList<Object> list = new115();
-                push(goTo(42), list, true);
+                push(goTo(42), list);
             }
             break;
             case 116: /* reduce ATerminal$Statement */
             {
                 ArrayList<Object> list = new116();
-                push(goTo(43), list, true);
+                push(goTo(43), list);
             }
             break;
             case 117: /* reduce ANonTerminal$Statement */
             {
                 ArrayList<Object> list = new117();
-                push(goTo(43), list, true);
+                push(goTo(43), list);
             }
             break;
             case 118: /* reduce ATerminal$NextIdentifier */
             {
                 ArrayList<Object> list = new118();
-                push(goTo(44), list, true);
+                push(goTo(44), list);
             }
             break;
             case 119: /* reduce ANonTerminal$NextIdentifier */
             {
                 ArrayList<Object> list = new119();
-                push(goTo(44), list, true);
+                push(goTo(44), list);
             }
             break;
             case 120: /* reduce ATerminal$ArraySize */
             {
                 ArrayList<Object> list = new120();
-                push(goTo(45), list, true);
+                push(goTo(45), list);
             }
             break;
             case 121: /* reduce ANonTerminal$ArraySize */
             {
                 ArrayList<Object> list = new121();
-                push(goTo(45), list, true);
+                push(goTo(45), list);
             }
             break;
             case 122: /* reduce ATerminal$NextExpression */
             {
                 ArrayList<Object> list = new122();
-                push(goTo(46), list, true);
+                push(goTo(46), list);
             }
             break;
             case 123: /* reduce ANonTerminal$NextExpression */
             {
                 ArrayList<Object> list = new123();
-                push(goTo(46), list, true);
+                push(goTo(46), list);
             }
             break;
             case 124: /* reduce ATerminal$ArrayPosition */
             {
                 ArrayList<Object> list = new124();
-                push(goTo(47), list, true);
+                push(goTo(47), list);
             }
             break;
             case 125: /* reduce ANonTerminal$ArrayPosition */
             {
                 ArrayList<Object> list = new125();
-                push(goTo(47), list, true);
+                push(goTo(47), list);
             }
             break;
         }
@@ -3203,13 +3194,11 @@ public class Parser
         {
             // Block
         PNExp pnexpNode2;
-        TPlus tplusNode3;
-        PTerm ptermNode4;
+        PNExp pnexpNode3;
         pnexpNode2 = (PNExp)nodeArrayList1.get(0);
-        tplusNode3 = (TPlus)nodeArrayList2.get(0);
-        ptermNode4 = (PTerm)nodeArrayList3.get(0);
+        pnexpNode3 = (PNExp)nodeArrayList3.get(0);
 
-        pnexpNode1 = new APlusExpNExp(pnexpNode2, tplusNode3, ptermNode4);
+        pnexpNode1 = new APlusExpNExp(pnexpNode2, pnexpNode3);
         }
 	nodeList.add(pnexpNode1);
         return nodeList;
@@ -3229,13 +3218,11 @@ public class Parser
         {
             // Block
         PNExp pnexpNode2;
-        TMinus tminusNode3;
-        PTerm ptermNode4;
+        PNExp pnexpNode3;
         pnexpNode2 = (PNExp)nodeArrayList1.get(0);
-        tminusNode3 = (TMinus)nodeArrayList2.get(0);
-        ptermNode4 = (PTerm)nodeArrayList3.get(0);
+        pnexpNode3 = (PNExp)nodeArrayList3.get(0);
 
-        pnexpNode1 = new AMinusExpNExp(pnexpNode2, tminusNode3, ptermNode4);
+        pnexpNode1 = new AMinusExpNExp(pnexpNode2, pnexpNode3);
         }
 	nodeList.add(pnexpNode1);
         return nodeList;
@@ -3250,13 +3237,7 @@ public class Parser
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
         PNExp pnexpNode1;
-        {
-            // Block
-        PTerm ptermNode2;
-        ptermNode2 = (PTerm)nodeArrayList1.get(0);
-
-        pnexpNode1 = new ATermNExp(ptermNode2);
-        }
+        pnexpNode1 = (PNExp)nodeArrayList1.get(0);
 	nodeList.add(pnexpNode1);
         return nodeList;
     }
@@ -3271,19 +3252,17 @@ public class Parser
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList3 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PTerm ptermNode1;
+        PNExp pnexpNode1;
         {
             // Block
-        PTerm ptermNode2;
-        TMult tmultNode3;
-        PExponent pexponentNode4;
-        ptermNode2 = (PTerm)nodeArrayList1.get(0);
-        tmultNode3 = (TMult)nodeArrayList2.get(0);
-        pexponentNode4 = (PExponent)nodeArrayList3.get(0);
+        PNExp pnexpNode2;
+        PNExp pnexpNode3;
+        pnexpNode2 = (PNExp)nodeArrayList1.get(0);
+        pnexpNode3 = (PNExp)nodeArrayList3.get(0);
 
-        ptermNode1 = new ATermMultTerm(ptermNode2, tmultNode3, pexponentNode4);
+        pnexpNode1 = new ATermMultNExp(pnexpNode2, pnexpNode3);
         }
-	nodeList.add(ptermNode1);
+	nodeList.add(pnexpNode1);
         return nodeList;
     }
 
@@ -3297,19 +3276,17 @@ public class Parser
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList3 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PTerm ptermNode1;
+        PNExp pnexpNode1;
         {
             // Block
-        PTerm ptermNode2;
-        TKwDiv tkwdivNode3;
-        PExponent pexponentNode4;
-        ptermNode2 = (PTerm)nodeArrayList1.get(0);
-        tkwdivNode3 = (TKwDiv)nodeArrayList2.get(0);
-        pexponentNode4 = (PExponent)nodeArrayList3.get(0);
+        PNExp pnexpNode2;
+        PNExp pnexpNode3;
+        pnexpNode2 = (PNExp)nodeArrayList1.get(0);
+        pnexpNode3 = (PNExp)nodeArrayList3.get(0);
 
-        ptermNode1 = new ATermDivTerm(ptermNode2, tkwdivNode3, pexponentNode4);
+        pnexpNode1 = new ATermDivNExp(pnexpNode2, pnexpNode3);
         }
-	nodeList.add(ptermNode1);
+	nodeList.add(pnexpNode1);
         return nodeList;
     }
 
@@ -3323,19 +3300,17 @@ public class Parser
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList3 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PTerm ptermNode1;
+        PNExp pnexpNode1;
         {
             // Block
-        PTerm ptermNode2;
-        TKwMod tkwmodNode3;
-        PExponent pexponentNode4;
-        ptermNode2 = (PTerm)nodeArrayList1.get(0);
-        tkwmodNode3 = (TKwMod)nodeArrayList2.get(0);
-        pexponentNode4 = (PExponent)nodeArrayList3.get(0);
+        PNExp pnexpNode2;
+        PNExp pnexpNode3;
+        pnexpNode2 = (PNExp)nodeArrayList1.get(0);
+        pnexpNode3 = (PNExp)nodeArrayList3.get(0);
 
-        ptermNode1 = new ATermModTerm(ptermNode2, tkwmodNode3, pexponentNode4);
+        pnexpNode1 = new ATermModNExp(pnexpNode2, pnexpNode3);
         }
-	nodeList.add(ptermNode1);
+	nodeList.add(pnexpNode1);
         return nodeList;
     }
 
@@ -3347,15 +3322,9 @@ public class Parser
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PTerm ptermNode1;
-        {
-            // Block
-        PExponent pexponentNode2;
-        pexponentNode2 = (PExponent)nodeArrayList1.get(0);
-
-        ptermNode1 = new AExponentTerm(pexponentNode2);
-        }
-	nodeList.add(ptermNode1);
+        PNExp pnexpNode1;
+        pnexpNode1 = (PNExp)nodeArrayList1.get(0);
+	nodeList.add(pnexpNode1);
         return nodeList;
     }
 
@@ -3367,15 +3336,15 @@ public class Parser
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PExponent pexponentNode1;
+        PNExp pnexpNode1;
         {
             // Block
         PFinal pfinalNode2;
         pfinalNode2 = (PFinal)nodeArrayList1.get(0);
 
-        pexponentNode1 = new AUnsignedExponent(pfinalNode2);
+        pnexpNode1 = new AExponentNExp(pfinalNode2);
         }
-	nodeList.add(pexponentNode1);
+	nodeList.add(pnexpNode1);
         return nodeList;
     }
 
@@ -3412,14 +3381,10 @@ public class Parser
         PFinal pfinalNode1;
         {
             // Block
-        TLparen tlparenNode2;
-        PNExp pnexpNode3;
-        TRparen trparenNode4;
-        tlparenNode2 = (TLparen)nodeArrayList1.get(0);
-        pnexpNode3 = (PNExp)nodeArrayList2.get(0);
-        trparenNode4 = (TRparen)nodeArrayList3.get(0);
+        PNExp pnexpNode2;
+        pnexpNode2 = (PNExp)nodeArrayList2.get(0);
 
-        pfinalNode1 = new AParenExpFinal(tlparenNode2, pnexpNode3, trparenNode4);
+        pfinalNode1 = new AParenExpFinal(pnexpNode2);
         }
 	nodeList.add(pfinalNode1);
         return nodeList;
@@ -3459,13 +3424,11 @@ public class Parser
         {
             // Block
         PCompExp pcompexpNode2;
-        TKwOr tkworNode3;
-        PCompTerm pcomptermNode4;
+        PCompExp pcompexpNode3;
         pcompexpNode2 = (PCompExp)nodeArrayList1.get(0);
-        tkworNode3 = (TKwOr)nodeArrayList2.get(0);
-        pcomptermNode4 = (PCompTerm)nodeArrayList3.get(0);
+        pcompexpNode3 = (PCompExp)nodeArrayList3.get(0);
 
-        pcompexpNode1 = new AOrExpCompExp(pcompexpNode2, tkworNode3, pcomptermNode4);
+        pcompexpNode1 = new AOrExpCompExp(pcompexpNode2, pcompexpNode3);
         }
 	nodeList.add(pcompexpNode1);
         return nodeList;
@@ -3480,13 +3443,7 @@ public class Parser
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
         PCompExp pcompexpNode1;
-        {
-            // Block
-        PCompTerm pcomptermNode2;
-        pcomptermNode2 = (PCompTerm)nodeArrayList1.get(0);
-
-        pcompexpNode1 = new ANoOrExpCompExp(pcomptermNode2);
-        }
+        pcompexpNode1 = (PCompExp)nodeArrayList1.get(0);
 	nodeList.add(pcompexpNode1);
         return nodeList;
     }
@@ -3501,19 +3458,17 @@ public class Parser
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList3 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PCompTerm pcomptermNode1;
+        PCompExp pcompexpNode1;
         {
             // Block
-        PCompTerm pcomptermNode2;
-        TKwAnd tkwandNode3;
-        PCompFun pcompfunNode4;
-        pcomptermNode2 = (PCompTerm)nodeArrayList1.get(0);
-        tkwandNode3 = (TKwAnd)nodeArrayList2.get(0);
-        pcompfunNode4 = (PCompFun)nodeArrayList3.get(0);
+        PCompExp pcompexpNode2;
+        PCompExp pcompexpNode3;
+        pcompexpNode2 = (PCompExp)nodeArrayList1.get(0);
+        pcompexpNode3 = (PCompExp)nodeArrayList3.get(0);
 
-        pcomptermNode1 = new AAndExprCompTerm(pcomptermNode2, tkwandNode3, pcompfunNode4);
+        pcompexpNode1 = new AAndExpCompExp(pcompexpNode2, pcompexpNode3);
         }
-	nodeList.add(pcomptermNode1);
+	nodeList.add(pcompexpNode1);
         return nodeList;
     }
 
@@ -3525,15 +3480,9 @@ public class Parser
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PCompTerm pcomptermNode1;
-        {
-            // Block
-        PCompFun pcompfunNode2;
-        pcompfunNode2 = (PCompFun)nodeArrayList1.get(0);
-
-        pcomptermNode1 = new ANoAndExpCompTerm(pcompfunNode2);
-        }
-	nodeList.add(pcomptermNode1);
+        PCompExp pcompexpNode1;
+        pcompexpNode1 = (PCompExp)nodeArrayList1.get(0);
+	nodeList.add(pcompexpNode1);
         return nodeList;
     }
 
@@ -3546,37 +3495,29 @@ public class Parser
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PCompFun pcompfunNode1;
-        {
-            // Block
-        TKwNot tkwnotNode2;
-        PCompFun pcompfunNode3;
-        tkwnotNode2 = (TKwNot)nodeArrayList1.get(0);
-        pcompfunNode3 = (PCompFun)nodeArrayList2.get(0);
-
-        pcompfunNode1 = new ANotExpCompFun(tkwnotNode2, pcompfunNode3);
-        }
-	nodeList.add(pcompfunNode1);
+        PCompExp pcompexpNode1;
+        pcompexpNode1 = (PCompExp)nodeArrayList2.get(0);
+	nodeList.add(pcompexpNode1);
         return nodeList;
     }
 
 
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new103() /* reduce ANoNotExpCompFun */
+    ArrayList<Object> new103() /* reduce APlainExpCompFun */
     {
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PCompFun pcompfunNode1;
+        PCompExp pcompexpNode1;
         {
             // Block
         PCompVal pcompvalNode2;
         pcompvalNode2 = (PCompVal)nodeArrayList1.get(0);
 
-        pcompfunNode1 = new ANoNotExpCompFun(pcompvalNode2);
+        pcompexpNode1 = new APlainExpCompExp(pcompvalNode2);
         }
-	nodeList.add(pcompfunNode1);
+	nodeList.add(pcompexpNode1);
         return nodeList;
     }
 
@@ -3594,13 +3535,11 @@ public class Parser
         {
             // Block
         PCompVal pcompvalNode2;
-        TEquals tequalsNode3;
-        PCompFinal pcompfinalNode4;
+        PCompFinal pcompfinalNode3;
         pcompvalNode2 = (PCompVal)nodeArrayList1.get(0);
-        tequalsNode3 = (TEquals)nodeArrayList2.get(0);
-        pcompfinalNode4 = (PCompFinal)nodeArrayList3.get(0);
+        pcompfinalNode3 = (PCompFinal)nodeArrayList3.get(0);
 
-        pcompvalNode1 = new AEqualsCompVal(pcompvalNode2, tequalsNode3, pcompfinalNode4);
+        pcompvalNode1 = new AEqualsCompVal(pcompvalNode2, pcompfinalNode3);
         }
 	nodeList.add(pcompvalNode1);
         return nodeList;
@@ -3620,13 +3559,11 @@ public class Parser
         {
             // Block
         PCompVal pcompvalNode2;
-        TNotEqual tnotequalNode3;
-        PCompFinal pcompfinalNode4;
+        PCompFinal pcompfinalNode3;
         pcompvalNode2 = (PCompVal)nodeArrayList1.get(0);
-        tnotequalNode3 = (TNotEqual)nodeArrayList2.get(0);
-        pcompfinalNode4 = (PCompFinal)nodeArrayList3.get(0);
+        pcompfinalNode3 = (PCompFinal)nodeArrayList3.get(0);
 
-        pcompvalNode1 = new ANotEqualsCompVal(pcompvalNode2, tnotequalNode3, pcompfinalNode4);
+        pcompvalNode1 = new ANotEqualsCompVal(pcompvalNode2, pcompfinalNode3);
         }
 	nodeList.add(pcompvalNode1);
         return nodeList;
@@ -3646,13 +3583,11 @@ public class Parser
         {
             // Block
         PCompVal pcompvalNode2;
-        TLessThan tlessthanNode3;
-        PCompFinal pcompfinalNode4;
+        PCompFinal pcompfinalNode3;
         pcompvalNode2 = (PCompVal)nodeArrayList1.get(0);
-        tlessthanNode3 = (TLessThan)nodeArrayList2.get(0);
-        pcompfinalNode4 = (PCompFinal)nodeArrayList3.get(0);
+        pcompfinalNode3 = (PCompFinal)nodeArrayList3.get(0);
 
-        pcompvalNode1 = new ALessThanCompVal(pcompvalNode2, tlessthanNode3, pcompfinalNode4);
+        pcompvalNode1 = new ALessThanCompVal(pcompvalNode2, pcompfinalNode3);
         }
 	nodeList.add(pcompvalNode1);
         return nodeList;
@@ -3672,13 +3607,11 @@ public class Parser
         {
             // Block
         PCompVal pcompvalNode2;
-        TGreaterThan tgreaterthanNode3;
-        PCompFinal pcompfinalNode4;
+        PCompFinal pcompfinalNode3;
         pcompvalNode2 = (PCompVal)nodeArrayList1.get(0);
-        tgreaterthanNode3 = (TGreaterThan)nodeArrayList2.get(0);
-        pcompfinalNode4 = (PCompFinal)nodeArrayList3.get(0);
+        pcompfinalNode3 = (PCompFinal)nodeArrayList3.get(0);
 
-        pcompvalNode1 = new AGreaterThanCompVal(pcompvalNode2, tgreaterthanNode3, pcompfinalNode4);
+        pcompvalNode1 = new AGreaterThanCompVal(pcompvalNode2, pcompfinalNode3);
         }
 	nodeList.add(pcompvalNode1);
         return nodeList;
@@ -3698,13 +3631,11 @@ public class Parser
         {
             // Block
         PCompVal pcompvalNode2;
-        TGreaterThanEqual tgreaterthanequalNode3;
-        PCompFinal pcompfinalNode4;
+        PCompFinal pcompfinalNode3;
         pcompvalNode2 = (PCompVal)nodeArrayList1.get(0);
-        tgreaterthanequalNode3 = (TGreaterThanEqual)nodeArrayList2.get(0);
-        pcompfinalNode4 = (PCompFinal)nodeArrayList3.get(0);
+        pcompfinalNode3 = (PCompFinal)nodeArrayList3.get(0);
 
-        pcompvalNode1 = new AGreaterOrEqualCompVal(pcompvalNode2, tgreaterthanequalNode3, pcompfinalNode4);
+        pcompvalNode1 = new AGreaterOrEqualCompVal(pcompvalNode2, pcompfinalNode3);
         }
 	nodeList.add(pcompvalNode1);
         return nodeList;
@@ -3724,13 +3655,11 @@ public class Parser
         {
             // Block
         PCompVal pcompvalNode2;
-        TLessThanEqual tlessthanequalNode3;
-        PCompFinal pcompfinalNode4;
+        PCompFinal pcompfinalNode3;
         pcompvalNode2 = (PCompVal)nodeArrayList1.get(0);
-        tlessthanequalNode3 = (TLessThanEqual)nodeArrayList2.get(0);
-        pcompfinalNode4 = (PCompFinal)nodeArrayList3.get(0);
+        pcompfinalNode3 = (PCompFinal)nodeArrayList3.get(0);
 
-        pcompvalNode1 = new ALessOrEqualCompVal(pcompvalNode2, tlessthanequalNode3, pcompfinalNode4);
+        pcompvalNode1 = new ALessOrEqualCompVal(pcompvalNode2, pcompfinalNode3);
         }
 	nodeList.add(pcompvalNode1);
         return nodeList;
@@ -3739,7 +3668,7 @@ public class Parser
 
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new110() /* reduce ANoCompExpCompVal */
+    ArrayList<Object> new110() /* reduce ACompFinalCompVal */
     {
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
@@ -3750,7 +3679,7 @@ public class Parser
         PCompFinal pcompfinalNode2;
         pcompfinalNode2 = (PCompFinal)nodeArrayList1.get(0);
 
-        pcompvalNode1 = new ANoCompExpCompVal(pcompfinalNode2);
+        pcompvalNode1 = new ACompFinalCompVal(pcompfinalNode2);
         }
 	nodeList.add(pcompvalNode1);
         return nodeList;

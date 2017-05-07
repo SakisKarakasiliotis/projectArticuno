@@ -5,46 +5,46 @@ package sablecc.node;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class ANoNotExpCompFun extends PCompFun
+public final class ANotExpCompExp extends PCompExp
 {
-    private PCompVal _compVal_;
+    private PCompExp _compExp_;
 
-    public ANoNotExpCompFun()
+    public ANotExpCompExp()
     {
         // Constructor
     }
 
-    public ANoNotExpCompFun(
-        @SuppressWarnings("hiding") PCompVal _compVal_)
+    public ANotExpCompExp(
+        @SuppressWarnings("hiding") PCompExp _compExp_)
     {
         // Constructor
-        setCompVal(_compVal_);
+        setCompExp(_compExp_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new ANoNotExpCompFun(
-            cloneNode(this._compVal_));
+        return new ANotExpCompExp(
+            cloneNode(this._compExp_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseANoNotExpCompFun(this);
+        ((Analysis) sw).caseANotExpCompExp(this);
     }
 
-    public PCompVal getCompVal()
+    public PCompExp getCompExp()
     {
-        return this._compVal_;
+        return this._compExp_;
     }
 
-    public void setCompVal(PCompVal node)
+    public void setCompExp(PCompExp node)
     {
-        if(this._compVal_ != null)
+        if(this._compExp_ != null)
         {
-            this._compVal_.parent(null);
+            this._compExp_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class ANoNotExpCompFun extends PCompFun
             node.parent(this);
         }
 
-        this._compVal_ = node;
+        this._compExp_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._compVal_);
+            + toString(this._compExp_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._compVal_ == child)
+        if(this._compExp_ == child)
         {
-            this._compVal_ = null;
+            this._compExp_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class ANoNotExpCompFun extends PCompFun
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._compVal_ == oldChild)
+        if(this._compExp_ == oldChild)
         {
-            setCompVal((PCompVal) newChild);
+            setCompExp((PCompExp) newChild);
             return;
         }
 

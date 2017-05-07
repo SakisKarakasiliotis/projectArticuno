@@ -5,51 +5,51 @@ package sablecc.node;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AGreaterThanCompVal extends PCompVal
+public final class ATermDivNExp extends PNExp
 {
-    private PCompVal _compVal1_;
-    private PCompFinal _compVal2_;
+    private PNExp _nExp1_;
+    private PNExp _nExp2_;
 
-    public AGreaterThanCompVal()
+    public ATermDivNExp()
     {
         // Constructor
     }
 
-    public AGreaterThanCompVal(
-        @SuppressWarnings("hiding") PCompVal _compVal1_,
-        @SuppressWarnings("hiding") PCompFinal _compVal2_)
+    public ATermDivNExp(
+        @SuppressWarnings("hiding") PNExp _nExp1_,
+        @SuppressWarnings("hiding") PNExp _nExp2_)
     {
         // Constructor
-        setCompVal1(_compVal1_);
+        setNExp1(_nExp1_);
 
-        setCompVal2(_compVal2_);
+        setNExp2(_nExp2_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AGreaterThanCompVal(
-            cloneNode(this._compVal1_),
-            cloneNode(this._compVal2_));
+        return new ATermDivNExp(
+            cloneNode(this._nExp1_),
+            cloneNode(this._nExp2_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAGreaterThanCompVal(this);
+        ((Analysis) sw).caseATermDivNExp(this);
     }
 
-    public PCompVal getCompVal1()
+    public PNExp getNExp1()
     {
-        return this._compVal1_;
+        return this._nExp1_;
     }
 
-    public void setCompVal1(PCompVal node)
+    public void setNExp1(PNExp node)
     {
-        if(this._compVal1_ != null)
+        if(this._nExp1_ != null)
         {
-            this._compVal1_.parent(null);
+            this._nExp1_.parent(null);
         }
 
         if(node != null)
@@ -62,19 +62,19 @@ public final class AGreaterThanCompVal extends PCompVal
             node.parent(this);
         }
 
-        this._compVal1_ = node;
+        this._nExp1_ = node;
     }
 
-    public PCompFinal getCompVal2()
+    public PNExp getNExp2()
     {
-        return this._compVal2_;
+        return this._nExp2_;
     }
 
-    public void setCompVal2(PCompFinal node)
+    public void setNExp2(PNExp node)
     {
-        if(this._compVal2_ != null)
+        if(this._nExp2_ != null)
         {
-            this._compVal2_.parent(null);
+            this._nExp2_.parent(null);
         }
 
         if(node != null)
@@ -87,30 +87,30 @@ public final class AGreaterThanCompVal extends PCompVal
             node.parent(this);
         }
 
-        this._compVal2_ = node;
+        this._nExp2_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._compVal1_)
-            + toString(this._compVal2_);
+            + toString(this._nExp1_)
+            + toString(this._nExp2_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._compVal1_ == child)
+        if(this._nExp1_ == child)
         {
-            this._compVal1_ = null;
+            this._nExp1_ = null;
             return;
         }
 
-        if(this._compVal2_ == child)
+        if(this._nExp2_ == child)
         {
-            this._compVal2_ = null;
+            this._nExp2_ = null;
             return;
         }
 
@@ -121,15 +121,15 @@ public final class AGreaterThanCompVal extends PCompVal
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._compVal1_ == oldChild)
+        if(this._nExp1_ == oldChild)
         {
-            setCompVal1((PCompVal) newChild);
+            setNExp1((PNExp) newChild);
             return;
         }
 
-        if(this._compVal2_ == oldChild)
+        if(this._nExp2_ == oldChild)
         {
-            setCompVal2((PCompFinal) newChild);
+            setNExp2((PNExp) newChild);
             return;
         }
 

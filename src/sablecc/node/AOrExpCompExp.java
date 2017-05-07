@@ -7,9 +7,8 @@ import sablecc.analysis.*;
 @SuppressWarnings("nls")
 public final class AOrExpCompExp extends PCompExp
 {
-    private PCompExp _compExp_;
-    private TKwOr _kwOr_;
-    private PCompTerm _compTerm_;
+    private PCompExp _compExp1_;
+    private PCompExp _compExp2_;
 
     public AOrExpCompExp()
     {
@@ -17,16 +16,13 @@ public final class AOrExpCompExp extends PCompExp
     }
 
     public AOrExpCompExp(
-        @SuppressWarnings("hiding") PCompExp _compExp_,
-        @SuppressWarnings("hiding") TKwOr _kwOr_,
-        @SuppressWarnings("hiding") PCompTerm _compTerm_)
+        @SuppressWarnings("hiding") PCompExp _compExp1_,
+        @SuppressWarnings("hiding") PCompExp _compExp2_)
     {
         // Constructor
-        setCompExp(_compExp_);
+        setCompExp1(_compExp1_);
 
-        setKwOr(_kwOr_);
-
-        setCompTerm(_compTerm_);
+        setCompExp2(_compExp2_);
 
     }
 
@@ -34,9 +30,8 @@ public final class AOrExpCompExp extends PCompExp
     public Object clone()
     {
         return new AOrExpCompExp(
-            cloneNode(this._compExp_),
-            cloneNode(this._kwOr_),
-            cloneNode(this._compTerm_));
+            cloneNode(this._compExp1_),
+            cloneNode(this._compExp2_));
     }
 
     @Override
@@ -45,16 +40,16 @@ public final class AOrExpCompExp extends PCompExp
         ((Analysis) sw).caseAOrExpCompExp(this);
     }
 
-    public PCompExp getCompExp()
+    public PCompExp getCompExp1()
     {
-        return this._compExp_;
+        return this._compExp1_;
     }
 
-    public void setCompExp(PCompExp node)
+    public void setCompExp1(PCompExp node)
     {
-        if(this._compExp_ != null)
+        if(this._compExp1_ != null)
         {
-            this._compExp_.parent(null);
+            this._compExp1_.parent(null);
         }
 
         if(node != null)
@@ -67,19 +62,19 @@ public final class AOrExpCompExp extends PCompExp
             node.parent(this);
         }
 
-        this._compExp_ = node;
+        this._compExp1_ = node;
     }
 
-    public TKwOr getKwOr()
+    public PCompExp getCompExp2()
     {
-        return this._kwOr_;
+        return this._compExp2_;
     }
 
-    public void setKwOr(TKwOr node)
+    public void setCompExp2(PCompExp node)
     {
-        if(this._kwOr_ != null)
+        if(this._compExp2_ != null)
         {
-            this._kwOr_.parent(null);
+            this._compExp2_.parent(null);
         }
 
         if(node != null)
@@ -92,62 +87,30 @@ public final class AOrExpCompExp extends PCompExp
             node.parent(this);
         }
 
-        this._kwOr_ = node;
-    }
-
-    public PCompTerm getCompTerm()
-    {
-        return this._compTerm_;
-    }
-
-    public void setCompTerm(PCompTerm node)
-    {
-        if(this._compTerm_ != null)
-        {
-            this._compTerm_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._compTerm_ = node;
+        this._compExp2_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._compExp_)
-            + toString(this._kwOr_)
-            + toString(this._compTerm_);
+            + toString(this._compExp1_)
+            + toString(this._compExp2_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._compExp_ == child)
+        if(this._compExp1_ == child)
         {
-            this._compExp_ = null;
+            this._compExp1_ = null;
             return;
         }
 
-        if(this._kwOr_ == child)
+        if(this._compExp2_ == child)
         {
-            this._kwOr_ = null;
-            return;
-        }
-
-        if(this._compTerm_ == child)
-        {
-            this._compTerm_ = null;
+            this._compExp2_ = null;
             return;
         }
 
@@ -158,21 +121,15 @@ public final class AOrExpCompExp extends PCompExp
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._compExp_ == oldChild)
+        if(this._compExp1_ == oldChild)
         {
-            setCompExp((PCompExp) newChild);
+            setCompExp1((PCompExp) newChild);
             return;
         }
 
-        if(this._kwOr_ == oldChild)
+        if(this._compExp2_ == oldChild)
         {
-            setKwOr((TKwOr) newChild);
-            return;
-        }
-
-        if(this._compTerm_ == oldChild)
-        {
-            setCompTerm((PCompTerm) newChild);
+            setCompExp2((PCompExp) newChild);
             return;
         }
 

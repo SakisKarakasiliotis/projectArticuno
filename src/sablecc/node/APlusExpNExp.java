@@ -7,9 +7,8 @@ import sablecc.analysis.*;
 @SuppressWarnings("nls")
 public final class APlusExpNExp extends PNExp
 {
-    private PNExp _nExp_;
-    private TPlus _plus_;
-    private PTerm _term_;
+    private PNExp _nExp1_;
+    private PNExp _nExp2_;
 
     public APlusExpNExp()
     {
@@ -17,16 +16,13 @@ public final class APlusExpNExp extends PNExp
     }
 
     public APlusExpNExp(
-        @SuppressWarnings("hiding") PNExp _nExp_,
-        @SuppressWarnings("hiding") TPlus _plus_,
-        @SuppressWarnings("hiding") PTerm _term_)
+        @SuppressWarnings("hiding") PNExp _nExp1_,
+        @SuppressWarnings("hiding") PNExp _nExp2_)
     {
         // Constructor
-        setNExp(_nExp_);
+        setNExp1(_nExp1_);
 
-        setPlus(_plus_);
-
-        setTerm(_term_);
+        setNExp2(_nExp2_);
 
     }
 
@@ -34,9 +30,8 @@ public final class APlusExpNExp extends PNExp
     public Object clone()
     {
         return new APlusExpNExp(
-            cloneNode(this._nExp_),
-            cloneNode(this._plus_),
-            cloneNode(this._term_));
+            cloneNode(this._nExp1_),
+            cloneNode(this._nExp2_));
     }
 
     @Override
@@ -45,16 +40,16 @@ public final class APlusExpNExp extends PNExp
         ((Analysis) sw).caseAPlusExpNExp(this);
     }
 
-    public PNExp getNExp()
+    public PNExp getNExp1()
     {
-        return this._nExp_;
+        return this._nExp1_;
     }
 
-    public void setNExp(PNExp node)
+    public void setNExp1(PNExp node)
     {
-        if(this._nExp_ != null)
+        if(this._nExp1_ != null)
         {
-            this._nExp_.parent(null);
+            this._nExp1_.parent(null);
         }
 
         if(node != null)
@@ -67,19 +62,19 @@ public final class APlusExpNExp extends PNExp
             node.parent(this);
         }
 
-        this._nExp_ = node;
+        this._nExp1_ = node;
     }
 
-    public TPlus getPlus()
+    public PNExp getNExp2()
     {
-        return this._plus_;
+        return this._nExp2_;
     }
 
-    public void setPlus(TPlus node)
+    public void setNExp2(PNExp node)
     {
-        if(this._plus_ != null)
+        if(this._nExp2_ != null)
         {
-            this._plus_.parent(null);
+            this._nExp2_.parent(null);
         }
 
         if(node != null)
@@ -92,62 +87,30 @@ public final class APlusExpNExp extends PNExp
             node.parent(this);
         }
 
-        this._plus_ = node;
-    }
-
-    public PTerm getTerm()
-    {
-        return this._term_;
-    }
-
-    public void setTerm(PTerm node)
-    {
-        if(this._term_ != null)
-        {
-            this._term_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._term_ = node;
+        this._nExp2_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._nExp_)
-            + toString(this._plus_)
-            + toString(this._term_);
+            + toString(this._nExp1_)
+            + toString(this._nExp2_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._nExp_ == child)
+        if(this._nExp1_ == child)
         {
-            this._nExp_ = null;
+            this._nExp1_ = null;
             return;
         }
 
-        if(this._plus_ == child)
+        if(this._nExp2_ == child)
         {
-            this._plus_ = null;
-            return;
-        }
-
-        if(this._term_ == child)
-        {
-            this._term_ = null;
+            this._nExp2_ = null;
             return;
         }
 
@@ -158,21 +121,15 @@ public final class APlusExpNExp extends PNExp
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._nExp_ == oldChild)
+        if(this._nExp1_ == oldChild)
         {
-            setNExp((PNExp) newChild);
+            setNExp1((PNExp) newChild);
             return;
         }
 
-        if(this._plus_ == oldChild)
+        if(this._nExp2_ == oldChild)
         {
-            setPlus((TPlus) newChild);
-            return;
-        }
-
-        if(this._term_ == oldChild)
-        {
-            setTerm((PTerm) newChild);
+            setNExp2((PNExp) newChild);
             return;
         }
 

@@ -828,65 +828,7 @@ public class PrintingVisitor extends DepthFirstAdapter{
         addIndentationLevel();
     }
 
-    @Override
-    public void outAOrExpCompExp(AOrExpCompExp node){
-        removeIndentationLevel();
-    }@Override
-    public void inANoOrExpCompExp(ANoOrExpCompExp node){
-        printIndentation();
-        System.out.println("[NoOrExpCompExp] "+node.toString());
-        addIndentationLevel();
-    }
 
-    @Override
-    public void outANoOrExpCompExp(ANoOrExpCompExp node){
-        removeIndentationLevel();
-    }@Override
-    public void inAAndExprCompTerm(AAndExprCompTerm node){
-        printIndentation();
-        System.out.println("[AndExprCompTerm] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outAAndExprCompTerm(AAndExprCompTerm node){
-        removeIndentationLevel();
-    }@Override
-    public void inANoAndExpCompTerm(ANoAndExpCompTerm node){
-        printIndentation();
-        System.out.println("[NoAndExpCompTerm] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outANoAndExpCompTerm(ANoAndExpCompTerm node){
-        removeIndentationLevel();
-    }@Override
-    public void inANotExpCompFun(ANotExpCompFun node){
-        printIndentation();
-        System.out.println("[NotExpCompFun] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outANotExpCompFun(ANotExpCompFun node){
-        removeIndentationLevel();
-    }@Override
-    public void inANoNotExpCompFun(ANoNotExpCompFun node){
-        printIndentation();
-        System.out.println("[NoNotExpCompFun] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outANoNotExpCompFun(ANoNotExpCompFun node){
-        removeIndentationLevel();
-    }@Override
-    public void inAEqualsCompVal(AEqualsCompVal node){
-        printIndentation();
-        System.out.println("[EqualsCompVal] "+node.toString());
-        addIndentationLevel();
-    }
 
     @Override
     public void outAEqualsCompVal(AEqualsCompVal node){
@@ -938,25 +880,7 @@ public class PrintingVisitor extends DepthFirstAdapter{
         addIndentationLevel();
     }
 
-    @Override
-    public void outALessOrEqualCompVal(ALessOrEqualCompVal node){
-        removeIndentationLevel();
-    }@Override
-    public void inANoCompExpCompVal(ANoCompExpCompVal node){
-        printIndentation();
-        System.out.println("[NoCompExpCompVal] "+node.toString());
-        addIndentationLevel();
-    }
 
-    @Override
-    public void outANoCompExpCompVal(ANoCompExpCompVal node){
-        removeIndentationLevel();
-    }@Override
-    public void inAExprCompFinal(AExprCompFinal node){
-        printIndentation();
-        System.out.println("[ExprCompFinal] "+node.toString());
-        addIndentationLevel();
-    }
 
     @Override
     public void outAExprCompFinal(AExprCompFinal node){

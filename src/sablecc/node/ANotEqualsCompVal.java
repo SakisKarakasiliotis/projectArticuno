@@ -7,9 +7,8 @@ import sablecc.analysis.*;
 @SuppressWarnings("nls")
 public final class ANotEqualsCompVal extends PCompVal
 {
-    private PCompVal _compVal_;
-    private TNotEqual _notEqual_;
-    private PCompFinal _compFinal_;
+    private PCompVal _compVal1_;
+    private PCompFinal _compVal2_;
 
     public ANotEqualsCompVal()
     {
@@ -17,16 +16,13 @@ public final class ANotEqualsCompVal extends PCompVal
     }
 
     public ANotEqualsCompVal(
-        @SuppressWarnings("hiding") PCompVal _compVal_,
-        @SuppressWarnings("hiding") TNotEqual _notEqual_,
-        @SuppressWarnings("hiding") PCompFinal _compFinal_)
+        @SuppressWarnings("hiding") PCompVal _compVal1_,
+        @SuppressWarnings("hiding") PCompFinal _compVal2_)
     {
         // Constructor
-        setCompVal(_compVal_);
+        setCompVal1(_compVal1_);
 
-        setNotEqual(_notEqual_);
-
-        setCompFinal(_compFinal_);
+        setCompVal2(_compVal2_);
 
     }
 
@@ -34,9 +30,8 @@ public final class ANotEqualsCompVal extends PCompVal
     public Object clone()
     {
         return new ANotEqualsCompVal(
-            cloneNode(this._compVal_),
-            cloneNode(this._notEqual_),
-            cloneNode(this._compFinal_));
+            cloneNode(this._compVal1_),
+            cloneNode(this._compVal2_));
     }
 
     @Override
@@ -45,16 +40,16 @@ public final class ANotEqualsCompVal extends PCompVal
         ((Analysis) sw).caseANotEqualsCompVal(this);
     }
 
-    public PCompVal getCompVal()
+    public PCompVal getCompVal1()
     {
-        return this._compVal_;
+        return this._compVal1_;
     }
 
-    public void setCompVal(PCompVal node)
+    public void setCompVal1(PCompVal node)
     {
-        if(this._compVal_ != null)
+        if(this._compVal1_ != null)
         {
-            this._compVal_.parent(null);
+            this._compVal1_.parent(null);
         }
 
         if(node != null)
@@ -67,19 +62,19 @@ public final class ANotEqualsCompVal extends PCompVal
             node.parent(this);
         }
 
-        this._compVal_ = node;
+        this._compVal1_ = node;
     }
 
-    public TNotEqual getNotEqual()
+    public PCompFinal getCompVal2()
     {
-        return this._notEqual_;
+        return this._compVal2_;
     }
 
-    public void setNotEqual(TNotEqual node)
+    public void setCompVal2(PCompFinal node)
     {
-        if(this._notEqual_ != null)
+        if(this._compVal2_ != null)
         {
-            this._notEqual_.parent(null);
+            this._compVal2_.parent(null);
         }
 
         if(node != null)
@@ -92,62 +87,30 @@ public final class ANotEqualsCompVal extends PCompVal
             node.parent(this);
         }
 
-        this._notEqual_ = node;
-    }
-
-    public PCompFinal getCompFinal()
-    {
-        return this._compFinal_;
-    }
-
-    public void setCompFinal(PCompFinal node)
-    {
-        if(this._compFinal_ != null)
-        {
-            this._compFinal_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._compFinal_ = node;
+        this._compVal2_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._compVal_)
-            + toString(this._notEqual_)
-            + toString(this._compFinal_);
+            + toString(this._compVal1_)
+            + toString(this._compVal2_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._compVal_ == child)
+        if(this._compVal1_ == child)
         {
-            this._compVal_ = null;
+            this._compVal1_ = null;
             return;
         }
 
-        if(this._notEqual_ == child)
+        if(this._compVal2_ == child)
         {
-            this._notEqual_ = null;
-            return;
-        }
-
-        if(this._compFinal_ == child)
-        {
-            this._compFinal_ = null;
+            this._compVal2_ = null;
             return;
         }
 
@@ -158,21 +121,15 @@ public final class ANotEqualsCompVal extends PCompVal
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._compVal_ == oldChild)
+        if(this._compVal1_ == oldChild)
         {
-            setCompVal((PCompVal) newChild);
+            setCompVal1((PCompVal) newChild);
             return;
         }
 
-        if(this._notEqual_ == oldChild)
+        if(this._compVal2_ == oldChild)
         {
-            setNotEqual((TNotEqual) newChild);
-            return;
-        }
-
-        if(this._compFinal_ == oldChild)
-        {
-            setCompFinal((PCompFinal) newChild);
+            setCompVal2((PCompFinal) newChild);
             return;
         }
 

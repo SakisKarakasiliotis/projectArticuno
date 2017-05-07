@@ -7,9 +7,7 @@ import sablecc.analysis.*;
 @SuppressWarnings("nls")
 public final class AParenExpFinal extends PFinal
 {
-    private TLparen _lparen_;
     private PNExp _nExp_;
-    private TRparen _rparen_;
 
     public AParenExpFinal()
     {
@@ -17,16 +15,10 @@ public final class AParenExpFinal extends PFinal
     }
 
     public AParenExpFinal(
-        @SuppressWarnings("hiding") TLparen _lparen_,
-        @SuppressWarnings("hiding") PNExp _nExp_,
-        @SuppressWarnings("hiding") TRparen _rparen_)
+        @SuppressWarnings("hiding") PNExp _nExp_)
     {
         // Constructor
-        setLparen(_lparen_);
-
         setNExp(_nExp_);
-
-        setRparen(_rparen_);
 
     }
 
@@ -34,40 +26,13 @@ public final class AParenExpFinal extends PFinal
     public Object clone()
     {
         return new AParenExpFinal(
-            cloneNode(this._lparen_),
-            cloneNode(this._nExp_),
-            cloneNode(this._rparen_));
+            cloneNode(this._nExp_));
     }
 
     @Override
     public void apply(Switch sw)
     {
         ((Analysis) sw).caseAParenExpFinal(this);
-    }
-
-    public TLparen getLparen()
-    {
-        return this._lparen_;
-    }
-
-    public void setLparen(TLparen node)
-    {
-        if(this._lparen_ != null)
-        {
-            this._lparen_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._lparen_ = node;
     }
 
     public PNExp getNExp()
@@ -95,59 +60,20 @@ public final class AParenExpFinal extends PFinal
         this._nExp_ = node;
     }
 
-    public TRparen getRparen()
-    {
-        return this._rparen_;
-    }
-
-    public void setRparen(TRparen node)
-    {
-        if(this._rparen_ != null)
-        {
-            this._rparen_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._rparen_ = node;
-    }
-
     @Override
     public String toString()
     {
         return ""
-            + toString(this._lparen_)
-            + toString(this._nExp_)
-            + toString(this._rparen_);
+            + toString(this._nExp_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._lparen_ == child)
-        {
-            this._lparen_ = null;
-            return;
-        }
-
         if(this._nExp_ == child)
         {
             this._nExp_ = null;
-            return;
-        }
-
-        if(this._rparen_ == child)
-        {
-            this._rparen_ = null;
             return;
         }
 
@@ -158,21 +84,9 @@ public final class AParenExpFinal extends PFinal
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._lparen_ == oldChild)
-        {
-            setLparen((TLparen) newChild);
-            return;
-        }
-
         if(this._nExp_ == oldChild)
         {
             setNExp((PNExp) newChild);
-            return;
-        }
-
-        if(this._rparen_ == oldChild)
-        {
-            setRparen((TRparen) newChild);
             return;
         }
 

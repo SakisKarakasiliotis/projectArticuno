@@ -180,34 +180,176 @@ Productions
                        {greater_or_equal} greater_than_equal|
                        {less_or_equal} less_than_equal;
 
- n_exp = {plus_exp} n_exp plus term |
-         {minus_exp}  n_exp minus term |
-         {term}  term;
+ n_exp {-> n_exp} = {plus_exp} n_exp plus term {-> New n_exp.plus_exp(n_exp, term.n_exp)}|
+                    {minus_exp}  n_exp minus term {-> New n_exp.minus_exp(n_exp, term.n_exp)}|
+                    {term} term {-> term.n_exp};
 
- term = {term_mult} term mult exponent |
-        {term_div} term kw_div exponent |
-        {term_mod} term kw_mod exponent |
-        {exponent} exponent;
+ term{-> n_exp} = {term_mult} term mult exponent {-> New n_exp.term_mult(term.n_exp,exponent.n_exp)}|
+                  {term_div} term kw_div exponent {-> New n_exp.term_div(term.n_exp,exponent.n_exp)}|
+                  {term_mod} term kw_mod exponent {-> New n_exp.term_mod(term.n_exp,exponent.n_exp)}|
+                  {exponent} exponent{-> exponent.n_exp};
 
- exponent = {unsigned} final;
+ exponent{-> n_exp} = {unsigned} final{-> New n_exp.exponent(final)};
+
+ final{-> final} = {non_paren} int_const {-> New final.non_paren(int_const)}|
+                   {paren_exp} lparen n_exp rparen {-> New final.paren_exp(n_exp)}|
+                   {iden}identifier{-> New final.iden(identifier)};
+
+ comp_exp {-> comp_exp} = {or_exp}comp_exp kw_or comp_term {-> New comp_exp.or_exp(comp_exp, comp_term.comp_exp)}|
+                          {no_or_exp} comp_term {-> comp_term.comp_exp};
+
+ comp_term {-> comp_exp} = {and_expr}comp_term kw_and comp_fun {-> New comp_exp.and_exp(comp_term.comp_exp, comp_fun.comp_exp)}|
+                           {no_and_exp} comp_fun {-> comp_fun.comp_exp};
+
+ comp_fun {-> comp_exp} = {not_exp}kw_not comp_fun {-> comp_fun.comp_exp}|
+                          {plain_exp} comp_val {-> New comp_exp.plain_exp(comp_val)};
+
+ comp_val {-> comp_val} = {equals}comp_val equals comp_final {-> New comp_val.equals(comp_val, comp_final)}|
+                          {not_equals} comp_val not_equal comp_final {-> New comp_val.not_equals(comp_val, comp_final)}|
+                          {less_than} comp_val less_than comp_final {-> New comp_val.less_than(comp_val, comp_final)}|
+                          {greater_than} comp_val greater_than comp_final {-> New comp_val.greater_than(comp_val, comp_final)}|
+                          {greater_or_equal} comp_val greater_than_equal comp_final {-> New comp_val.greater_or_equal(comp_val, comp_final)}|
+                          {less_or_equal} comp_val less_than_equal comp_final {-> New comp_val.less_or_equal(comp_val, comp_final)}|
+                          {comp_final} comp_final {-> New comp_val.comp_final(comp_final)};
+
+ comp_final {-> comp_final} = {expr}expression {-> New comp_final.expr(expression)};
+
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+
+Abstract Syntax Tree
+
+  program = function_definition;
+
+  function_definition = header local_definition* block;
+
+  header = kw_fun identifier lparen fpar_definition? next_fpar_definition* rparen colon ret_type;
+
+  local_definition = {f_def} function_definition |
+                     {f_decl} function_declaration |
+                     {var_def} var_definition;
+
+  block = lbrace statement* rbrace;
+
+  fpar_definition = kw_ref? identifier  next_identifier* colon fpar_type;
+
+  next_fpar_definition = semicolon fpar_definition;
+
+  ret_type = {data_type} data_type |
+             {nothing} kw_nothing;
+
+  data_type = {integer} kw_int|
+              {character} kw_char;
+
+  type = data_type array_size*;
+
+  function_declaration = header semicolon;
+
+  fpar_type = data_type empty_brackets? array_size*;
+
+  var_definition = kw_var identifier next_identifier* colon type semicolon;
+
+  next_identifier = comma identifier;
+
+  statement = {noop} semicolon |
+              {assignment} l_value assign expression semicolon |
+              {if} if_stmt |
+              {block} block |
+              {f_call} func_call semicolon |
+              {while_do} kw_while condition kw_do statement |
+              {return} kw_return expression? semicolon;
+
+  if_stmt = {no_else} kw_if condition kw_then [then_stmt]:statement |
+            {with_else} kw_if condition kw_then [then_stmt]:stmt_with_else kw_else [else_stmt]:statement;
+
+  stmt_with_else = {noop} semicolon |
+                   {assignment} l_value assign expression semicolon |
+                   {if} if_else_stmt |
+                   {block} block |
+                   {f_call} func_call semicolon |
+                   {while_do} kw_while condition kw_do stmt_with_else |
+                   {return} kw_return expression? semicolon;
+
+  if_else_stmt = kw_if condition kw_then [then_stmt]:stmt_with_else kw_else [else_stmt]:stmt_with_else;
+
+  func_call = identifier lparen multiple_expressions? rparen;
+
+  l_value = {identifier} identifier |
+            {string_lit} string_literal |
+            {array_assign} l_value lbracket expression? rbracket;
+
+  expression = {array} array |
+               {string}string_literal |
+               {char_const} char_const |
+               {f_call} func_call |
+               {paren_expression} lparen expression_b rparen |
+               {signed_expression} sign expression |
+               {num_oper} n_exp;
+
+  expression_b = {array} array |
+                 {string}string_literal |
+                 {char_const} char_const |
+                 {f_call} func_call |
+                 {signed_expression} sign expression;
+
+  condition = {cond_exp}  comp_exp;
+
+  sign = {plus} plus |
+         {minus} minus ;
+
+  next_expression = comma expression;
+
+  multiple_expressions = expression next_expression*;
+
+  array_size = lbracket int_const rbracket;
+
+  empty_brackets = lbracket rbracket;
+
+  array = identifier  array_position+;
+
+  array_position = lbracket expression rbracket;
+
+  logic_operations = {or} kw_or |
+                      {and} kw_and |
+                      {not} kw_not;
+
+  comparison_symbols = {equals} equals|
+                       {not_equals} not_equal|
+                       {less_than} less_than|
+                       {greater_than} greater_than|
+                       {greater_or_equal} greater_than_equal|
+                       {less_or_equal} less_than_equal;
+
+
+//------------------------------------------------------------------------
+ n_exp = {plus_exp} [n_exp1]:n_exp [n_exp2]:n_exp |
+         {minus_exp}  [n_exp1]:n_exp [n_exp2]:n_exp |
+         {term_mult} [n_exp1]:n_exp [n_exp2]:n_exp |
+         {term_div} [n_exp1]:n_exp [n_exp2]:n_exp |
+         {term_mod} [n_exp1]:n_exp [n_exp2]:n_exp |
+         {exponent} final ;
 
  final = {non_paren} int_const |
-         {paren_exp} lparen n_exp rparen |
-         {iden}identifier;
+         {paren_exp} n_exp |
+         {iden} identifier;
 
- comp_exp = {or_exp}comp_exp kw_or comp_term |{no_or_exp} comp_term;
 
- comp_term = {and_expr}comp_term kw_and comp_fun |{no_and_exp} comp_fun;
 
- comp_fun = {not_exp}kw_not comp_fun |
-            {no_not_exp} comp_val ;
 
- comp_val = {equals}comp_val equals comp_final |
-            {not_equals} comp_val not_equal comp_final |
-            {less_than} comp_val less_than comp_final |
-            {greater_than} comp_val greater_than comp_final |
-            {greater_or_equal} comp_val greater_than_equal comp_final |
-            {less_or_equal} comp_val less_than_equal comp_final |
-            {no_comp_exp} comp_final;
+
+//------------------------------------------------------------------------
+ comp_exp = {or_exp}[comp_exp1]:comp_exp [comp_exp2]:comp_exp|
+            {and_exp}[comp_exp1]:comp_exp [comp_exp2]:comp_exp|
+            {not_exp} comp_exp|
+            {plain_exp} comp_val;
+
+
+ comp_val = {equals}[comp_val1]:comp_val [comp_val2]:comp_final|
+            {not_equals} [comp_val1]:comp_val [comp_val2]:comp_final |
+            {less_than} [comp_val1]:comp_val [comp_val2]:comp_final |
+            {greater_than} [comp_val1]:comp_val [comp_val2]:comp_final |
+            {greater_or_equal} [comp_val1]:comp_val [comp_val2]:comp_final |
+            {less_or_equal} [comp_val1]:comp_val [comp_val2]:comp_final |
+            {comp_final} comp_final;
 
  comp_final = {expr}expression ;

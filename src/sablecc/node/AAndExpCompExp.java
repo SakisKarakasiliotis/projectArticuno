@@ -5,51 +5,51 @@ package sablecc.node;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class ANotExpCompFun extends PCompFun
+public final class AAndExpCompExp extends PCompExp
 {
-    private TKwNot _kwNot_;
-    private PCompFun _compFun_;
+    private PCompExp _compExp1_;
+    private PCompExp _compExp2_;
 
-    public ANotExpCompFun()
+    public AAndExpCompExp()
     {
         // Constructor
     }
 
-    public ANotExpCompFun(
-        @SuppressWarnings("hiding") TKwNot _kwNot_,
-        @SuppressWarnings("hiding") PCompFun _compFun_)
+    public AAndExpCompExp(
+        @SuppressWarnings("hiding") PCompExp _compExp1_,
+        @SuppressWarnings("hiding") PCompExp _compExp2_)
     {
         // Constructor
-        setKwNot(_kwNot_);
+        setCompExp1(_compExp1_);
 
-        setCompFun(_compFun_);
+        setCompExp2(_compExp2_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new ANotExpCompFun(
-            cloneNode(this._kwNot_),
-            cloneNode(this._compFun_));
+        return new AAndExpCompExp(
+            cloneNode(this._compExp1_),
+            cloneNode(this._compExp2_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseANotExpCompFun(this);
+        ((Analysis) sw).caseAAndExpCompExp(this);
     }
 
-    public TKwNot getKwNot()
+    public PCompExp getCompExp1()
     {
-        return this._kwNot_;
+        return this._compExp1_;
     }
 
-    public void setKwNot(TKwNot node)
+    public void setCompExp1(PCompExp node)
     {
-        if(this._kwNot_ != null)
+        if(this._compExp1_ != null)
         {
-            this._kwNot_.parent(null);
+            this._compExp1_.parent(null);
         }
 
         if(node != null)
@@ -62,19 +62,19 @@ public final class ANotExpCompFun extends PCompFun
             node.parent(this);
         }
 
-        this._kwNot_ = node;
+        this._compExp1_ = node;
     }
 
-    public PCompFun getCompFun()
+    public PCompExp getCompExp2()
     {
-        return this._compFun_;
+        return this._compExp2_;
     }
 
-    public void setCompFun(PCompFun node)
+    public void setCompExp2(PCompExp node)
     {
-        if(this._compFun_ != null)
+        if(this._compExp2_ != null)
         {
-            this._compFun_.parent(null);
+            this._compExp2_.parent(null);
         }
 
         if(node != null)
@@ -87,30 +87,30 @@ public final class ANotExpCompFun extends PCompFun
             node.parent(this);
         }
 
-        this._compFun_ = node;
+        this._compExp2_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._kwNot_)
-            + toString(this._compFun_);
+            + toString(this._compExp1_)
+            + toString(this._compExp2_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._kwNot_ == child)
+        if(this._compExp1_ == child)
         {
-            this._kwNot_ = null;
+            this._compExp1_ = null;
             return;
         }
 
-        if(this._compFun_ == child)
+        if(this._compExp2_ == child)
         {
-            this._compFun_ = null;
+            this._compExp2_ = null;
             return;
         }
 
@@ -121,15 +121,15 @@ public final class ANotExpCompFun extends PCompFun
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._kwNot_ == oldChild)
+        if(this._compExp1_ == oldChild)
         {
-            setKwNot((TKwNot) newChild);
+            setCompExp1((PCompExp) newChild);
             return;
         }
 
-        if(this._compFun_ == oldChild)
+        if(this._compExp2_ == oldChild)
         {
-            setCompFun((PCompFun) newChild);
+            setCompExp2((PCompExp) newChild);
             return;
         }
 

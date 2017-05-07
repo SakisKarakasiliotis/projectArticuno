@@ -501,37 +501,25 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseATermNExp(ATermNExp node)
+    public void caseATermMultNExp(ATermMultNExp node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseATermMultTerm(ATermMultTerm node)
+    public void caseATermDivNExp(ATermDivNExp node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseATermDivTerm(ATermDivTerm node)
+    public void caseATermModNExp(ATermModNExp node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseATermModTerm(ATermModTerm node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAExponentTerm(AExponentTerm node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAUnsignedExponent(AUnsignedExponent node)
+    public void caseAExponentNExp(AExponentNExp node)
     {
         defaultCase(node);
     }
@@ -561,31 +549,19 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseANoOrExpCompExp(ANoOrExpCompExp node)
+    public void caseAAndExpCompExp(AAndExpCompExp node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAAndExprCompTerm(AAndExprCompTerm node)
+    public void caseANotExpCompExp(ANotExpCompExp node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseANoAndExpCompTerm(ANoAndExpCompTerm node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseANotExpCompFun(ANotExpCompFun node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseANoNotExpCompFun(ANoNotExpCompFun node)
+    public void caseAPlainExpCompExp(APlainExpCompExp node)
     {
         defaultCase(node);
     }
@@ -627,7 +603,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseANoCompExpCompVal(ANoCompExpCompVal node)
+    public void caseACompFinalCompVal(ACompFinalCompVal node)
     {
         defaultCase(node);
     }

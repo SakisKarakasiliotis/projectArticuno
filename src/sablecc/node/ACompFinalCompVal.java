@@ -5,46 +5,46 @@ package sablecc.node;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class ANoAndExpCompTerm extends PCompTerm
+public final class ACompFinalCompVal extends PCompVal
 {
-    private PCompFun _compFun_;
+    private PCompFinal _compFinal_;
 
-    public ANoAndExpCompTerm()
+    public ACompFinalCompVal()
     {
         // Constructor
     }
 
-    public ANoAndExpCompTerm(
-        @SuppressWarnings("hiding") PCompFun _compFun_)
+    public ACompFinalCompVal(
+        @SuppressWarnings("hiding") PCompFinal _compFinal_)
     {
         // Constructor
-        setCompFun(_compFun_);
+        setCompFinal(_compFinal_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new ANoAndExpCompTerm(
-            cloneNode(this._compFun_));
+        return new ACompFinalCompVal(
+            cloneNode(this._compFinal_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseANoAndExpCompTerm(this);
+        ((Analysis) sw).caseACompFinalCompVal(this);
     }
 
-    public PCompFun getCompFun()
+    public PCompFinal getCompFinal()
     {
-        return this._compFun_;
+        return this._compFinal_;
     }
 
-    public void setCompFun(PCompFun node)
+    public void setCompFinal(PCompFinal node)
     {
-        if(this._compFun_ != null)
+        if(this._compFinal_ != null)
         {
-            this._compFun_.parent(null);
+            this._compFinal_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class ANoAndExpCompTerm extends PCompTerm
             node.parent(this);
         }
 
-        this._compFun_ = node;
+        this._compFinal_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._compFun_);
+            + toString(this._compFinal_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._compFun_ == child)
+        if(this._compFinal_ == child)
         {
-            this._compFun_ = null;
+            this._compFinal_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class ANoAndExpCompTerm extends PCompTerm
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._compFun_ == oldChild)
+        if(this._compFinal_ == oldChild)
         {
-            setCompFun((PCompFun) newChild);
+            setCompFinal((PCompFinal) newChild);
             return;
         }
 
