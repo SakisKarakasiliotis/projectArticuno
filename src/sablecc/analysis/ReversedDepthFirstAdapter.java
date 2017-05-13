@@ -1574,24 +1574,24 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outAEmptyBrackets(node);
     }
 
-    public void inAArray(AArray node)
+    public void inAArrayArray(AArrayArray node)
     {
         defaultIn(node);
     }
 
-    public void outAArray(AArray node)
+    public void outAArrayArray(AArrayArray node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAArray(AArray node)
+    public void caseAArrayArray(AArrayArray node)
     {
-        inAArray(node);
+        inAArrayArray(node);
         {
-            List<PArrayPosition> copy = new ArrayList<PArrayPosition>(node.getArrayPosition());
+            List<PExpression> copy = new ArrayList<PExpression>(node.getExpression());
             Collections.reverse(copy);
-            for(PArrayPosition e : copy)
+            for(PExpression e : copy)
             {
                 e.apply(this);
             }
@@ -1600,225 +1600,7 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getIdentifier().apply(this);
         }
-        outAArray(node);
-    }
-
-    public void inAArrayPosition(AArrayPosition node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAArrayPosition(AArrayPosition node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAArrayPosition(AArrayPosition node)
-    {
-        inAArrayPosition(node);
-        if(node.getRbracket() != null)
-        {
-            node.getRbracket().apply(this);
-        }
-        if(node.getExpression() != null)
-        {
-            node.getExpression().apply(this);
-        }
-        if(node.getLbracket() != null)
-        {
-            node.getLbracket().apply(this);
-        }
-        outAArrayPosition(node);
-    }
-
-    public void inAOrLogicOperations(AOrLogicOperations node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAOrLogicOperations(AOrLogicOperations node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAOrLogicOperations(AOrLogicOperations node)
-    {
-        inAOrLogicOperations(node);
-        if(node.getKwOr() != null)
-        {
-            node.getKwOr().apply(this);
-        }
-        outAOrLogicOperations(node);
-    }
-
-    public void inAAndLogicOperations(AAndLogicOperations node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAAndLogicOperations(AAndLogicOperations node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAAndLogicOperations(AAndLogicOperations node)
-    {
-        inAAndLogicOperations(node);
-        if(node.getKwAnd() != null)
-        {
-            node.getKwAnd().apply(this);
-        }
-        outAAndLogicOperations(node);
-    }
-
-    public void inANotLogicOperations(ANotLogicOperations node)
-    {
-        defaultIn(node);
-    }
-
-    public void outANotLogicOperations(ANotLogicOperations node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseANotLogicOperations(ANotLogicOperations node)
-    {
-        inANotLogicOperations(node);
-        if(node.getKwNot() != null)
-        {
-            node.getKwNot().apply(this);
-        }
-        outANotLogicOperations(node);
-    }
-
-    public void inAEqualsComparisonSymbols(AEqualsComparisonSymbols node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAEqualsComparisonSymbols(AEqualsComparisonSymbols node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAEqualsComparisonSymbols(AEqualsComparisonSymbols node)
-    {
-        inAEqualsComparisonSymbols(node);
-        if(node.getEquals() != null)
-        {
-            node.getEquals().apply(this);
-        }
-        outAEqualsComparisonSymbols(node);
-    }
-
-    public void inANotEqualsComparisonSymbols(ANotEqualsComparisonSymbols node)
-    {
-        defaultIn(node);
-    }
-
-    public void outANotEqualsComparisonSymbols(ANotEqualsComparisonSymbols node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseANotEqualsComparisonSymbols(ANotEqualsComparisonSymbols node)
-    {
-        inANotEqualsComparisonSymbols(node);
-        if(node.getNotEqual() != null)
-        {
-            node.getNotEqual().apply(this);
-        }
-        outANotEqualsComparisonSymbols(node);
-    }
-
-    public void inALessThanComparisonSymbols(ALessThanComparisonSymbols node)
-    {
-        defaultIn(node);
-    }
-
-    public void outALessThanComparisonSymbols(ALessThanComparisonSymbols node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseALessThanComparisonSymbols(ALessThanComparisonSymbols node)
-    {
-        inALessThanComparisonSymbols(node);
-        if(node.getLessThan() != null)
-        {
-            node.getLessThan().apply(this);
-        }
-        outALessThanComparisonSymbols(node);
-    }
-
-    public void inAGreaterThanComparisonSymbols(AGreaterThanComparisonSymbols node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAGreaterThanComparisonSymbols(AGreaterThanComparisonSymbols node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAGreaterThanComparisonSymbols(AGreaterThanComparisonSymbols node)
-    {
-        inAGreaterThanComparisonSymbols(node);
-        if(node.getGreaterThan() != null)
-        {
-            node.getGreaterThan().apply(this);
-        }
-        outAGreaterThanComparisonSymbols(node);
-    }
-
-    public void inAGreaterOrEqualComparisonSymbols(AGreaterOrEqualComparisonSymbols node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAGreaterOrEqualComparisonSymbols(AGreaterOrEqualComparisonSymbols node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAGreaterOrEqualComparisonSymbols(AGreaterOrEqualComparisonSymbols node)
-    {
-        inAGreaterOrEqualComparisonSymbols(node);
-        if(node.getGreaterThanEqual() != null)
-        {
-            node.getGreaterThanEqual().apply(this);
-        }
-        outAGreaterOrEqualComparisonSymbols(node);
-    }
-
-    public void inALessOrEqualComparisonSymbols(ALessOrEqualComparisonSymbols node)
-    {
-        defaultIn(node);
-    }
-
-    public void outALessOrEqualComparisonSymbols(ALessOrEqualComparisonSymbols node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseALessOrEqualComparisonSymbols(ALessOrEqualComparisonSymbols node)
-    {
-        inALessOrEqualComparisonSymbols(node);
-        if(node.getLessThanEqual() != null)
-        {
-            node.getLessThanEqual().apply(this);
-        }
-        outALessOrEqualComparisonSymbols(node);
+        outAArrayArray(node);
     }
 
     public void inAPlusExpNExp(APlusExpNExp node)

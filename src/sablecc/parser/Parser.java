@@ -681,7 +681,7 @@ public class Parser
                 push(goTo(31), list);
             }
             break;
-            case 82: /* reduce ANotEqualsComparisonSymbols */
+            case 82: /* reduce ANotEqualComparisonSymbols */
             {
                 ArrayList<Object> list = new82();
                 push(goTo(31), list);
@@ -2968,7 +2968,7 @@ public class Parser
 	}
         }
 
-        parrayNode1 = new AArray(tidentifierNode2, listNode4);
+        parrayNode1 = new AArrayArray(tidentifierNode2, listNode4);
         }
 	nodeList.add(parrayNode1);
         return nodeList;
@@ -2984,19 +2984,9 @@ public class Parser
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList3 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PArrayPosition parraypositionNode1;
-        {
-            // Block
-        TLbracket tlbracketNode2;
-        PExpression pexpressionNode3;
-        TRbracket trbracketNode4;
-        tlbracketNode2 = (TLbracket)nodeArrayList1.get(0);
-        pexpressionNode3 = (PExpression)nodeArrayList2.get(0);
-        trbracketNode4 = (TRbracket)nodeArrayList3.get(0);
-
-        parraypositionNode1 = new AArrayPosition(tlbracketNode2, pexpressionNode3, trbracketNode4);
-        }
-	nodeList.add(parraypositionNode1);
+        PExpression pexpressionNode1;
+        pexpressionNode1 = (PExpression)nodeArrayList2.get(0);
+	nodeList.add(pexpressionNode1);
         return nodeList;
     }
 
@@ -3008,15 +2998,6 @@ public class Parser
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PLogicOperations plogicoperationsNode1;
-        {
-            // Block
-        TKwOr tkworNode2;
-        tkworNode2 = (TKwOr)nodeArrayList1.get(0);
-
-        plogicoperationsNode1 = new AOrLogicOperations(tkworNode2);
-        }
-	nodeList.add(plogicoperationsNode1);
         return nodeList;
     }
 
@@ -3028,15 +3009,6 @@ public class Parser
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PLogicOperations plogicoperationsNode1;
-        {
-            // Block
-        TKwAnd tkwandNode2;
-        tkwandNode2 = (TKwAnd)nodeArrayList1.get(0);
-
-        plogicoperationsNode1 = new AAndLogicOperations(tkwandNode2);
-        }
-	nodeList.add(plogicoperationsNode1);
         return nodeList;
     }
 
@@ -3048,15 +3020,6 @@ public class Parser
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PLogicOperations plogicoperationsNode1;
-        {
-            // Block
-        TKwNot tkwnotNode2;
-        tkwnotNode2 = (TKwNot)nodeArrayList1.get(0);
-
-        plogicoperationsNode1 = new ANotLogicOperations(tkwnotNode2);
-        }
-	nodeList.add(plogicoperationsNode1);
         return nodeList;
     }
 
@@ -3068,35 +3031,17 @@ public class Parser
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PComparisonSymbols pcomparisonsymbolsNode1;
-        {
-            // Block
-        TEquals tequalsNode2;
-        tequalsNode2 = (TEquals)nodeArrayList1.get(0);
-
-        pcomparisonsymbolsNode1 = new AEqualsComparisonSymbols(tequalsNode2);
-        }
-	nodeList.add(pcomparisonsymbolsNode1);
         return nodeList;
     }
 
 
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new82() /* reduce ANotEqualsComparisonSymbols */
+    ArrayList<Object> new82() /* reduce ANotEqualComparisonSymbols */
     {
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PComparisonSymbols pcomparisonsymbolsNode1;
-        {
-            // Block
-        TNotEqual tnotequalNode2;
-        tnotequalNode2 = (TNotEqual)nodeArrayList1.get(0);
-
-        pcomparisonsymbolsNode1 = new ANotEqualsComparisonSymbols(tnotequalNode2);
-        }
-	nodeList.add(pcomparisonsymbolsNode1);
         return nodeList;
     }
 
@@ -3108,15 +3053,6 @@ public class Parser
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PComparisonSymbols pcomparisonsymbolsNode1;
-        {
-            // Block
-        TLessThan tlessthanNode2;
-        tlessthanNode2 = (TLessThan)nodeArrayList1.get(0);
-
-        pcomparisonsymbolsNode1 = new ALessThanComparisonSymbols(tlessthanNode2);
-        }
-	nodeList.add(pcomparisonsymbolsNode1);
         return nodeList;
     }
 
@@ -3128,15 +3064,6 @@ public class Parser
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PComparisonSymbols pcomparisonsymbolsNode1;
-        {
-            // Block
-        TGreaterThan tgreaterthanNode2;
-        tgreaterthanNode2 = (TGreaterThan)nodeArrayList1.get(0);
-
-        pcomparisonsymbolsNode1 = new AGreaterThanComparisonSymbols(tgreaterthanNode2);
-        }
-	nodeList.add(pcomparisonsymbolsNode1);
         return nodeList;
     }
 
@@ -3148,15 +3075,6 @@ public class Parser
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PComparisonSymbols pcomparisonsymbolsNode1;
-        {
-            // Block
-        TGreaterThanEqual tgreaterthanequalNode2;
-        tgreaterthanequalNode2 = (TGreaterThanEqual)nodeArrayList1.get(0);
-
-        pcomparisonsymbolsNode1 = new AGreaterOrEqualComparisonSymbols(tgreaterthanequalNode2);
-        }
-	nodeList.add(pcomparisonsymbolsNode1);
         return nodeList;
     }
 
@@ -3168,15 +3086,6 @@ public class Parser
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PComparisonSymbols pcomparisonsymbolsNode1;
-        {
-            // Block
-        TLessThanEqual tlessthanequalNode2;
-        tlessthanequalNode2 = (TLessThanEqual)nodeArrayList1.get(0);
-
-        pcomparisonsymbolsNode1 = new ALessOrEqualComparisonSymbols(tlessthanequalNode2);
-        }
-	nodeList.add(pcomparisonsymbolsNode1);
         return nodeList;
     }
 
@@ -4022,11 +3931,11 @@ public class Parser
         LinkedList<Object> listNode2 = new LinkedList<Object>();
         {
             // Block
-        PArrayPosition parraypositionNode1;
-        parraypositionNode1 = (PArrayPosition)nodeArrayList1.get(0);
-	if(parraypositionNode1 != null)
+        PExpression pexpressionNode1;
+        pexpressionNode1 = (PExpression)nodeArrayList1.get(0);
+	if(pexpressionNode1 != null)
 	{
-	  listNode2.add(parraypositionNode1);
+	  listNode2.add(pexpressionNode1);
 	}
         }
 	nodeList.add(listNode2);
@@ -4046,16 +3955,16 @@ public class Parser
         {
             // Block
         LinkedList<Object> listNode1 = new LinkedList<Object>();
-        PArrayPosition parraypositionNode2;
+        PExpression pexpressionNode2;
         listNode1 = (LinkedList)nodeArrayList1.get(0);
-        parraypositionNode2 = (PArrayPosition)nodeArrayList2.get(0);
+        pexpressionNode2 = (PExpression)nodeArrayList2.get(0);
 	if(listNode1 != null)
 	{
 	  listNode3.addAll(listNode1);
 	}
-	if(parraypositionNode2 != null)
+	if(pexpressionNode2 != null)
 	{
-	  listNode3.add(parraypositionNode2);
+	  listNode3.add(pexpressionNode2);
 	}
         }
 	nodeList.add(listNode3);

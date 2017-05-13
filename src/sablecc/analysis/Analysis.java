@@ -70,17 +70,7 @@ public interface Analysis extends Switch
     void caseAMultipleExpressions(AMultipleExpressions node);
     void caseAArraySize(AArraySize node);
     void caseAEmptyBrackets(AEmptyBrackets node);
-    void caseAArray(AArray node);
-    void caseAArrayPosition(AArrayPosition node);
-    void caseAOrLogicOperations(AOrLogicOperations node);
-    void caseAAndLogicOperations(AAndLogicOperations node);
-    void caseANotLogicOperations(ANotLogicOperations node);
-    void caseAEqualsComparisonSymbols(AEqualsComparisonSymbols node);
-    void caseANotEqualsComparisonSymbols(ANotEqualsComparisonSymbols node);
-    void caseALessThanComparisonSymbols(ALessThanComparisonSymbols node);
-    void caseAGreaterThanComparisonSymbols(AGreaterThanComparisonSymbols node);
-    void caseAGreaterOrEqualComparisonSymbols(AGreaterOrEqualComparisonSymbols node);
-    void caseALessOrEqualComparisonSymbols(ALessOrEqualComparisonSymbols node);
+    void caseAArrayArray(AArrayArray node);
     void caseAPlusExpNExp(APlusExpNExp node);
     void caseAMinusExpNExp(AMinusExpNExp node);
     void caseATermMultNExp(ATermMultNExp node);

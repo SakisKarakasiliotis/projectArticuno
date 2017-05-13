@@ -423,67 +423,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAArray(AArray node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAArrayPosition(AArrayPosition node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAOrLogicOperations(AOrLogicOperations node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAAndLogicOperations(AAndLogicOperations node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseANotLogicOperations(ANotLogicOperations node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAEqualsComparisonSymbols(AEqualsComparisonSymbols node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseANotEqualsComparisonSymbols(ANotEqualsComparisonSymbols node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseALessThanComparisonSymbols(ALessThanComparisonSymbols node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAGreaterThanComparisonSymbols(AGreaterThanComparisonSymbols node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAGreaterOrEqualComparisonSymbols(AGreaterOrEqualComparisonSymbols node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseALessOrEqualComparisonSymbols(ALessOrEqualComparisonSymbols node)
+    public void caseAArrayArray(AArrayArray node)
     {
         defaultCase(node);
     }

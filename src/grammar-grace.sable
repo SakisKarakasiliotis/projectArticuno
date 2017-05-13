@@ -164,21 +164,21 @@ Productions
   array_size = lbracket int_const rbracket;
 
   empty_brackets = lbracket rbracket;
+//------------------------------------------------------------------------------------------------------------------
+  array{-> array} = identifier  array_position+ {-> New array.array(identifier,[array_position.expression])};
 
-  array = identifier  array_position+;
-
-  array_position = lbracket expression rbracket;
+  array_position{-> expression} = lbracket expression rbracket{-> expression};
 
   logic_operations = {or} kw_or |
                       {and} kw_and |
                       {not} kw_not;
 
-  comparison_symbols = {equals} equals|
-                       {not_equals} not_equal|
-                       {less_than} less_than|
-                       {greater_than} greater_than|
-                       {greater_or_equal} greater_than_equal|
-                       {less_or_equal} less_than_equal;
+  comparison_symbols {-> }=  {equals} equals {-> }|
+                             {not_equal} not_equal{-> }|
+                             {less_than} less_than{-> }|
+                             {greater_than} greater_than{-> }|
+                             {greater_or_equal} greater_than_equal{-> }|
+                             {less_or_equal} less_than_equal{-> };
 
  n_exp {-> n_exp} = {plus_exp} n_exp plus term {-> New n_exp.plus_exp(n_exp, term.n_exp)}|
                     {minus_exp}  n_exp minus term {-> New n_exp.minus_exp(n_exp, term.n_exp)}|
@@ -304,24 +304,16 @@ Abstract Syntax Tree
   array_size = lbracket int_const rbracket;
 
   empty_brackets = lbracket rbracket;
-
-  array = identifier  array_position+;
-
-  array_position = lbracket expression rbracket;
-
-  logic_operations = {or} kw_or |
-                      {and} kw_and |
-                      {not} kw_not;
-
-  comparison_symbols = {equals} equals|
-                       {not_equals} not_equal|
-                       {less_than} less_than|
-                       {greater_than} greater_than|
-                       {greater_or_equal} greater_than_equal|
-                       {less_or_equal} less_than_equal;
-
-
+  
 //------------------------------------------------------------------------
+  array ={array} identifier  expression+;
+
+
+
+
+
+
+
  n_exp = {plus_exp} [n_exp1]:n_exp [n_exp2]:n_exp |
          {minus_exp}  [n_exp1]:n_exp [n_exp2]:n_exp |
          {term_mult} [n_exp1]:n_exp [n_exp2]:n_exp |
