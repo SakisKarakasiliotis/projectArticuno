@@ -285,7 +285,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAFuncCall(AFuncCall node)
+    public void caseAFuncCallFuncCall(AFuncCallFuncCall node)
     {
         defaultCase(node);
     }
@@ -399,19 +399,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseANextExpression(ANextExpression node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAMultipleExpressions(AMultipleExpressions node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAArraySize(AArraySize node)
+    public void caseAArraySizeArraySize(AArraySizeArraySize node)
     {
         defaultCase(node);
     }

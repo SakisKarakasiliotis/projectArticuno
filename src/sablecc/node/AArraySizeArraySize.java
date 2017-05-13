@@ -5,46 +5,46 @@ package sablecc.node;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AGreaterOrEqualComparisonSymbols extends PComparisonSymbols
+public final class AArraySizeArraySize extends PArraySize
 {
-    private TGreaterThanEqual _greaterThanEqual_;
+    private TIntConst _intConst_;
 
-    public AGreaterOrEqualComparisonSymbols()
+    public AArraySizeArraySize()
     {
         // Constructor
     }
 
-    public AGreaterOrEqualComparisonSymbols(
-        @SuppressWarnings("hiding") TGreaterThanEqual _greaterThanEqual_)
+    public AArraySizeArraySize(
+        @SuppressWarnings("hiding") TIntConst _intConst_)
     {
         // Constructor
-        setGreaterThanEqual(_greaterThanEqual_);
+        setIntConst(_intConst_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AGreaterOrEqualComparisonSymbols(
-            cloneNode(this._greaterThanEqual_));
+        return new AArraySizeArraySize(
+            cloneNode(this._intConst_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAGreaterOrEqualComparisonSymbols(this);
+        ((Analysis) sw).caseAArraySizeArraySize(this);
     }
 
-    public TGreaterThanEqual getGreaterThanEqual()
+    public TIntConst getIntConst()
     {
-        return this._greaterThanEqual_;
+        return this._intConst_;
     }
 
-    public void setGreaterThanEqual(TGreaterThanEqual node)
+    public void setIntConst(TIntConst node)
     {
-        if(this._greaterThanEqual_ != null)
+        if(this._intConst_ != null)
         {
-            this._greaterThanEqual_.parent(null);
+            this._intConst_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class AGreaterOrEqualComparisonSymbols extends PComparisonSymbols
             node.parent(this);
         }
 
-        this._greaterThanEqual_ = node;
+        this._intConst_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._greaterThanEqual_);
+            + toString(this._intConst_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._greaterThanEqual_ == child)
+        if(this._intConst_ == child)
         {
-            this._greaterThanEqual_ = null;
+            this._intConst_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class AGreaterOrEqualComparisonSymbols extends PComparisonSymbols
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._greaterThanEqual_ == oldChild)
+        if(this._intConst_ == oldChild)
         {
-            setGreaterThanEqual((TGreaterThanEqual) newChild);
+            setIntConst((TIntConst) newChild);
             return;
         }
 

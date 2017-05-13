@@ -132,11 +132,20 @@ Productions
 
   if_else_stmt = kw_if condition kw_then [then_stmt]:stmt_with_else kw_else [else_stmt]:stmt_with_else;
 
-  func_call = identifier lparen multiple_expressions? rparen;
+  func_call {-> func_call}={func_call} identifier lparen multiple_expressions? rparen {-> New func_call.func_call(identifier, [multiple_expressions.expression])};
+
+      multiple_expressions {-> expression*}= expression next_expression* {-> [expression, next_expression.expression]};
+
+      next_expression{-> expression} = comma expression{-> expression};
+
 
   l_value = {identifier} identifier |
             {string_lit} string_literal |
             {array_assign} l_value lbracket expression? rbracket;
+
+
+
+
 
   expression = {array} array |
                {string}string_literal |
@@ -157,14 +166,14 @@ Productions
   sign = {plus} plus |
          {minus} minus ;
 
-  next_expression = comma expression;
 
-  multiple_expressions = expression next_expression*;
+//------------------------------------------------------------------------------------------------------------------
 
-  array_size = lbracket int_const rbracket;
+
+  array_size {->array_size }= lbracket int_const rbracket{-> New array_size.array_size(int_const)};
 
   empty_brackets = lbracket rbracket;
-//------------------------------------------------------------------------------------------------------------------
+
   array{-> array} = identifier  array_position+ {-> New array.array(identifier,[array_position.expression])};
 
   array_position{-> expression} = lbracket expression rbracket{-> expression};
@@ -272,11 +281,15 @@ Abstract Syntax Tree
 
   if_else_stmt = kw_if condition kw_then [then_stmt]:stmt_with_else kw_else [else_stmt]:stmt_with_else;
 
-  func_call = identifier lparen multiple_expressions? rparen;
+  func_call ={func_call} identifier  expression* ;
+
+  //multiple_expressions =  expression*;
+
 
   l_value = {identifier} identifier |
             {string_lit} string_literal |
             {array_assign} l_value lbracket expression? rbracket;
+
 
   expression = {array} array |
                {string}string_literal |
@@ -297,22 +310,18 @@ Abstract Syntax Tree
   sign = {plus} plus |
          {minus} minus ;
 
-  next_expression = comma expression;
 
-  multiple_expressions = expression next_expression*;
 
-  array_size = lbracket int_const rbracket;
+
+
+
+//------------------------------------------------------------------------
+
+  array_size = {array_size} int_const ;
 
   empty_brackets = lbracket rbracket;
-  
-//------------------------------------------------------------------------
+
   array ={array} identifier  expression+;
-
-
-
-
-
-
 
  n_exp = {plus_exp} [n_exp1]:n_exp [n_exp2]:n_exp |
          {minus_exp}  [n_exp1]:n_exp [n_exp2]:n_exp |
@@ -325,11 +334,6 @@ Abstract Syntax Tree
          {paren_exp} n_exp |
          {iden} identifier;
 
-
-
-
-
-//------------------------------------------------------------------------
  comp_exp = {or_exp}[comp_exp1]:comp_exp [comp_exp2]:comp_exp|
             {and_exp}[comp_exp1]:comp_exp [comp_exp2]:comp_exp|
             {not_exp} comp_exp|

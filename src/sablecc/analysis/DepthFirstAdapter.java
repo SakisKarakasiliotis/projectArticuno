@@ -1020,37 +1020,32 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outAIfElseStmt(node);
     }
 
-    public void inAFuncCall(AFuncCall node)
+    public void inAFuncCallFuncCall(AFuncCallFuncCall node)
     {
         defaultIn(node);
     }
 
-    public void outAFuncCall(AFuncCall node)
+    public void outAFuncCallFuncCall(AFuncCallFuncCall node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAFuncCall(AFuncCall node)
+    public void caseAFuncCallFuncCall(AFuncCallFuncCall node)
     {
-        inAFuncCall(node);
+        inAFuncCallFuncCall(node);
         if(node.getIdentifier() != null)
         {
             node.getIdentifier().apply(this);
         }
-        if(node.getLparen() != null)
         {
-            node.getLparen().apply(this);
+            List<PExpression> copy = new ArrayList<PExpression>(node.getExpression());
+            for(PExpression e : copy)
+            {
+                e.apply(this);
+            }
         }
-        if(node.getMultipleExpressions() != null)
-        {
-            node.getMultipleExpressions().apply(this);
-        }
-        if(node.getRparen() != null)
-        {
-            node.getRparen().apply(this);
-        }
-        outAFuncCall(node);
+        outAFuncCallFuncCall(node);
     }
 
     public void inAIdentifierLValue(AIdentifierLValue node)
@@ -1459,86 +1454,25 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outAMinusSign(node);
     }
 
-    public void inANextExpression(ANextExpression node)
+    public void inAArraySizeArraySize(AArraySizeArraySize node)
     {
         defaultIn(node);
     }
 
-    public void outANextExpression(ANextExpression node)
+    public void outAArraySizeArraySize(AArraySizeArraySize node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseANextExpression(ANextExpression node)
+    public void caseAArraySizeArraySize(AArraySizeArraySize node)
     {
-        inANextExpression(node);
-        if(node.getComma() != null)
-        {
-            node.getComma().apply(this);
-        }
-        if(node.getExpression() != null)
-        {
-            node.getExpression().apply(this);
-        }
-        outANextExpression(node);
-    }
-
-    public void inAMultipleExpressions(AMultipleExpressions node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAMultipleExpressions(AMultipleExpressions node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAMultipleExpressions(AMultipleExpressions node)
-    {
-        inAMultipleExpressions(node);
-        if(node.getExpression() != null)
-        {
-            node.getExpression().apply(this);
-        }
-        {
-            List<PNextExpression> copy = new ArrayList<PNextExpression>(node.getNextExpression());
-            for(PNextExpression e : copy)
-            {
-                e.apply(this);
-            }
-        }
-        outAMultipleExpressions(node);
-    }
-
-    public void inAArraySize(AArraySize node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAArraySize(AArraySize node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAArraySize(AArraySize node)
-    {
-        inAArraySize(node);
-        if(node.getLbracket() != null)
-        {
-            node.getLbracket().apply(this);
-        }
+        inAArraySizeArraySize(node);
         if(node.getIntConst() != null)
         {
             node.getIntConst().apply(this);
         }
-        if(node.getRbracket() != null)
-        {
-            node.getRbracket().apply(this);
-        }
-        outAArraySize(node);
+        outAArraySizeArraySize(node);
     }
 
     public void inAEmptyBrackets(AEmptyBrackets node)

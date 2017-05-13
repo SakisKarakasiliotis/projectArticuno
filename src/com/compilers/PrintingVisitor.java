@@ -368,25 +368,25 @@ public class PrintingVisitor extends DepthFirstAdapter{
         addIndentationLevel();
     }
 
-    @Override
-    public void outAIfElseStmt(AIfElseStmt node){
-        removeIndentationLevel();
-    }@Override
-    public void inAFuncCall(AFuncCall node){
-        printIndentation();
-        System.out.println("[FuncCall] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outAFuncCall(AFuncCall node){
-        removeIndentationLevel();
-    }@Override
-    public void inAIdentifierLValue(AIdentifierLValue node){
-        printIndentation();
-        System.out.println("[IdentifierLValue] "+node.toString());
-        addIndentationLevel();
-    }
+//    @Override
+//    public void outAIfElseStmt(AIfElseStmt node){
+//        removeIndentationLevel();
+//    }@Override
+//    public void inAFuncCall(AFuncCall node){
+//        printIndentation();
+//        System.out.println("[FuncCall] "+node.toString());
+//        addIndentationLevel();
+//    }
+//
+//    @Override
+//    public void outAFuncCall(AFuncCall node){
+//        removeIndentationLevel();
+//    }@Override
+//    public void inAIdentifierLValue(AIdentifierLValue node){
+//        printIndentation();
+//        System.out.println("[IdentifierLValue] "+node.toString());
+//        addIndentationLevel();
+//    }
 
     @Override
     public void outAIdentifierLValue(AIdentifierLValue node){
@@ -558,165 +558,165 @@ public class PrintingVisitor extends DepthFirstAdapter{
         addIndentationLevel();
     }
 
-    @Override
-    public void outAMinusSign(AMinusSign node){
-        removeIndentationLevel();
-    }@Override
-    public void inANextExpression(ANextExpression node){
-        printIndentation();
-        System.out.println("[NextExpression] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outANextExpression(ANextExpression node){
-        removeIndentationLevel();
-    }@Override
-    public void inAMultipleExpressions(AMultipleExpressions node){
-        printIndentation();
-        System.out.println("[MultipleExpressions] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outAMultipleExpressions(AMultipleExpressions node){
-        removeIndentationLevel();
-    }@Override
-    public void inAArraySize(AArraySize node){
-        printIndentation();
-        System.out.println("[ArraySize] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outAArraySize(AArraySize node){
-        removeIndentationLevel();
-    }@Override
-    public void inAEmptyBrackets(AEmptyBrackets node){
-        printIndentation();
-        System.out.println("[EmptyBrackets] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outAEmptyBrackets(AEmptyBrackets node){
-        removeIndentationLevel();
-    }@Override
-    public void inAArray(AArray node){
-        printIndentation();
-        System.out.println("[Array] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outAArray(AArray node){
-        removeIndentationLevel();
-    }@Override
-    public void inAArrayPosition(AArrayPosition node){
-        printIndentation();
-        System.out.println("[ArrayPosition] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outAArrayPosition(AArrayPosition node){
-        removeIndentationLevel();
-    }@Override
-    public void inAOrLogicOperations(AOrLogicOperations node){
-        printIndentation();
-        System.out.println("[OrLogicOperations] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outAOrLogicOperations(AOrLogicOperations node){
-        removeIndentationLevel();
-    }@Override
-    public void inAAndLogicOperations(AAndLogicOperations node){
-        printIndentation();
-        System.out.println("[AndLogicOperations] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outAAndLogicOperations(AAndLogicOperations node){
-        removeIndentationLevel();
-    }@Override
-    public void inANotLogicOperations(ANotLogicOperations node){
-        printIndentation();
-        System.out.println("[NotLogicOperations] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outANotLogicOperations(ANotLogicOperations node){
-        removeIndentationLevel();
-    }@Override
-    public void inAEqualsComparisonSymbols(AEqualsComparisonSymbols node){
-        printIndentation();
-        System.out.println("[EqualsComparisonSymbols] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outAEqualsComparisonSymbols(AEqualsComparisonSymbols node){
-        removeIndentationLevel();
-    }@Override
-    public void inANotEqualsComparisonSymbols(ANotEqualsComparisonSymbols node){
-        printIndentation();
-        System.out.println("[NotEqualsComparisonSymbols] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outANotEqualsComparisonSymbols(ANotEqualsComparisonSymbols node){
-        removeIndentationLevel();
-    }@Override
-    public void inALessThanComparisonSymbols(ALessThanComparisonSymbols node){
-        printIndentation();
-        System.out.println("[LessThanComparisonSymbols] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outALessThanComparisonSymbols(ALessThanComparisonSymbols node){
-        removeIndentationLevel();
-    }@Override
-    public void inAGreaterThanComparisonSymbols(AGreaterThanComparisonSymbols node){
-        printIndentation();
-        System.out.println("[GreaterThanComparisonSymbols] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outAGreaterThanComparisonSymbols(AGreaterThanComparisonSymbols node){
-        removeIndentationLevel();
-    }@Override
-    public void inAGreaterOrEqualComparisonSymbols(AGreaterOrEqualComparisonSymbols node){
-        printIndentation();
-        System.out.println("[GreaterOrEqualComparisonSymbols] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outAGreaterOrEqualComparisonSymbols(AGreaterOrEqualComparisonSymbols node){
-        removeIndentationLevel();
-    }@Override
-    public void inALessOrEqualComparisonSymbols(ALessOrEqualComparisonSymbols node){
-        printIndentation();
-        System.out.println("[LessOrEqualComparisonSymbols] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outALessOrEqualComparisonSymbols(ALessOrEqualComparisonSymbols node){
-        removeIndentationLevel();
-    }@Override
-    public void inAPlusExpNExp(APlusExpNExp node){
-        printIndentation();
-        System.out.println("[PlusExpNExp] "+node.toString());
-        addIndentationLevel();
-    }
+//    @Override
+//    public void outAMinusSign(AMinusSign node){
+//        removeIndentationLevel();
+//    }@Override
+//    public void inANextExpression(ANextExpression node){
+//        printIndentation();
+//        System.out.println("[NextExpression] "+node.toString());
+//        addIndentationLevel();
+//    }
+//
+//    @Override
+//    public void outANextExpression(ANextExpression node){
+//        removeIndentationLevel();
+//    }@Override
+//    public void inAMultipleExpressions(AMultipleExpressions node){
+//        printIndentation();
+//        System.out.println("[MultipleExpressions] "+node.toString());
+//        addIndentationLevel();
+//    }
+//
+//    @Override
+//    public void outAMultipleExpressions(AMultipleExpressions node){
+//        removeIndentationLevel();
+//    }@Override
+//    public void inAArraySize(AArraySize node){
+//        printIndentation();
+//        System.out.println("[ArraySize] "+node.toString());
+//        addIndentationLevel();
+//    }
+//
+//    @Override
+//    public void outAArraySize(AArraySize node){
+//        removeIndentationLevel();
+//    }@Override
+//    public void inAEmptyBrackets(AEmptyBrackets node){
+//        printIndentation();
+//        System.out.println("[EmptyBrackets] "+node.toString());
+//        addIndentationLevel();
+//    }
+//
+//    @Override
+//    public void outAEmptyBrackets(AEmptyBrackets node){
+//        removeIndentationLevel();
+//    }@Override
+//    public void inAArray(AArray node){
+//        printIndentation();
+//        System.out.println("[Array] "+node.toString());
+//        addIndentationLevel();
+//    }
+//
+//    @Override
+//    public void outAArray(AArray node){
+//        removeIndentationLevel();
+//    }@Override
+//    public void inAArrayPosition(AArrayPosition node){
+//        printIndentation();
+//        System.out.println("[ArrayPosition] "+node.toString());
+//        addIndentationLevel();
+//    }
+//
+//    @Override
+//    public void outAArrayPosition(AArrayPosition node){
+//        removeIndentationLevel();
+//    }@Override
+//    public void inAOrLogicOperations(AOrLogicOperations node){
+//        printIndentation();
+//        System.out.println("[OrLogicOperations] "+node.toString());
+//        addIndentationLevel();
+//    }
+//
+//    @Override
+//    public void outAOrLogicOperations(AOrLogicOperations node){
+//        removeIndentationLevel();
+//    }@Override
+//    public void inAAndLogicOperations(AAndLogicOperations node){
+//        printIndentation();
+//        System.out.println("[AndLogicOperations] "+node.toString());
+//        addIndentationLevel();
+//    }
+//
+//    @Override
+//    public void outAAndLogicOperations(AAndLogicOperations node){
+//        removeIndentationLevel();
+//    }@Override
+//    public void inANotLogicOperations(ANotLogicOperations node){
+//        printIndentation();
+//        System.out.println("[NotLogicOperations] "+node.toString());
+//        addIndentationLevel();
+//    }
+//
+//    @Override
+//    public void outANotLogicOperations(ANotLogicOperations node){
+//        removeIndentationLevel();
+//    }@Override
+//    public void inAEqualsComparisonSymbols(AEqualsComparisonSymbols node){
+//        printIndentation();
+//        System.out.println("[EqualsComparisonSymbols] "+node.toString());
+//        addIndentationLevel();
+//    }
+//
+//    @Override
+//    public void outAEqualsComparisonSymbols(AEqualsComparisonSymbols node){
+//        removeIndentationLevel();
+//    }@Override
+//    public void inANotEqualsComparisonSymbols(ANotEqualsComparisonSymbols node){
+//        printIndentation();
+//        System.out.println("[NotEqualsComparisonSymbols] "+node.toString());
+//        addIndentationLevel();
+//    }
+//
+//    @Override
+//    public void outANotEqualsComparisonSymbols(ANotEqualsComparisonSymbols node){
+//        removeIndentationLevel();
+//    }@Override
+//    public void inALessThanComparisonSymbols(ALessThanComparisonSymbols node){
+//        printIndentation();
+//        System.out.println("[LessThanComparisonSymbols] "+node.toString());
+//        addIndentationLevel();
+//    }
+//
+//    @Override
+//    public void outALessThanComparisonSymbols(ALessThanComparisonSymbols node){
+//        removeIndentationLevel();
+//    }@Override
+//    public void inAGreaterThanComparisonSymbols(AGreaterThanComparisonSymbols node){
+//        printIndentation();
+//        System.out.println("[GreaterThanComparisonSymbols] "+node.toString());
+//        addIndentationLevel();
+//    }
+//
+//    @Override
+//    public void outAGreaterThanComparisonSymbols(AGreaterThanComparisonSymbols node){
+//        removeIndentationLevel();
+//    }@Override
+//    public void inAGreaterOrEqualComparisonSymbols(AGreaterOrEqualComparisonSymbols node){
+//        printIndentation();
+//        System.out.println("[GreaterOrEqualComparisonSymbols] "+node.toString());
+//        addIndentationLevel();
+//    }
+//
+//    @Override
+//    public void outAGreaterOrEqualComparisonSymbols(AGreaterOrEqualComparisonSymbols node){
+//        removeIndentationLevel();
+//    }@Override
+//    public void inALessOrEqualComparisonSymbols(ALessOrEqualComparisonSymbols node){
+//        printIndentation();
+//        System.out.println("[LessOrEqualComparisonSymbols] "+node.toString());
+//        addIndentationLevel();
+//    }
+//
+//    @Override
+//    public void outALessOrEqualComparisonSymbols(ALessOrEqualComparisonSymbols node){
+//        removeIndentationLevel();
+//    }@Override
+//    public void inAPlusExpNExp(APlusExpNExp node){
+//        printIndentation();
+//        System.out.println("[PlusExpNExp] "+node.toString());
+//        addIndentationLevel();
+//    }
 
     @Override
     public void outAPlusExpNExp(APlusExpNExp node){
@@ -729,69 +729,71 @@ public class PrintingVisitor extends DepthFirstAdapter{
     }
 
     @Override
-    public void outAMinusExpNExp(AMinusExpNExp node){
-        removeIndentationLevel();
-    }@Override
-    public void inATermNExp(ATermNExp node){
-        printIndentation();
-        System.out.println("[TermNExp] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outATermNExp(ATermNExp node){
-        removeIndentationLevel();
-    }@Override
-    public void inATermMultTerm(ATermMultTerm node){
-        printIndentation();
-        System.out.println("[TermMultTerm] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outATermMultTerm(ATermMultTerm node){
-        removeIndentationLevel();
-    }@Override
-    public void inATermDivTerm(ATermDivTerm node){
-        printIndentation();
-        System.out.println("[TermDivTerm] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outATermDivTerm(ATermDivTerm node){
-        removeIndentationLevel();
-    }@Override
-    public void inATermModTerm(ATermModTerm node){
-        printIndentation();
-        System.out.println("[TermModTerm] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outATermModTerm(ATermModTerm node){
-        removeIndentationLevel();
-    }@Override
-    public void inAExponentTerm(AExponentTerm node){
-        printIndentation();
-        System.out.println("[ExponentTerm] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outAExponentTerm(AExponentTerm node){
-        removeIndentationLevel();
-    }@Override
-    public void inAUnsignedExponent(AUnsignedExponent node){
-        printIndentation();
-        System.out.println("[UnsignedExponent] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outAUnsignedExponent(AUnsignedExponent node){
-        removeIndentationLevel();
-    }@Override
+        public void outAMinusExpNExp(AMinusExpNExp node){
+            removeIndentationLevel();
+        }
+//        @Override
+//        public void inATermNExp(ATermNExp node){
+//            printIndentation();
+//            System.out.println("[TermNExp] "+node.toString());
+//            addIndentationLevel();
+//        }
+//
+//        @Override
+//        public void outATermNExp(ATermNExp node){
+//            removeIndentationLevel();
+//        }@Override
+//        public void inATermMultTerm(ATermMultTerm node){
+//            printIndentation();
+//            System.out.println("[TermMultTerm] "+node.toString());
+//            addIndentationLevel();
+//        }
+//
+//        @Override
+//        public void outATermMultTerm(ATermMultTerm node){
+//            removeIndentationLevel();
+//        }@Override
+//        public void inATermDivTerm(ATermDivTerm node){
+//            printIndentation();
+//            System.out.println("[TermDivTerm] "+node.toString());
+//            addIndentationLevel();
+//        }
+//
+//        @Override
+//        public void outATermDivTerm(ATermDivTerm node){
+//            removeIndentationLevel();
+//        }@Override
+//        public void inATermModTerm(ATermModTerm node){
+//            printIndentation();
+//            System.out.println("[TermModTerm] "+node.toString());
+//            addIndentationLevel();
+//        }
+//
+//        @Override
+//        public void outATermModTerm(ATermModTerm node){
+//            removeIndentationLevel();
+//        }@Override
+//        public void inAExponentTerm(AExponentTerm node){
+//            printIndentation();
+//        System.out.println("[ExponentTerm] "+node.toString());
+//        addIndentationLevel();
+//    }
+//
+//    @Override
+//    public void outAExponentTerm(AExponentTerm node){
+//        removeIndentationLevel();
+//    }@Override
+//    public void inAUnsignedExponent(AUnsignedExponent node){
+//        printIndentation();
+//        System.out.println("[UnsignedExponent] "+node.toString());
+//        addIndentationLevel();
+//    }
+//
+//    @Override
+//    public void outAUnsignedExponent(AUnsignedExponent node){
+//        removeIndentationLevel();
+//    }
+ @Override
     public void inANonParenFinal(ANonParenFinal node){
         printIndentation();
         System.out.println("[NonParenFinal] "+node.toString());

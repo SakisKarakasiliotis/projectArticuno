@@ -47,7 +47,7 @@ public interface Analysis extends Switch
     void caseAWhileDoStmtWithElse(AWhileDoStmtWithElse node);
     void caseAReturnStmtWithElse(AReturnStmtWithElse node);
     void caseAIfElseStmt(AIfElseStmt node);
-    void caseAFuncCall(AFuncCall node);
+    void caseAFuncCallFuncCall(AFuncCallFuncCall node);
     void caseAIdentifierLValue(AIdentifierLValue node);
     void caseAStringLitLValue(AStringLitLValue node);
     void caseAArrayAssignLValue(AArrayAssignLValue node);
@@ -66,9 +66,7 @@ public interface Analysis extends Switch
     void caseACondExpCondition(ACondExpCondition node);
     void caseAPlusSign(APlusSign node);
     void caseAMinusSign(AMinusSign node);
-    void caseANextExpression(ANextExpression node);
-    void caseAMultipleExpressions(AMultipleExpressions node);
-    void caseAArraySize(AArraySize node);
+    void caseAArraySizeArraySize(AArraySizeArraySize node);
     void caseAEmptyBrackets(AEmptyBrackets node);
     void caseAArrayArray(AArrayArray node);
     void caseAPlusExpNExp(APlusExpNExp node);

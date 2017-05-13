@@ -6,51 +6,51 @@ import java.util.*;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AMultipleExpressions extends PMultipleExpressions
+public final class AFuncCallFuncCall extends PFuncCall
 {
-    private PExpression _expression_;
-    private final LinkedList<PNextExpression> _nextExpression_ = new LinkedList<PNextExpression>();
+    private TIdentifier _identifier_;
+    private final LinkedList<PExpression> _expression_ = new LinkedList<PExpression>();
 
-    public AMultipleExpressions()
+    public AFuncCallFuncCall()
     {
         // Constructor
     }
 
-    public AMultipleExpressions(
-        @SuppressWarnings("hiding") PExpression _expression_,
-        @SuppressWarnings("hiding") List<?> _nextExpression_)
+    public AFuncCallFuncCall(
+        @SuppressWarnings("hiding") TIdentifier _identifier_,
+        @SuppressWarnings("hiding") List<?> _expression_)
     {
         // Constructor
-        setExpression(_expression_);
+        setIdentifier(_identifier_);
 
-        setNextExpression(_nextExpression_);
+        setExpression(_expression_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AMultipleExpressions(
-            cloneNode(this._expression_),
-            cloneList(this._nextExpression_));
+        return new AFuncCallFuncCall(
+            cloneNode(this._identifier_),
+            cloneList(this._expression_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAMultipleExpressions(this);
+        ((Analysis) sw).caseAFuncCallFuncCall(this);
     }
 
-    public PExpression getExpression()
+    public TIdentifier getIdentifier()
     {
-        return this._expression_;
+        return this._identifier_;
     }
 
-    public void setExpression(PExpression node)
+    public void setIdentifier(TIdentifier node)
     {
-        if(this._expression_ != null)
+        if(this._identifier_ != null)
         {
-            this._expression_.parent(null);
+            this._identifier_.parent(null);
         }
 
         if(node != null)
@@ -63,32 +63,32 @@ public final class AMultipleExpressions extends PMultipleExpressions
             node.parent(this);
         }
 
-        this._expression_ = node;
+        this._identifier_ = node;
     }
 
-    public LinkedList<PNextExpression> getNextExpression()
+    public LinkedList<PExpression> getExpression()
     {
-        return this._nextExpression_;
+        return this._expression_;
     }
 
-    public void setNextExpression(List<?> list)
+    public void setExpression(List<?> list)
     {
-        for(PNextExpression e : this._nextExpression_)
+        for(PExpression e : this._expression_)
         {
             e.parent(null);
         }
-        this._nextExpression_.clear();
+        this._expression_.clear();
 
         for(Object obj_e : list)
         {
-            PNextExpression e = (PNextExpression) obj_e;
+            PExpression e = (PExpression) obj_e;
             if(e.parent() != null)
             {
                 e.parent().removeChild(e);
             }
 
             e.parent(this);
-            this._nextExpression_.add(e);
+            this._expression_.add(e);
         }
     }
 
@@ -96,21 +96,21 @@ public final class AMultipleExpressions extends PMultipleExpressions
     public String toString()
     {
         return ""
-            + toString(this._expression_)
-            + toString(this._nextExpression_);
+            + toString(this._identifier_)
+            + toString(this._expression_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._expression_ == child)
+        if(this._identifier_ == child)
         {
-            this._expression_ = null;
+            this._identifier_ = null;
             return;
         }
 
-        if(this._nextExpression_.remove(child))
+        if(this._expression_.remove(child))
         {
             return;
         }
@@ -122,19 +122,19 @@ public final class AMultipleExpressions extends PMultipleExpressions
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._expression_ == oldChild)
+        if(this._identifier_ == oldChild)
         {
-            setExpression((PExpression) newChild);
+            setIdentifier((TIdentifier) newChild);
             return;
         }
 
-        for(ListIterator<PNextExpression> i = this._nextExpression_.listIterator(); i.hasNext();)
+        for(ListIterator<PExpression> i = this._expression_.listIterator(); i.hasNext();)
         {
             if(i.next() == oldChild)
             {
                 if(newChild != null)
                 {
-                    i.set((PNextExpression) newChild);
+                    i.set((PExpression) newChild);
                     newChild.parent(this);
                     oldChild.parent(null);
                     return;
