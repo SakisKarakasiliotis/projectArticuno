@@ -147,13 +147,13 @@ Productions
 
 
 
-  expression = {array} array |
-               {string}string_literal |
-               {char_const} char_const |
-               {f_call} func_call |
-               {paren_expression} lparen expression_b rparen |
-               {signed_expression} sign expression |
-               {num_oper} n_exp;
+  expression = {array} array|
+                              {string}string_literal |
+                              {char_const} char_const |
+                              {f_call} func_call |
+                              {paren_expression} lparen expression_b rparen |
+                              {signed_expression} sign expression |
+                              {num_oper} n_exp;
 
   expression_b = {array} array |
                  {string}string_literal |
@@ -161,13 +161,13 @@ Productions
                  {f_call} func_call |
                  {signed_expression} sign expression;
 
-  condition = {cond_exp}  comp_exp;
+  condition {-> condition}= {cond_exp} comp_exp {->  New condition.cond_exp(comp_exp)};
 
   sign = {plus} plus |
          {minus} minus ;
 
 
-//------------------------------------------------------------------------------------------------------------------
+//----------------------------------PRODUCTION SEP------------------------------------------------------------
 
 
   array_size {->array_size }= lbracket int_const rbracket{-> New array_size.array_size(int_const)};
@@ -299,13 +299,13 @@ Abstract Syntax Tree
                {signed_expression} sign expression |
                {num_oper} n_exp;
 
-  expression_b = {array} array |
-                 {string}string_literal |
-                 {char_const} char_const |
-                 {f_call} func_call |
-                 {signed_expression} sign expression;
+expression_b = {array} array |
+            {string}string_literal |
+                           {char_const} char_const |
+            {f_call} func_call |
+            {signed_expression} sign expression;
 
-  condition = {cond_exp}  comp_exp;
+  condition = {cond_exp} comp_exp;
 
   sign = {plus} plus |
          {minus} minus ;
