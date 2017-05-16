@@ -351,36 +351,6 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAArrayExpressionB(AArrayExpressionB node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAStringExpressionB(AStringExpressionB node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseACharConstExpressionB(ACharConstExpressionB node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAFCallExpressionB(AFCallExpressionB node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseASignedExpressionExpressionB(ASignedExpressionExpressionB node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
     public void caseACondExpCondition(ACondExpCondition node)
     {
         defaultCase(node);

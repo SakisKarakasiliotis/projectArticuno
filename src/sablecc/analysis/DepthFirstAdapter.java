@@ -1221,17 +1221,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseAParenExpressionExpression(AParenExpressionExpression node)
     {
         inAParenExpressionExpression(node);
-        if(node.getLparen() != null)
+        if(node.getExpression() != null)
         {
-            node.getLparen().apply(this);
-        }
-        if(node.getExpressionB() != null)
-        {
-            node.getExpressionB().apply(this);
-        }
-        if(node.getRparen() != null)
-        {
-            node.getRparen().apply(this);
+            node.getExpression().apply(this);
         }
         outAParenExpressionExpression(node);
     }
@@ -1280,115 +1272,6 @@ public class DepthFirstAdapter extends AnalysisAdapter
             node.getNExp().apply(this);
         }
         outANumOperExpression(node);
-    }
-
-    public void inAArrayExpressionB(AArrayExpressionB node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAArrayExpressionB(AArrayExpressionB node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAArrayExpressionB(AArrayExpressionB node)
-    {
-        inAArrayExpressionB(node);
-        if(node.getArray() != null)
-        {
-            node.getArray().apply(this);
-        }
-        outAArrayExpressionB(node);
-    }
-
-    public void inAStringExpressionB(AStringExpressionB node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAStringExpressionB(AStringExpressionB node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAStringExpressionB(AStringExpressionB node)
-    {
-        inAStringExpressionB(node);
-        if(node.getStringLiteral() != null)
-        {
-            node.getStringLiteral().apply(this);
-        }
-        outAStringExpressionB(node);
-    }
-
-    public void inACharConstExpressionB(ACharConstExpressionB node)
-    {
-        defaultIn(node);
-    }
-
-    public void outACharConstExpressionB(ACharConstExpressionB node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseACharConstExpressionB(ACharConstExpressionB node)
-    {
-        inACharConstExpressionB(node);
-        if(node.getCharConst() != null)
-        {
-            node.getCharConst().apply(this);
-        }
-        outACharConstExpressionB(node);
-    }
-
-    public void inAFCallExpressionB(AFCallExpressionB node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAFCallExpressionB(AFCallExpressionB node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAFCallExpressionB(AFCallExpressionB node)
-    {
-        inAFCallExpressionB(node);
-        if(node.getFuncCall() != null)
-        {
-            node.getFuncCall().apply(this);
-        }
-        outAFCallExpressionB(node);
-    }
-
-    public void inASignedExpressionExpressionB(ASignedExpressionExpressionB node)
-    {
-        defaultIn(node);
-    }
-
-    public void outASignedExpressionExpressionB(ASignedExpressionExpressionB node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseASignedExpressionExpressionB(ASignedExpressionExpressionB node)
-    {
-        inASignedExpressionExpressionB(node);
-        if(node.getSign() != null)
-        {
-            node.getSign().apply(this);
-        }
-        if(node.getExpression() != null)
-        {
-            node.getExpression().apply(this);
-        }
-        outASignedExpressionExpressionB(node);
     }
 
     public void inACondExpCondition(ACondExpCondition node)

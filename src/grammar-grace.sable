@@ -147,19 +147,19 @@ Productions
 
 
 
-  expression = {array} array|
-                              {string}string_literal |
-                              {char_const} char_const |
-                              {f_call} func_call |
-                              {paren_expression} lparen expression_b rparen |
-                              {signed_expression} sign expression |
-                              {num_oper} n_exp;
+  expression {->expression } ={array} array {-> New expression.array(array)}|
+                              {string} string_literal {-> New expression.string(string_literal)}|
+                              {char_const} char_const {-> New expression.char_const(char_const)}|
+                              {f_call} func_call {-> New expression.f_call(func_call)}|
+                              {paren_expression} lparen expression_b rparen  {-> New expression.paren_expression(expression_b.expression)}|
+                              {signed_expression} sign expression {-> New expression.signed_expression(sign,expression)}|
+                              {num_oper} n_exp {-> New expression.num_oper(n_exp)};
 
-  expression_b = {array} array |
-                 {string}string_literal |
-                 {char_const} char_const |
-                 {f_call} func_call |
-                 {signed_expression} sign expression;
+  expression_b{->expression } = {array} array {-> New expression.array(array)}|
+                                {string}string_literal {-> New expression.string(string_literal)}|
+                                {char_const} char_const  {-> New expression.char_const(char_const)}|
+                                {f_call} func_call {-> New expression.f_call(func_call)}|
+                                {signed_expression} sign expression {-> New expression.signed_expression(sign,expression)};
 
   condition {-> condition}= {cond_exp} comp_exp {->  New condition.cond_exp(comp_exp)};
 
@@ -292,18 +292,18 @@ Abstract Syntax Tree
 
 
   expression = {array} array |
-               {string}string_literal |
+               {string} string_literal |
                {char_const} char_const |
                {f_call} func_call |
-               {paren_expression} lparen expression_b rparen |
+               {paren_expression} expression |
                {signed_expression} sign expression |
                {num_oper} n_exp;
 
-expression_b = {array} array |
-            {string}string_literal |
-                           {char_const} char_const |
-            {f_call} func_call |
-            {signed_expression} sign expression;
+  //expression_b = {array} array |
+    //             {string}string_literal |
+      //           {char_const} char_const |
+        //         {f_call} func_call |
+          //       {signed_expression} sign expression;
 
   condition = {cond_exp} comp_exp;
 

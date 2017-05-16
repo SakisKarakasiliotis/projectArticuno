@@ -2666,14 +2666,10 @@ public class Parser
         PExpression pexpressionNode1;
         {
             // Block
-        TLparen tlparenNode2;
-        PExpressionB pexpressionbNode3;
-        TRparen trparenNode4;
-        tlparenNode2 = (TLparen)nodeArrayList1.get(0);
-        pexpressionbNode3 = (PExpressionB)nodeArrayList2.get(0);
-        trparenNode4 = (TRparen)nodeArrayList3.get(0);
+        PExpression pexpressionNode2;
+        pexpressionNode2 = (PExpression)nodeArrayList2.get(0);
 
-        pexpressionNode1 = new AParenExpressionExpression(tlparenNode2, pexpressionbNode3, trparenNode4);
+        pexpressionNode1 = new AParenExpressionExpression(pexpressionNode2);
         }
 	nodeList.add(pexpressionNode1);
         return nodeList;
@@ -2730,15 +2726,15 @@ public class Parser
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PExpressionB pexpressionbNode1;
+        PExpression pexpressionNode1;
         {
             // Block
         PArray parrayNode2;
         parrayNode2 = (PArray)nodeArrayList1.get(0);
 
-        pexpressionbNode1 = new AArrayExpressionB(parrayNode2);
+        pexpressionNode1 = new AArrayExpression(parrayNode2);
         }
-	nodeList.add(pexpressionbNode1);
+	nodeList.add(pexpressionNode1);
         return nodeList;
     }
 
@@ -2750,15 +2746,15 @@ public class Parser
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PExpressionB pexpressionbNode1;
+        PExpression pexpressionNode1;
         {
             // Block
         TStringLiteral tstringliteralNode2;
         tstringliteralNode2 = (TStringLiteral)nodeArrayList1.get(0);
 
-        pexpressionbNode1 = new AStringExpressionB(tstringliteralNode2);
+        pexpressionNode1 = new AStringExpression(tstringliteralNode2);
         }
-	nodeList.add(pexpressionbNode1);
+	nodeList.add(pexpressionNode1);
         return nodeList;
     }
 
@@ -2770,15 +2766,15 @@ public class Parser
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PExpressionB pexpressionbNode1;
+        PExpression pexpressionNode1;
         {
             // Block
         TCharConst tcharconstNode2;
         tcharconstNode2 = (TCharConst)nodeArrayList1.get(0);
 
-        pexpressionbNode1 = new ACharConstExpressionB(tcharconstNode2);
+        pexpressionNode1 = new ACharConstExpression(tcharconstNode2);
         }
-	nodeList.add(pexpressionbNode1);
+	nodeList.add(pexpressionNode1);
         return nodeList;
     }
 
@@ -2790,15 +2786,15 @@ public class Parser
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PExpressionB pexpressionbNode1;
+        PExpression pexpressionNode1;
         {
             // Block
         PFuncCall pfunccallNode2;
         pfunccallNode2 = (PFuncCall)nodeArrayList1.get(0);
 
-        pexpressionbNode1 = new AFCallExpressionB(pfunccallNode2);
+        pexpressionNode1 = new AFCallExpression(pfunccallNode2);
         }
-	nodeList.add(pexpressionbNode1);
+	nodeList.add(pexpressionNode1);
         return nodeList;
     }
 
@@ -2811,7 +2807,7 @@ public class Parser
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PExpressionB pexpressionbNode1;
+        PExpression pexpressionNode1;
         {
             // Block
         PSign psignNode2;
@@ -2819,9 +2815,9 @@ public class Parser
         psignNode2 = (PSign)nodeArrayList1.get(0);
         pexpressionNode3 = (PExpression)nodeArrayList2.get(0);
 
-        pexpressionbNode1 = new ASignedExpressionExpressionB(psignNode2, pexpressionNode3);
+        pexpressionNode1 = new ASignedExpressionExpression(psignNode2, pexpressionNode3);
         }
-	nodeList.add(pexpressionbNode1);
+	nodeList.add(pexpressionNode1);
         return nodeList;
     }
 

@@ -58,11 +58,6 @@ public interface Analysis extends Switch
     void caseAParenExpressionExpression(AParenExpressionExpression node);
     void caseASignedExpressionExpression(ASignedExpressionExpression node);
     void caseANumOperExpression(ANumOperExpression node);
-    void caseAArrayExpressionB(AArrayExpressionB node);
-    void caseAStringExpressionB(AStringExpressionB node);
-    void caseACharConstExpressionB(ACharConstExpressionB node);
-    void caseAFCallExpressionB(AFCallExpressionB node);
-    void caseASignedExpressionExpressionB(ASignedExpressionExpressionB node);
     void caseACondExpCondition(ACondExpCondition node);
     void caseAPlusSign(APlusSign node);
     void caseAMinusSign(AMinusSign node);
