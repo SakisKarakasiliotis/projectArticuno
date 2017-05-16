@@ -195,7 +195,13 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAIfStatement(AIfStatement node)
+    public void caseANoElseStatement(ANoElseStatement node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAWithElseStatement(AWithElseStatement node)
     {
         defaultCase(node);
     }
@@ -225,61 +231,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseANoElseIfStmt(ANoElseIfStmt node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAWithElseIfStmt(AWithElseIfStmt node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseANoopStmtWithElse(ANoopStmtWithElse node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAAssignmentStmtWithElse(AAssignmentStmtWithElse node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAIfStmtWithElse(AIfStmtWithElse node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseABlockStmtWithElse(ABlockStmtWithElse node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAFCallStmtWithElse(AFCallStmtWithElse node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAWhileDoStmtWithElse(AWhileDoStmtWithElse node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAReturnStmtWithElse(AReturnStmtWithElse node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAIfElseStmt(AIfElseStmt node)
+    public void caseAStatementWithElseStatement(AStatementWithElseStatement node)
     {
         defaultCase(node);
     }

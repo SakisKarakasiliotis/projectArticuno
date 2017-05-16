@@ -7,9 +7,7 @@ import sablecc.analysis.*;
 @SuppressWarnings("nls")
 public final class AReturnStatement extends PStatement
 {
-    private TKwReturn _kwReturn_;
     private PExpression _expression_;
-    private TSemicolon _semicolon_;
 
     public AReturnStatement()
     {
@@ -17,16 +15,10 @@ public final class AReturnStatement extends PStatement
     }
 
     public AReturnStatement(
-        @SuppressWarnings("hiding") TKwReturn _kwReturn_,
-        @SuppressWarnings("hiding") PExpression _expression_,
-        @SuppressWarnings("hiding") TSemicolon _semicolon_)
+        @SuppressWarnings("hiding") PExpression _expression_)
     {
         // Constructor
-        setKwReturn(_kwReturn_);
-
         setExpression(_expression_);
-
-        setSemicolon(_semicolon_);
 
     }
 
@@ -34,40 +26,13 @@ public final class AReturnStatement extends PStatement
     public Object clone()
     {
         return new AReturnStatement(
-            cloneNode(this._kwReturn_),
-            cloneNode(this._expression_),
-            cloneNode(this._semicolon_));
+            cloneNode(this._expression_));
     }
 
     @Override
     public void apply(Switch sw)
     {
         ((Analysis) sw).caseAReturnStatement(this);
-    }
-
-    public TKwReturn getKwReturn()
-    {
-        return this._kwReturn_;
-    }
-
-    public void setKwReturn(TKwReturn node)
-    {
-        if(this._kwReturn_ != null)
-        {
-            this._kwReturn_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._kwReturn_ = node;
     }
 
     public PExpression getExpression()
@@ -95,59 +60,20 @@ public final class AReturnStatement extends PStatement
         this._expression_ = node;
     }
 
-    public TSemicolon getSemicolon()
-    {
-        return this._semicolon_;
-    }
-
-    public void setSemicolon(TSemicolon node)
-    {
-        if(this._semicolon_ != null)
-        {
-            this._semicolon_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._semicolon_ = node;
-    }
-
     @Override
     public String toString()
     {
         return ""
-            + toString(this._kwReturn_)
-            + toString(this._expression_)
-            + toString(this._semicolon_);
+            + toString(this._expression_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._kwReturn_ == child)
-        {
-            this._kwReturn_ = null;
-            return;
-        }
-
         if(this._expression_ == child)
         {
             this._expression_ = null;
-            return;
-        }
-
-        if(this._semicolon_ == child)
-        {
-            this._semicolon_ = null;
             return;
         }
 
@@ -158,21 +84,9 @@ public final class AReturnStatement extends PStatement
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._kwReturn_ == oldChild)
-        {
-            setKwReturn((TKwReturn) newChild);
-            return;
-        }
-
         if(this._expression_ == oldChild)
         {
             setExpression((PExpression) newChild);
-            return;
-        }
-
-        if(this._semicolon_ == oldChild)
-        {
-            setSemicolon((TSemicolon) newChild);
             return;
         }
 

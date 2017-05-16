@@ -5,39 +5,44 @@ package sablecc.node;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AWhileDoStatement extends PStatement
+public final class AWithElseStatement extends PStatement
 {
     private PCondition _condition_;
-    private PStatement _statement_;
+    private PStatement _thenStmt_;
+    private PStatement _elseStmt_;
 
-    public AWhileDoStatement()
+    public AWithElseStatement()
     {
         // Constructor
     }
 
-    public AWhileDoStatement(
+    public AWithElseStatement(
         @SuppressWarnings("hiding") PCondition _condition_,
-        @SuppressWarnings("hiding") PStatement _statement_)
+        @SuppressWarnings("hiding") PStatement _thenStmt_,
+        @SuppressWarnings("hiding") PStatement _elseStmt_)
     {
         // Constructor
         setCondition(_condition_);
 
-        setStatement(_statement_);
+        setThenStmt(_thenStmt_);
+
+        setElseStmt(_elseStmt_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AWhileDoStatement(
+        return new AWithElseStatement(
             cloneNode(this._condition_),
-            cloneNode(this._statement_));
+            cloneNode(this._thenStmt_),
+            cloneNode(this._elseStmt_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAWhileDoStatement(this);
+        ((Analysis) sw).caseAWithElseStatement(this);
     }
 
     public PCondition getCondition()
@@ -65,16 +70,16 @@ public final class AWhileDoStatement extends PStatement
         this._condition_ = node;
     }
 
-    public PStatement getStatement()
+    public PStatement getThenStmt()
     {
-        return this._statement_;
+        return this._thenStmt_;
     }
 
-    public void setStatement(PStatement node)
+    public void setThenStmt(PStatement node)
     {
-        if(this._statement_ != null)
+        if(this._thenStmt_ != null)
         {
-            this._statement_.parent(null);
+            this._thenStmt_.parent(null);
         }
 
         if(node != null)
@@ -87,7 +92,32 @@ public final class AWhileDoStatement extends PStatement
             node.parent(this);
         }
 
-        this._statement_ = node;
+        this._thenStmt_ = node;
+    }
+
+    public PStatement getElseStmt()
+    {
+        return this._elseStmt_;
+    }
+
+    public void setElseStmt(PStatement node)
+    {
+        if(this._elseStmt_ != null)
+        {
+            this._elseStmt_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._elseStmt_ = node;
     }
 
     @Override
@@ -95,7 +125,8 @@ public final class AWhileDoStatement extends PStatement
     {
         return ""
             + toString(this._condition_)
-            + toString(this._statement_);
+            + toString(this._thenStmt_)
+            + toString(this._elseStmt_);
     }
 
     @Override
@@ -108,9 +139,15 @@ public final class AWhileDoStatement extends PStatement
             return;
         }
 
-        if(this._statement_ == child)
+        if(this._thenStmt_ == child)
         {
-            this._statement_ = null;
+            this._thenStmt_ = null;
+            return;
+        }
+
+        if(this._elseStmt_ == child)
+        {
+            this._elseStmt_ = null;
             return;
         }
 
@@ -127,9 +164,15 @@ public final class AWhileDoStatement extends PStatement
             return;
         }
 
-        if(this._statement_ == oldChild)
+        if(this._thenStmt_ == oldChild)
         {
-            setStatement((PStatement) newChild);
+            setThenStmt((PStatement) newChild);
+            return;
+        }
+
+        if(this._elseStmt_ == oldChild)
+        {
+            setElseStmt((PStatement) newChild);
             return;
         }
 

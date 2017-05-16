@@ -8,9 +8,7 @@ import sablecc.analysis.*;
 public final class AAssignmentStatement extends PStatement
 {
     private PLValue _lValue_;
-    private TAssign _assign_;
     private PExpression _expression_;
-    private TSemicolon _semicolon_;
 
     public AAssignmentStatement()
     {
@@ -19,18 +17,12 @@ public final class AAssignmentStatement extends PStatement
 
     public AAssignmentStatement(
         @SuppressWarnings("hiding") PLValue _lValue_,
-        @SuppressWarnings("hiding") TAssign _assign_,
-        @SuppressWarnings("hiding") PExpression _expression_,
-        @SuppressWarnings("hiding") TSemicolon _semicolon_)
+        @SuppressWarnings("hiding") PExpression _expression_)
     {
         // Constructor
         setLValue(_lValue_);
 
-        setAssign(_assign_);
-
         setExpression(_expression_);
-
-        setSemicolon(_semicolon_);
 
     }
 
@@ -39,9 +31,7 @@ public final class AAssignmentStatement extends PStatement
     {
         return new AAssignmentStatement(
             cloneNode(this._lValue_),
-            cloneNode(this._assign_),
-            cloneNode(this._expression_),
-            cloneNode(this._semicolon_));
+            cloneNode(this._expression_));
     }
 
     @Override
@@ -75,31 +65,6 @@ public final class AAssignmentStatement extends PStatement
         this._lValue_ = node;
     }
 
-    public TAssign getAssign()
-    {
-        return this._assign_;
-    }
-
-    public void setAssign(TAssign node)
-    {
-        if(this._assign_ != null)
-        {
-            this._assign_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._assign_ = node;
-    }
-
     public PExpression getExpression()
     {
         return this._expression_;
@@ -125,39 +90,12 @@ public final class AAssignmentStatement extends PStatement
         this._expression_ = node;
     }
 
-    public TSemicolon getSemicolon()
-    {
-        return this._semicolon_;
-    }
-
-    public void setSemicolon(TSemicolon node)
-    {
-        if(this._semicolon_ != null)
-        {
-            this._semicolon_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._semicolon_ = node;
-    }
-
     @Override
     public String toString()
     {
         return ""
             + toString(this._lValue_)
-            + toString(this._assign_)
-            + toString(this._expression_)
-            + toString(this._semicolon_);
+            + toString(this._expression_);
     }
 
     @Override
@@ -170,21 +108,9 @@ public final class AAssignmentStatement extends PStatement
             return;
         }
 
-        if(this._assign_ == child)
-        {
-            this._assign_ = null;
-            return;
-        }
-
         if(this._expression_ == child)
         {
             this._expression_ = null;
-            return;
-        }
-
-        if(this._semicolon_ == child)
-        {
-            this._semicolon_ = null;
             return;
         }
 
@@ -201,21 +127,9 @@ public final class AAssignmentStatement extends PStatement
             return;
         }
 
-        if(this._assign_ == oldChild)
-        {
-            setAssign((TAssign) newChild);
-            return;
-        }
-
         if(this._expression_ == oldChild)
         {
             setExpression((PExpression) newChild);
-            return;
-        }
-
-        if(this._semicolon_ == oldChild)
-        {
-            setSemicolon((TSemicolon) newChild);
             return;
         }
 

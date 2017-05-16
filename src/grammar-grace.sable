@@ -111,37 +111,39 @@ Productions
 
   next_identifier = comma identifier;
 
-  statement = {noop} semicolon |
-              {assignment} l_value assign expression semicolon |
-              {if} if_stmt |
-              {block} block |
-              {f_call} func_call semicolon |
-              {while_do} kw_while condition kw_do statement |
-              {return} kw_return expression? semicolon;
+  statement {-> statement}= {noop} semicolon {->New statement.noop(semicolon) }|
+                            {assignment} l_value assign expression semicolon {-> New statement.assignment(l_value, expression)} |
+                            {if} if_stmt {-> if_stmt.statement}|
+                            {block} block {-> New statement.block(block)}|
+                            {f_call} func_call semicolon {-> New statement.f_call(func_call)}|
+                            {while_do} kw_while condition kw_do statement {-> New statement.while_do(condition,statement)}|
+                            {return} kw_return expression? semicolon {-> New statement.return(expression)};
 
-  if_stmt = {no_else} kw_if condition kw_then [then_stmt]:statement |
-            {with_else} kw_if condition kw_then [then_stmt]:stmt_with_else kw_else [else_stmt]:statement;
+  if_stmt {-> statement} = {no_else} kw_if condition kw_then  statement {-> New statement.no_else(condition, statement)}|
+                           {with_else} kw_if condition kw_then  stmt_with_else kw_else statement {-> New statement.with_else(condition,statement,stmt_with_else.statement)};
 
-  stmt_with_else = {noop} semicolon |
-                   {assignment} l_value assign expression semicolon |
-                   {if} if_else_stmt |
-                   {block} block |
-                   {f_call} func_call semicolon |
-                   {while_do} kw_while condition kw_do stmt_with_else |
-                   {return} kw_return expression? semicolon;
+  stmt_with_else {-> statement} = {noop} semicolon {->New statement.noop(semicolon) }|
+                                  {assignment} l_value assign expression semicolon {-> New statement.assignment(l_value, expression)}|
+                                  {if} if_else_stmt {-> if_else_stmt.statement}|
+                                  {block} block {-> New statement.block(block)}|
+                                  {f_call} func_call semicolon {-> New statement.f_call(func_call)}|
+                                  {while_do} kw_while condition kw_do stmt_with_else {-> New statement.while_do(condition,stmt_with_else.statement)}|
+                                  {return} kw_return expression? semicolon {-> New statement.return(expression)};
 
-  if_else_stmt = kw_if condition kw_then [then_stmt]:stmt_with_else kw_else [else_stmt]:stmt_with_else;
+  if_else_stmt {-> statement} = {statement_with_else} kw_if condition kw_then [then_stmt]:stmt_with_else kw_else [else_stmt]:stmt_with_else {-> New statement.statement_with_else(condition,then_stmt.statement,else_stmt.statement)};
+
+//----------------------------------PRODUCTION SEP------------------------------------------------------------
 
   func_call {-> func_call}={func_call} identifier lparen multiple_expressions? rparen {-> New func_call.func_call(identifier, [multiple_expressions.expression])};
 
-      multiple_expressions {-> expression*}= expression next_expression* {-> [expression, next_expression.expression]};
+  multiple_expressions {-> expression*}= expression next_expression* {-> [expression, next_expression.expression]};
 
-      next_expression{-> expression} = comma expression{-> expression};
+  next_expression{-> expression} = comma expression{-> expression};
 
 
-  l_value = {identifier} identifier |
-            {string_lit} string_literal |
-            {array_assign} l_value lbracket expression? rbracket;
+  l_value {-> l_value} = {identifier} identifier {-> New l_value.identifier(identifier)}|
+                         {string_lit} string_literal {-> New l_value.string_lit(string_literal)}|
+                         {array_assign} l_value lbracket expression? rbracket {-> New l_value.array_assign(l_value,expression )};
 
 
 
@@ -167,7 +169,6 @@ Productions
          {minus} minus ;
 
 
-//----------------------------------PRODUCTION SEP------------------------------------------------------------
 
 
   array_size {->array_size }= lbracket int_const rbracket{-> New array_size.array_size(int_const)};
@@ -224,7 +225,7 @@ Productions
  comp_final {-> comp_final} = {expr}expression {-> New comp_final.expr(expression)};
 
 
-//-------------------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------------ABSTARCT-------------------------------------------------------------------------------------------------
 
 Abstract Syntax Tree
 
@@ -261,34 +262,38 @@ Abstract Syntax Tree
   next_identifier = comma identifier;
 
   statement = {noop} semicolon |
-              {assignment} l_value assign expression semicolon |
-              {if} if_stmt |
+              {assignment} l_value  expression  |
+              {no_else}  condition  [then_stmt]:statement |
+              {with_else}  condition  [then_stmt]:statement  [else_stmt]:statement|
               {block} block |
-              {f_call} func_call semicolon |
-              {while_do} kw_while condition kw_do statement |
-              {return} kw_return expression? semicolon;
+              {f_call} func_call  |
+              {while_do}  condition statement |
+              {return}  expression? |
+              {statement_with_else}  condition  [then_stmt]:statement  [else_stmt]:statement;
 
-  if_stmt = {no_else} kw_if condition kw_then [then_stmt]:statement |
-            {with_else} kw_if condition kw_then [then_stmt]:stmt_with_else kw_else [else_stmt]:statement;
+  //if_stmt = {no_else} kw_if condition kw_then [then_stmt]:statement |
+          //  {with_else} kw_if condition kw_then [then_stmt]:stmt_with_else kw_else [else_stmt]:statement;
 
-  stmt_with_else = {noop} semicolon |
-                   {assignment} l_value assign expression semicolon |
-                   {if} if_else_stmt |
-                   {block} block |
-                   {f_call} func_call semicolon |
-                   {while_do} kw_while condition kw_do stmt_with_else |
-                   {return} kw_return expression? semicolon;
+  //stmt_with_else = {noop} semicolon |
+          //         {assignment} l_value assign expression semicolon |
+         //          {if} if_else_stmt |
+         //          {block} block |
+    //               {f_call} func_call semicolon |
+         //          {while_do} kw_while condition kw_do stmt_with_else |
+            //       {return} kw_return expression? semicolon;
 
-  if_else_stmt = kw_if condition kw_then [then_stmt]:stmt_with_else kw_else [else_stmt]:stmt_with_else;
+  //if_else_stmt = kw_if condition kw_then [then_stmt]:stmt_with_else kw_else [else_stmt]:stmt_with_else;
+
+
+  //----------------------------ABSTARCT -----------------------
+
 
   func_call ={func_call} identifier  expression* ;
-
-  //multiple_expressions =  expression*;
 
 
   l_value = {identifier} identifier |
             {string_lit} string_literal |
-            {array_assign} l_value lbracket expression? rbracket;
+            {array_assign} l_value expression?;
 
 
   expression = {array} array |
@@ -299,23 +304,13 @@ Abstract Syntax Tree
                {signed_expression} sign expression |
                {num_oper} n_exp;
 
-  //expression_b = {array} array |
-    //             {string}string_literal |
-      //           {char_const} char_const |
-        //         {f_call} func_call |
-          //       {signed_expression} sign expression;
+
 
   condition = {cond_exp} comp_exp;
 
   sign = {plus} plus |
          {minus} minus ;
 
-
-
-
-
-
-//------------------------------------------------------------------------
 
   array_size = {array_size} int_const ;
 

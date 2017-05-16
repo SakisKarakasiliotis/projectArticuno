@@ -8,7 +8,6 @@ import sablecc.analysis.*;
 public final class AFCallStatement extends PStatement
 {
     private PFuncCall _funcCall_;
-    private TSemicolon _semicolon_;
 
     public AFCallStatement()
     {
@@ -16,13 +15,10 @@ public final class AFCallStatement extends PStatement
     }
 
     public AFCallStatement(
-        @SuppressWarnings("hiding") PFuncCall _funcCall_,
-        @SuppressWarnings("hiding") TSemicolon _semicolon_)
+        @SuppressWarnings("hiding") PFuncCall _funcCall_)
     {
         // Constructor
         setFuncCall(_funcCall_);
-
-        setSemicolon(_semicolon_);
 
     }
 
@@ -30,8 +26,7 @@ public final class AFCallStatement extends PStatement
     public Object clone()
     {
         return new AFCallStatement(
-            cloneNode(this._funcCall_),
-            cloneNode(this._semicolon_));
+            cloneNode(this._funcCall_));
     }
 
     @Override
@@ -65,37 +60,11 @@ public final class AFCallStatement extends PStatement
         this._funcCall_ = node;
     }
 
-    public TSemicolon getSemicolon()
-    {
-        return this._semicolon_;
-    }
-
-    public void setSemicolon(TSemicolon node)
-    {
-        if(this._semicolon_ != null)
-        {
-            this._semicolon_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._semicolon_ = node;
-    }
-
     @Override
     public String toString()
     {
         return ""
-            + toString(this._funcCall_)
-            + toString(this._semicolon_);
+            + toString(this._funcCall_);
     }
 
     @Override
@@ -105,12 +74,6 @@ public final class AFCallStatement extends PStatement
         if(this._funcCall_ == child)
         {
             this._funcCall_ = null;
-            return;
-        }
-
-        if(this._semicolon_ == child)
-        {
-            this._semicolon_ = null;
             return;
         }
 
@@ -124,12 +87,6 @@ public final class AFCallStatement extends PStatement
         if(this._funcCall_ == oldChild)
         {
             setFuncCall((PFuncCall) newChild);
-            return;
-        }
-
-        if(this._semicolon_ == oldChild)
-        {
-            setSemicolon((TSemicolon) newChild);
             return;
         }
 

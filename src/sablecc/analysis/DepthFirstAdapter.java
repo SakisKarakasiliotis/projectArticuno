@@ -578,40 +578,65 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getLValue().apply(this);
         }
-        if(node.getAssign() != null)
-        {
-            node.getAssign().apply(this);
-        }
         if(node.getExpression() != null)
         {
             node.getExpression().apply(this);
         }
-        if(node.getSemicolon() != null)
-        {
-            node.getSemicolon().apply(this);
-        }
         outAAssignmentStatement(node);
     }
 
-    public void inAIfStatement(AIfStatement node)
+    public void inANoElseStatement(ANoElseStatement node)
     {
         defaultIn(node);
     }
 
-    public void outAIfStatement(AIfStatement node)
+    public void outANoElseStatement(ANoElseStatement node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAIfStatement(AIfStatement node)
+    public void caseANoElseStatement(ANoElseStatement node)
     {
-        inAIfStatement(node);
-        if(node.getIfStmt() != null)
+        inANoElseStatement(node);
+        if(node.getCondition() != null)
         {
-            node.getIfStmt().apply(this);
+            node.getCondition().apply(this);
         }
-        outAIfStatement(node);
+        if(node.getThenStmt() != null)
+        {
+            node.getThenStmt().apply(this);
+        }
+        outANoElseStatement(node);
+    }
+
+    public void inAWithElseStatement(AWithElseStatement node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAWithElseStatement(AWithElseStatement node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAWithElseStatement(AWithElseStatement node)
+    {
+        inAWithElseStatement(node);
+        if(node.getCondition() != null)
+        {
+            node.getCondition().apply(this);
+        }
+        if(node.getThenStmt() != null)
+        {
+            node.getThenStmt().apply(this);
+        }
+        if(node.getElseStmt() != null)
+        {
+            node.getElseStmt().apply(this);
+        }
+        outAWithElseStatement(node);
     }
 
     public void inABlockStatement(ABlockStatement node)
@@ -653,10 +678,6 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getFuncCall().apply(this);
         }
-        if(node.getSemicolon() != null)
-        {
-            node.getSemicolon().apply(this);
-        }
         outAFCallStatement(node);
     }
 
@@ -674,17 +695,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseAWhileDoStatement(AWhileDoStatement node)
     {
         inAWhileDoStatement(node);
-        if(node.getKwWhile() != null)
-        {
-            node.getKwWhile().apply(this);
-        }
         if(node.getCondition() != null)
         {
             node.getCondition().apply(this);
-        }
-        if(node.getKwDo() != null)
-        {
-            node.getKwDo().apply(this);
         }
         if(node.getStatement() != null)
         {
@@ -707,317 +720,40 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseAReturnStatement(AReturnStatement node)
     {
         inAReturnStatement(node);
-        if(node.getKwReturn() != null)
-        {
-            node.getKwReturn().apply(this);
-        }
         if(node.getExpression() != null)
         {
             node.getExpression().apply(this);
-        }
-        if(node.getSemicolon() != null)
-        {
-            node.getSemicolon().apply(this);
         }
         outAReturnStatement(node);
     }
 
-    public void inANoElseIfStmt(ANoElseIfStmt node)
+    public void inAStatementWithElseStatement(AStatementWithElseStatement node)
     {
         defaultIn(node);
     }
 
-    public void outANoElseIfStmt(ANoElseIfStmt node)
+    public void outAStatementWithElseStatement(AStatementWithElseStatement node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseANoElseIfStmt(ANoElseIfStmt node)
+    public void caseAStatementWithElseStatement(AStatementWithElseStatement node)
     {
-        inANoElseIfStmt(node);
-        if(node.getKwIf() != null)
-        {
-            node.getKwIf().apply(this);
-        }
+        inAStatementWithElseStatement(node);
         if(node.getCondition() != null)
         {
             node.getCondition().apply(this);
         }
-        if(node.getKwThen() != null)
-        {
-            node.getKwThen().apply(this);
-        }
         if(node.getThenStmt() != null)
         {
             node.getThenStmt().apply(this);
-        }
-        outANoElseIfStmt(node);
-    }
-
-    public void inAWithElseIfStmt(AWithElseIfStmt node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAWithElseIfStmt(AWithElseIfStmt node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAWithElseIfStmt(AWithElseIfStmt node)
-    {
-        inAWithElseIfStmt(node);
-        if(node.getKwIf() != null)
-        {
-            node.getKwIf().apply(this);
-        }
-        if(node.getCondition() != null)
-        {
-            node.getCondition().apply(this);
-        }
-        if(node.getKwThen() != null)
-        {
-            node.getKwThen().apply(this);
-        }
-        if(node.getThenStmt() != null)
-        {
-            node.getThenStmt().apply(this);
-        }
-        if(node.getKwElse() != null)
-        {
-            node.getKwElse().apply(this);
         }
         if(node.getElseStmt() != null)
         {
             node.getElseStmt().apply(this);
         }
-        outAWithElseIfStmt(node);
-    }
-
-    public void inANoopStmtWithElse(ANoopStmtWithElse node)
-    {
-        defaultIn(node);
-    }
-
-    public void outANoopStmtWithElse(ANoopStmtWithElse node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseANoopStmtWithElse(ANoopStmtWithElse node)
-    {
-        inANoopStmtWithElse(node);
-        if(node.getSemicolon() != null)
-        {
-            node.getSemicolon().apply(this);
-        }
-        outANoopStmtWithElse(node);
-    }
-
-    public void inAAssignmentStmtWithElse(AAssignmentStmtWithElse node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAAssignmentStmtWithElse(AAssignmentStmtWithElse node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAAssignmentStmtWithElse(AAssignmentStmtWithElse node)
-    {
-        inAAssignmentStmtWithElse(node);
-        if(node.getLValue() != null)
-        {
-            node.getLValue().apply(this);
-        }
-        if(node.getAssign() != null)
-        {
-            node.getAssign().apply(this);
-        }
-        if(node.getExpression() != null)
-        {
-            node.getExpression().apply(this);
-        }
-        if(node.getSemicolon() != null)
-        {
-            node.getSemicolon().apply(this);
-        }
-        outAAssignmentStmtWithElse(node);
-    }
-
-    public void inAIfStmtWithElse(AIfStmtWithElse node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAIfStmtWithElse(AIfStmtWithElse node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAIfStmtWithElse(AIfStmtWithElse node)
-    {
-        inAIfStmtWithElse(node);
-        if(node.getIfElseStmt() != null)
-        {
-            node.getIfElseStmt().apply(this);
-        }
-        outAIfStmtWithElse(node);
-    }
-
-    public void inABlockStmtWithElse(ABlockStmtWithElse node)
-    {
-        defaultIn(node);
-    }
-
-    public void outABlockStmtWithElse(ABlockStmtWithElse node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseABlockStmtWithElse(ABlockStmtWithElse node)
-    {
-        inABlockStmtWithElse(node);
-        if(node.getBlock() != null)
-        {
-            node.getBlock().apply(this);
-        }
-        outABlockStmtWithElse(node);
-    }
-
-    public void inAFCallStmtWithElse(AFCallStmtWithElse node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAFCallStmtWithElse(AFCallStmtWithElse node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAFCallStmtWithElse(AFCallStmtWithElse node)
-    {
-        inAFCallStmtWithElse(node);
-        if(node.getFuncCall() != null)
-        {
-            node.getFuncCall().apply(this);
-        }
-        if(node.getSemicolon() != null)
-        {
-            node.getSemicolon().apply(this);
-        }
-        outAFCallStmtWithElse(node);
-    }
-
-    public void inAWhileDoStmtWithElse(AWhileDoStmtWithElse node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAWhileDoStmtWithElse(AWhileDoStmtWithElse node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAWhileDoStmtWithElse(AWhileDoStmtWithElse node)
-    {
-        inAWhileDoStmtWithElse(node);
-        if(node.getKwWhile() != null)
-        {
-            node.getKwWhile().apply(this);
-        }
-        if(node.getCondition() != null)
-        {
-            node.getCondition().apply(this);
-        }
-        if(node.getKwDo() != null)
-        {
-            node.getKwDo().apply(this);
-        }
-        if(node.getStmtWithElse() != null)
-        {
-            node.getStmtWithElse().apply(this);
-        }
-        outAWhileDoStmtWithElse(node);
-    }
-
-    public void inAReturnStmtWithElse(AReturnStmtWithElse node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAReturnStmtWithElse(AReturnStmtWithElse node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAReturnStmtWithElse(AReturnStmtWithElse node)
-    {
-        inAReturnStmtWithElse(node);
-        if(node.getKwReturn() != null)
-        {
-            node.getKwReturn().apply(this);
-        }
-        if(node.getExpression() != null)
-        {
-            node.getExpression().apply(this);
-        }
-        if(node.getSemicolon() != null)
-        {
-            node.getSemicolon().apply(this);
-        }
-        outAReturnStmtWithElse(node);
-    }
-
-    public void inAIfElseStmt(AIfElseStmt node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAIfElseStmt(AIfElseStmt node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAIfElseStmt(AIfElseStmt node)
-    {
-        inAIfElseStmt(node);
-        if(node.getKwIf() != null)
-        {
-            node.getKwIf().apply(this);
-        }
-        if(node.getCondition() != null)
-        {
-            node.getCondition().apply(this);
-        }
-        if(node.getKwThen() != null)
-        {
-            node.getKwThen().apply(this);
-        }
-        if(node.getThenStmt() != null)
-        {
-            node.getThenStmt().apply(this);
-        }
-        if(node.getKwElse() != null)
-        {
-            node.getKwElse().apply(this);
-        }
-        if(node.getElseStmt() != null)
-        {
-            node.getElseStmt().apply(this);
-        }
-        outAIfElseStmt(node);
+        outAStatementWithElseStatement(node);
     }
 
     public void inAFuncCallFuncCall(AFuncCallFuncCall node)
@@ -1108,17 +844,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
         {
             node.getLValue().apply(this);
         }
-        if(node.getLbracket() != null)
-        {
-            node.getLbracket().apply(this);
-        }
         if(node.getExpression() != null)
         {
             node.getExpression().apply(this);
-        }
-        if(node.getRbracket() != null)
-        {
-            node.getRbracket().apply(this);
         }
         outAArrayAssignLValue(node);
     }

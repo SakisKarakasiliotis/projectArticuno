@@ -5,51 +5,51 @@ package sablecc.node;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AArrayAssignLValue extends PLValue
+public final class ANoElseStatement extends PStatement
 {
-    private PLValue _lValue_;
-    private PExpression _expression_;
+    private PCondition _condition_;
+    private PStatement _thenStmt_;
 
-    public AArrayAssignLValue()
+    public ANoElseStatement()
     {
         // Constructor
     }
 
-    public AArrayAssignLValue(
-        @SuppressWarnings("hiding") PLValue _lValue_,
-        @SuppressWarnings("hiding") PExpression _expression_)
+    public ANoElseStatement(
+        @SuppressWarnings("hiding") PCondition _condition_,
+        @SuppressWarnings("hiding") PStatement _thenStmt_)
     {
         // Constructor
-        setLValue(_lValue_);
+        setCondition(_condition_);
 
-        setExpression(_expression_);
+        setThenStmt(_thenStmt_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AArrayAssignLValue(
-            cloneNode(this._lValue_),
-            cloneNode(this._expression_));
+        return new ANoElseStatement(
+            cloneNode(this._condition_),
+            cloneNode(this._thenStmt_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAArrayAssignLValue(this);
+        ((Analysis) sw).caseANoElseStatement(this);
     }
 
-    public PLValue getLValue()
+    public PCondition getCondition()
     {
-        return this._lValue_;
+        return this._condition_;
     }
 
-    public void setLValue(PLValue node)
+    public void setCondition(PCondition node)
     {
-        if(this._lValue_ != null)
+        if(this._condition_ != null)
         {
-            this._lValue_.parent(null);
+            this._condition_.parent(null);
         }
 
         if(node != null)
@@ -62,19 +62,19 @@ public final class AArrayAssignLValue extends PLValue
             node.parent(this);
         }
 
-        this._lValue_ = node;
+        this._condition_ = node;
     }
 
-    public PExpression getExpression()
+    public PStatement getThenStmt()
     {
-        return this._expression_;
+        return this._thenStmt_;
     }
 
-    public void setExpression(PExpression node)
+    public void setThenStmt(PStatement node)
     {
-        if(this._expression_ != null)
+        if(this._thenStmt_ != null)
         {
-            this._expression_.parent(null);
+            this._thenStmt_.parent(null);
         }
 
         if(node != null)
@@ -87,30 +87,30 @@ public final class AArrayAssignLValue extends PLValue
             node.parent(this);
         }
 
-        this._expression_ = node;
+        this._thenStmt_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._lValue_)
-            + toString(this._expression_);
+            + toString(this._condition_)
+            + toString(this._thenStmt_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._lValue_ == child)
+        if(this._condition_ == child)
         {
-            this._lValue_ = null;
+            this._condition_ = null;
             return;
         }
 
-        if(this._expression_ == child)
+        if(this._thenStmt_ == child)
         {
-            this._expression_ = null;
+            this._thenStmt_ = null;
             return;
         }
 
@@ -121,15 +121,15 @@ public final class AArrayAssignLValue extends PLValue
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._lValue_ == oldChild)
+        if(this._condition_ == oldChild)
         {
-            setLValue((PLValue) newChild);
+            setCondition((PCondition) newChild);
             return;
         }
 
-        if(this._expression_ == oldChild)
+        if(this._thenStmt_ == oldChild)
         {
-            setExpression((PExpression) newChild);
+            setThenStmt((PStatement) newChild);
             return;
         }
 

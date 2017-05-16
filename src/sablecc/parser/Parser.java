@@ -483,7 +483,7 @@ public class Parser
                 push(goTo(16), list);
             }
             break;
-            case 49: /* reduce AIfElseStmt */
+            case 49: /* reduce AStatementWithElseIfElseStmt */
             {
                 ArrayList<Object> list = new49();
                 push(goTo(17), list);
@@ -1906,15 +1906,11 @@ public class Parser
         {
             // Block
         PLValue plvalueNode2;
-        TAssign tassignNode3;
-        PExpression pexpressionNode4;
-        TSemicolon tsemicolonNode5;
+        PExpression pexpressionNode3;
         plvalueNode2 = (PLValue)nodeArrayList1.get(0);
-        tassignNode3 = (TAssign)nodeArrayList2.get(0);
-        pexpressionNode4 = (PExpression)nodeArrayList3.get(0);
-        tsemicolonNode5 = (TSemicolon)nodeArrayList4.get(0);
+        pexpressionNode3 = (PExpression)nodeArrayList3.get(0);
 
-        pstatementNode1 = new AAssignmentStatement(plvalueNode2, tassignNode3, pexpressionNode4, tsemicolonNode5);
+        pstatementNode1 = new AAssignmentStatement(plvalueNode2, pexpressionNode3);
         }
 	nodeList.add(pstatementNode1);
         return nodeList;
@@ -1929,13 +1925,7 @@ public class Parser
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
         PStatement pstatementNode1;
-        {
-            // Block
-        PIfStmt pifstmtNode2;
-        pifstmtNode2 = (PIfStmt)nodeArrayList1.get(0);
-
-        pstatementNode1 = new AIfStatement(pifstmtNode2);
-        }
+        pstatementNode1 = (PStatement)nodeArrayList1.get(0);
 	nodeList.add(pstatementNode1);
         return nodeList;
     }
@@ -1973,11 +1963,9 @@ public class Parser
         {
             // Block
         PFuncCall pfunccallNode2;
-        TSemicolon tsemicolonNode3;
         pfunccallNode2 = (PFuncCall)nodeArrayList1.get(0);
-        tsemicolonNode3 = (TSemicolon)nodeArrayList2.get(0);
 
-        pstatementNode1 = new AFCallStatement(pfunccallNode2, tsemicolonNode3);
+        pstatementNode1 = new AFCallStatement(pfunccallNode2);
         }
 	nodeList.add(pstatementNode1);
         return nodeList;
@@ -1997,16 +1985,12 @@ public class Parser
         PStatement pstatementNode1;
         {
             // Block
-        TKwWhile tkwwhileNode2;
-        PCondition pconditionNode3;
-        TKwDo tkwdoNode4;
-        PStatement pstatementNode5;
-        tkwwhileNode2 = (TKwWhile)nodeArrayList1.get(0);
-        pconditionNode3 = (PCondition)nodeArrayList2.get(0);
-        tkwdoNode4 = (TKwDo)nodeArrayList3.get(0);
-        pstatementNode5 = (PStatement)nodeArrayList4.get(0);
+        PCondition pconditionNode2;
+        PStatement pstatementNode3;
+        pconditionNode2 = (PCondition)nodeArrayList2.get(0);
+        pstatementNode3 = (PStatement)nodeArrayList4.get(0);
 
-        pstatementNode1 = new AWhileDoStatement(tkwwhileNode2, pconditionNode3, tkwdoNode4, pstatementNode5);
+        pstatementNode1 = new AWhileDoStatement(pconditionNode2, pstatementNode3);
         }
 	nodeList.add(pstatementNode1);
         return nodeList;
@@ -2024,13 +2008,9 @@ public class Parser
         PStatement pstatementNode1;
         {
             // Block
-        TKwReturn tkwreturnNode2;
-        @SuppressWarnings("unused") Object nullNode3 = null;
-        TSemicolon tsemicolonNode4;
-        tkwreturnNode2 = (TKwReturn)nodeArrayList1.get(0);
-        tsemicolonNode4 = (TSemicolon)nodeArrayList2.get(0);
+        @SuppressWarnings("unused") Object nullNode2 = null;
 
-        pstatementNode1 = new AReturnStatement(tkwreturnNode2, null, tsemicolonNode4);
+        pstatementNode1 = new AReturnStatement(null);
         }
 	nodeList.add(pstatementNode1);
         return nodeList;
@@ -2049,14 +2029,10 @@ public class Parser
         PStatement pstatementNode1;
         {
             // Block
-        TKwReturn tkwreturnNode2;
-        PExpression pexpressionNode3;
-        TSemicolon tsemicolonNode4;
-        tkwreturnNode2 = (TKwReturn)nodeArrayList1.get(0);
-        pexpressionNode3 = (PExpression)nodeArrayList2.get(0);
-        tsemicolonNode4 = (TSemicolon)nodeArrayList3.get(0);
+        PExpression pexpressionNode2;
+        pexpressionNode2 = (PExpression)nodeArrayList2.get(0);
 
-        pstatementNode1 = new AReturnStatement(tkwreturnNode2, pexpressionNode3, tsemicolonNode4);
+        pstatementNode1 = new AReturnStatement(pexpressionNode2);
         }
 	nodeList.add(pstatementNode1);
         return nodeList;
@@ -2073,21 +2049,17 @@ public class Parser
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList3 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PIfStmt pifstmtNode1;
+        PStatement pstatementNode1;
         {
             // Block
-        TKwIf tkwifNode2;
-        PCondition pconditionNode3;
-        TKwThen tkwthenNode4;
-        PStatement pstatementNode5;
-        tkwifNode2 = (TKwIf)nodeArrayList1.get(0);
-        pconditionNode3 = (PCondition)nodeArrayList2.get(0);
-        tkwthenNode4 = (TKwThen)nodeArrayList3.get(0);
-        pstatementNode5 = (PStatement)nodeArrayList4.get(0);
+        PCondition pconditionNode2;
+        PStatement pstatementNode3;
+        pconditionNode2 = (PCondition)nodeArrayList2.get(0);
+        pstatementNode3 = (PStatement)nodeArrayList4.get(0);
 
-        pifstmtNode1 = new ANoElseIfStmt(tkwifNode2, pconditionNode3, tkwthenNode4, pstatementNode5);
+        pstatementNode1 = new ANoElseStatement(pconditionNode2, pstatementNode3);
         }
-	nodeList.add(pifstmtNode1);
+	nodeList.add(pstatementNode1);
         return nodeList;
     }
 
@@ -2104,25 +2076,19 @@ public class Parser
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList3 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PIfStmt pifstmtNode1;
+        PStatement pstatementNode1;
         {
             // Block
-        TKwIf tkwifNode2;
-        PCondition pconditionNode3;
-        TKwThen tkwthenNode4;
-        PStmtWithElse pstmtwithelseNode5;
-        TKwElse tkwelseNode6;
-        PStatement pstatementNode7;
-        tkwifNode2 = (TKwIf)nodeArrayList1.get(0);
-        pconditionNode3 = (PCondition)nodeArrayList2.get(0);
-        tkwthenNode4 = (TKwThen)nodeArrayList3.get(0);
-        pstmtwithelseNode5 = (PStmtWithElse)nodeArrayList4.get(0);
-        tkwelseNode6 = (TKwElse)nodeArrayList5.get(0);
-        pstatementNode7 = (PStatement)nodeArrayList6.get(0);
+        PCondition pconditionNode2;
+        PStatement pstatementNode3;
+        PStatement pstatementNode4;
+        pconditionNode2 = (PCondition)nodeArrayList2.get(0);
+        pstatementNode3 = (PStatement)nodeArrayList6.get(0);
+        pstatementNode4 = (PStatement)nodeArrayList4.get(0);
 
-        pifstmtNode1 = new AWithElseIfStmt(tkwifNode2, pconditionNode3, tkwthenNode4, pstmtwithelseNode5, tkwelseNode6, pstatementNode7);
+        pstatementNode1 = new AWithElseStatement(pconditionNode2, pstatementNode3, pstatementNode4);
         }
-	nodeList.add(pifstmtNode1);
+	nodeList.add(pstatementNode1);
         return nodeList;
     }
 
@@ -2134,15 +2100,15 @@ public class Parser
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PStmtWithElse pstmtwithelseNode1;
+        PStatement pstatementNode1;
         {
             // Block
         TSemicolon tsemicolonNode2;
         tsemicolonNode2 = (TSemicolon)nodeArrayList1.get(0);
 
-        pstmtwithelseNode1 = new ANoopStmtWithElse(tsemicolonNode2);
+        pstatementNode1 = new ANoopStatement(tsemicolonNode2);
         }
-	nodeList.add(pstmtwithelseNode1);
+	nodeList.add(pstatementNode1);
         return nodeList;
     }
 
@@ -2157,21 +2123,17 @@ public class Parser
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList3 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PStmtWithElse pstmtwithelseNode1;
+        PStatement pstatementNode1;
         {
             // Block
         PLValue plvalueNode2;
-        TAssign tassignNode3;
-        PExpression pexpressionNode4;
-        TSemicolon tsemicolonNode5;
+        PExpression pexpressionNode3;
         plvalueNode2 = (PLValue)nodeArrayList1.get(0);
-        tassignNode3 = (TAssign)nodeArrayList2.get(0);
-        pexpressionNode4 = (PExpression)nodeArrayList3.get(0);
-        tsemicolonNode5 = (TSemicolon)nodeArrayList4.get(0);
+        pexpressionNode3 = (PExpression)nodeArrayList3.get(0);
 
-        pstmtwithelseNode1 = new AAssignmentStmtWithElse(plvalueNode2, tassignNode3, pexpressionNode4, tsemicolonNode5);
+        pstatementNode1 = new AAssignmentStatement(plvalueNode2, pexpressionNode3);
         }
-	nodeList.add(pstmtwithelseNode1);
+	nodeList.add(pstatementNode1);
         return nodeList;
     }
 
@@ -2183,15 +2145,9 @@ public class Parser
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PStmtWithElse pstmtwithelseNode1;
-        {
-            // Block
-        PIfElseStmt pifelsestmtNode2;
-        pifelsestmtNode2 = (PIfElseStmt)nodeArrayList1.get(0);
-
-        pstmtwithelseNode1 = new AIfStmtWithElse(pifelsestmtNode2);
-        }
-	nodeList.add(pstmtwithelseNode1);
+        PStatement pstatementNode1;
+        pstatementNode1 = (PStatement)nodeArrayList1.get(0);
+	nodeList.add(pstatementNode1);
         return nodeList;
     }
 
@@ -2203,15 +2159,15 @@ public class Parser
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PStmtWithElse pstmtwithelseNode1;
+        PStatement pstatementNode1;
         {
             // Block
         PBlock pblockNode2;
         pblockNode2 = (PBlock)nodeArrayList1.get(0);
 
-        pstmtwithelseNode1 = new ABlockStmtWithElse(pblockNode2);
+        pstatementNode1 = new ABlockStatement(pblockNode2);
         }
-	nodeList.add(pstmtwithelseNode1);
+	nodeList.add(pstatementNode1);
         return nodeList;
     }
 
@@ -2224,17 +2180,15 @@ public class Parser
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PStmtWithElse pstmtwithelseNode1;
+        PStatement pstatementNode1;
         {
             // Block
         PFuncCall pfunccallNode2;
-        TSemicolon tsemicolonNode3;
         pfunccallNode2 = (PFuncCall)nodeArrayList1.get(0);
-        tsemicolonNode3 = (TSemicolon)nodeArrayList2.get(0);
 
-        pstmtwithelseNode1 = new AFCallStmtWithElse(pfunccallNode2, tsemicolonNode3);
+        pstatementNode1 = new AFCallStatement(pfunccallNode2);
         }
-	nodeList.add(pstmtwithelseNode1);
+	nodeList.add(pstatementNode1);
         return nodeList;
     }
 
@@ -2249,21 +2203,17 @@ public class Parser
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList3 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PStmtWithElse pstmtwithelseNode1;
+        PStatement pstatementNode1;
         {
             // Block
-        TKwWhile tkwwhileNode2;
-        PCondition pconditionNode3;
-        TKwDo tkwdoNode4;
-        PStmtWithElse pstmtwithelseNode5;
-        tkwwhileNode2 = (TKwWhile)nodeArrayList1.get(0);
-        pconditionNode3 = (PCondition)nodeArrayList2.get(0);
-        tkwdoNode4 = (TKwDo)nodeArrayList3.get(0);
-        pstmtwithelseNode5 = (PStmtWithElse)nodeArrayList4.get(0);
+        PCondition pconditionNode2;
+        PStatement pstatementNode3;
+        pconditionNode2 = (PCondition)nodeArrayList2.get(0);
+        pstatementNode3 = (PStatement)nodeArrayList4.get(0);
 
-        pstmtwithelseNode1 = new AWhileDoStmtWithElse(tkwwhileNode2, pconditionNode3, tkwdoNode4, pstmtwithelseNode5);
+        pstatementNode1 = new AWhileDoStatement(pconditionNode2, pstatementNode3);
         }
-	nodeList.add(pstmtwithelseNode1);
+	nodeList.add(pstatementNode1);
         return nodeList;
     }
 
@@ -2276,18 +2226,14 @@ public class Parser
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PStmtWithElse pstmtwithelseNode1;
+        PStatement pstatementNode1;
         {
             // Block
-        TKwReturn tkwreturnNode2;
-        @SuppressWarnings("unused") Object nullNode3 = null;
-        TSemicolon tsemicolonNode4;
-        tkwreturnNode2 = (TKwReturn)nodeArrayList1.get(0);
-        tsemicolonNode4 = (TSemicolon)nodeArrayList2.get(0);
+        @SuppressWarnings("unused") Object nullNode2 = null;
 
-        pstmtwithelseNode1 = new AReturnStmtWithElse(tkwreturnNode2, null, tsemicolonNode4);
+        pstatementNode1 = new AReturnStatement(null);
         }
-	nodeList.add(pstmtwithelseNode1);
+	nodeList.add(pstatementNode1);
         return nodeList;
     }
 
@@ -2301,26 +2247,22 @@ public class Parser
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList3 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PStmtWithElse pstmtwithelseNode1;
+        PStatement pstatementNode1;
         {
             // Block
-        TKwReturn tkwreturnNode2;
-        PExpression pexpressionNode3;
-        TSemicolon tsemicolonNode4;
-        tkwreturnNode2 = (TKwReturn)nodeArrayList1.get(0);
-        pexpressionNode3 = (PExpression)nodeArrayList2.get(0);
-        tsemicolonNode4 = (TSemicolon)nodeArrayList3.get(0);
+        PExpression pexpressionNode2;
+        pexpressionNode2 = (PExpression)nodeArrayList2.get(0);
 
-        pstmtwithelseNode1 = new AReturnStmtWithElse(tkwreturnNode2, pexpressionNode3, tsemicolonNode4);
+        pstatementNode1 = new AReturnStatement(pexpressionNode2);
         }
-	nodeList.add(pstmtwithelseNode1);
+	nodeList.add(pstatementNode1);
         return nodeList;
     }
 
 
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new49() /* reduce AIfElseStmt */
+    ArrayList<Object> new49() /* reduce AStatementWithElseIfElseStmt */
     {
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
@@ -2330,25 +2272,19 @@ public class Parser
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList3 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PIfElseStmt pifelsestmtNode1;
+        PStatement pstatementNode1;
         {
             // Block
-        TKwIf tkwifNode2;
-        PCondition pconditionNode3;
-        TKwThen tkwthenNode4;
-        PStmtWithElse pstmtwithelseNode5;
-        TKwElse tkwelseNode6;
-        PStmtWithElse pstmtwithelseNode7;
-        tkwifNode2 = (TKwIf)nodeArrayList1.get(0);
-        pconditionNode3 = (PCondition)nodeArrayList2.get(0);
-        tkwthenNode4 = (TKwThen)nodeArrayList3.get(0);
-        pstmtwithelseNode5 = (PStmtWithElse)nodeArrayList4.get(0);
-        tkwelseNode6 = (TKwElse)nodeArrayList5.get(0);
-        pstmtwithelseNode7 = (PStmtWithElse)nodeArrayList6.get(0);
+        PCondition pconditionNode2;
+        PStatement pstatementNode3;
+        PStatement pstatementNode4;
+        pconditionNode2 = (PCondition)nodeArrayList2.get(0);
+        pstatementNode3 = (PStatement)nodeArrayList4.get(0);
+        pstatementNode4 = (PStatement)nodeArrayList6.get(0);
 
-        pifelsestmtNode1 = new AIfElseStmt(tkwifNode2, pconditionNode3, tkwthenNode4, pstmtwithelseNode5, tkwelseNode6, pstmtwithelseNode7);
+        pstatementNode1 = new AStatementWithElseStatement(pconditionNode2, pstatementNode3, pstatementNode4);
         }
-	nodeList.add(pifelsestmtNode1);
+	nodeList.add(pstatementNode1);
         return nodeList;
     }
 
@@ -2531,14 +2467,10 @@ public class Parser
         {
             // Block
         PLValue plvalueNode2;
-        TLbracket tlbracketNode3;
-        @SuppressWarnings("unused") Object nullNode4 = null;
-        TRbracket trbracketNode5;
+        @SuppressWarnings("unused") Object nullNode3 = null;
         plvalueNode2 = (PLValue)nodeArrayList1.get(0);
-        tlbracketNode3 = (TLbracket)nodeArrayList2.get(0);
-        trbracketNode5 = (TRbracket)nodeArrayList3.get(0);
 
-        plvalueNode1 = new AArrayAssignLValue(plvalueNode2, tlbracketNode3, null, trbracketNode5);
+        plvalueNode1 = new AArrayAssignLValue(plvalueNode2, null);
         }
 	nodeList.add(plvalueNode1);
         return nodeList;
@@ -2559,15 +2491,11 @@ public class Parser
         {
             // Block
         PLValue plvalueNode2;
-        TLbracket tlbracketNode3;
-        PExpression pexpressionNode4;
-        TRbracket trbracketNode5;
+        PExpression pexpressionNode3;
         plvalueNode2 = (PLValue)nodeArrayList1.get(0);
-        tlbracketNode3 = (TLbracket)nodeArrayList2.get(0);
-        pexpressionNode4 = (PExpression)nodeArrayList3.get(0);
-        trbracketNode5 = (TRbracket)nodeArrayList4.get(0);
+        pexpressionNode3 = (PExpression)nodeArrayList3.get(0);
 
-        plvalueNode1 = new AArrayAssignLValue(plvalueNode2, tlbracketNode3, pexpressionNode4, trbracketNode5);
+        plvalueNode1 = new AArrayAssignLValue(plvalueNode2, pexpressionNode3);
         }
 	nodeList.add(plvalueNode1);
         return nodeList;
