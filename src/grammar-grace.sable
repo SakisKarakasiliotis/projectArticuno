@@ -105,11 +105,15 @@ Productions
 
   function_declaration = header semicolon;
 
-  fpar_type = data_type empty_brackets? array_size*;
+  fpar_type {-> fpar_type}={fpar_type} data_type empty_brackets? array_size* {-> New fpar_type.fpar_type(data_type, empty_brackets, [array_size])};
 
-  var_definition = kw_var identifier next_identifier* colon type semicolon;
+  //----------------------------------PRODUCTION SEP------------------------------------------------------------
 
-  next_identifier = comma identifier;
+
+  var_definition {-> var_definition }= {var_definition} identifier next_identifier*  type {-> New var_definition.var_definition(identifier, [next_identifier], type)};
+
+  next_identifier {-> next_identifier}={next_identifier} comma identifier {-> New next_identifier.next_identifier(identifier)};
+
 
   statement {-> statement}= {noop} semicolon {->New statement.noop(semicolon) }|
                             {assignment} l_value assign expression semicolon {-> New statement.assignment(l_value, expression)} |
@@ -132,7 +136,6 @@ Productions
 
   if_else_stmt {-> statement} = {statement_with_else} kw_if condition kw_then [then_stmt]:stmt_with_else kw_else [else_stmt]:stmt_with_else {-> New statement.statement_with_else(condition,then_stmt.statement,else_stmt.statement)};
 
-//----------------------------------PRODUCTION SEP------------------------------------------------------------
 
   func_call {-> func_call}={func_call} identifier lparen multiple_expressions? rparen {-> New func_call.func_call(identifier, [multiple_expressions.expression])};
 
@@ -255,11 +258,16 @@ Abstract Syntax Tree
 
   function_declaration = header semicolon;
 
-  fpar_type = data_type empty_brackets? array_size*;
+  fpar_type ={fpar_type} data_type empty_brackets? array_size*;
 
-  var_definition = kw_var identifier next_identifier* colon type semicolon;
+    //----------------------------ABSTARCT -----------------------
 
-  next_identifier = comma identifier;
+
+  var_definition = {var_definition} identifier next_identifier*  type ;
+
+  next_identifier = {next_identifier} identifier;
+
+
 
   statement = {noop} semicolon |
               {assignment} l_value  expression  |
@@ -270,22 +278,6 @@ Abstract Syntax Tree
               {while_do}  condition statement |
               {return}  expression? |
               {statement_with_else}  condition  [then_stmt]:statement  [else_stmt]:statement;
-
-  //if_stmt = {no_else} kw_if condition kw_then [then_stmt]:statement |
-          //  {with_else} kw_if condition kw_then [then_stmt]:stmt_with_else kw_else [else_stmt]:statement;
-
-  //stmt_with_else = {noop} semicolon |
-          //         {assignment} l_value assign expression semicolon |
-         //          {if} if_else_stmt |
-         //          {block} block |
-    //               {f_call} func_call semicolon |
-         //          {while_do} kw_while condition kw_do stmt_with_else |
-            //       {return} kw_return expression? semicolon;
-
-  //if_else_stmt = kw_if condition kw_then [then_stmt]:stmt_with_else kw_else [else_stmt]:stmt_with_else;
-
-
-  //----------------------------ABSTARCT -----------------------
 
 
   func_call ={func_call} identifier  expression* ;

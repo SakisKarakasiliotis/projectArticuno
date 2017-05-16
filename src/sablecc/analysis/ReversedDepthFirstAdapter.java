@@ -443,20 +443,20 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         outAFunctionDeclaration(node);
     }
 
-    public void inAFparType(AFparType node)
+    public void inAFparTypeFparType(AFparTypeFparType node)
     {
         defaultIn(node);
     }
 
-    public void outAFparType(AFparType node)
+    public void outAFparTypeFparType(AFparTypeFparType node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAFparType(AFparType node)
+    public void caseAFparTypeFparType(AFparTypeFparType node)
     {
-        inAFparType(node);
+        inAFparTypeFparType(node);
         {
             List<PArraySize> copy = new ArrayList<PArraySize>(node.getArraySize());
             Collections.reverse(copy);
@@ -473,34 +473,26 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getDataType().apply(this);
         }
-        outAFparType(node);
+        outAFparTypeFparType(node);
     }
 
-    public void inAVarDefinition(AVarDefinition node)
+    public void inAVarDefinitionVarDefinition(AVarDefinitionVarDefinition node)
     {
         defaultIn(node);
     }
 
-    public void outAVarDefinition(AVarDefinition node)
+    public void outAVarDefinitionVarDefinition(AVarDefinitionVarDefinition node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAVarDefinition(AVarDefinition node)
+    public void caseAVarDefinitionVarDefinition(AVarDefinitionVarDefinition node)
     {
-        inAVarDefinition(node);
-        if(node.getSemicolon() != null)
-        {
-            node.getSemicolon().apply(this);
-        }
+        inAVarDefinitionVarDefinition(node);
         if(node.getType() != null)
         {
             node.getType().apply(this);
-        }
-        if(node.getColon() != null)
-        {
-            node.getColon().apply(this);
         }
         {
             List<PNextIdentifier> copy = new ArrayList<PNextIdentifier>(node.getNextIdentifier());
@@ -514,36 +506,28 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
         {
             node.getIdentifier().apply(this);
         }
-        if(node.getKwVar() != null)
-        {
-            node.getKwVar().apply(this);
-        }
-        outAVarDefinition(node);
+        outAVarDefinitionVarDefinition(node);
     }
 
-    public void inANextIdentifier(ANextIdentifier node)
+    public void inANextIdentifierNextIdentifier(ANextIdentifierNextIdentifier node)
     {
         defaultIn(node);
     }
 
-    public void outANextIdentifier(ANextIdentifier node)
+    public void outANextIdentifierNextIdentifier(ANextIdentifierNextIdentifier node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseANextIdentifier(ANextIdentifier node)
+    public void caseANextIdentifierNextIdentifier(ANextIdentifierNextIdentifier node)
     {
-        inANextIdentifier(node);
+        inANextIdentifierNextIdentifier(node);
         if(node.getIdentifier() != null)
         {
             node.getIdentifier().apply(this);
         }
-        if(node.getComma() != null)
-        {
-            node.getComma().apply(this);
-        }
-        outANextIdentifier(node);
+        outANextIdentifierNextIdentifier(node);
     }
 
     public void inANoopStatement(ANoopStatement node)

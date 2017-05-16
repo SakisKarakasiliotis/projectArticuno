@@ -27,9 +27,9 @@ public interface Analysis extends Switch
     void caseACharacterDataType(ACharacterDataType node);
     void caseAType(AType node);
     void caseAFunctionDeclaration(AFunctionDeclaration node);
-    void caseAFparType(AFparType node);
-    void caseAVarDefinition(AVarDefinition node);
-    void caseANextIdentifier(ANextIdentifier node);
+    void caseAFparTypeFparType(AFparTypeFparType node);
+    void caseAVarDefinitionVarDefinition(AVarDefinitionVarDefinition node);
+    void caseANextIdentifierNextIdentifier(ANextIdentifierNextIdentifier node);
     void caseANoopStatement(ANoopStatement node);
     void caseAAssignmentStatement(AAssignmentStatement node);
     void caseANoElseStatement(ANoElseStatement node);

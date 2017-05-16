@@ -333,43 +333,43 @@ public class Parser
                 push(goTo(10), list);
             }
             break;
-            case 24: /* reduce AAfpartype1FparType */
+            case 24: /* reduce AAfpartypefpartype1FparType */
             {
                 ArrayList<Object> list = new24();
                 push(goTo(11), list);
             }
             break;
-            case 25: /* reduce AAfpartype2FparType */
+            case 25: /* reduce AAfpartypefpartype2FparType */
             {
                 ArrayList<Object> list = new25();
                 push(goTo(11), list);
             }
             break;
-            case 26: /* reduce AAfpartype3FparType */
+            case 26: /* reduce AAfpartypefpartype3FparType */
             {
                 ArrayList<Object> list = new26();
                 push(goTo(11), list);
             }
             break;
-            case 27: /* reduce AAfpartype4FparType */
+            case 27: /* reduce AAfpartypefpartype4FparType */
             {
                 ArrayList<Object> list = new27();
                 push(goTo(11), list);
             }
             break;
-            case 28: /* reduce AAvardefinition1VarDefinition */
+            case 28: /* reduce AAvardefinitionvardefinition1VarDefinition */
             {
                 ArrayList<Object> list = new28();
                 push(goTo(12), list);
             }
             break;
-            case 29: /* reduce AAvardefinition2VarDefinition */
+            case 29: /* reduce AAvardefinitionvardefinition2VarDefinition */
             {
                 ArrayList<Object> list = new29();
                 push(goTo(12), list);
             }
             break;
-            case 30: /* reduce ANextIdentifier */
+            case 30: /* reduce ANextIdentifierNextIdentifier */
             {
                 ArrayList<Object> list = new30();
                 push(goTo(13), list);
@@ -1654,7 +1654,7 @@ public class Parser
 
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new24() /* reduce AAfpartype1FparType */
+    ArrayList<Object> new24() /* reduce AAfpartypefpartype1FparType */
     {
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
@@ -1670,7 +1670,7 @@ public class Parser
             // Block
         }
 
-        pfpartypeNode1 = new AFparType(pdatatypeNode2, null, listNode4);
+        pfpartypeNode1 = new AFparTypeFparType(pdatatypeNode2, null, listNode4);
         }
 	nodeList.add(pfpartypeNode1);
         return nodeList;
@@ -1679,7 +1679,7 @@ public class Parser
 
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new25() /* reduce AAfpartype2FparType */
+    ArrayList<Object> new25() /* reduce AAfpartypefpartype2FparType */
     {
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
@@ -1697,7 +1697,7 @@ public class Parser
             // Block
         }
 
-        pfpartypeNode1 = new AFparType(pdatatypeNode2, pemptybracketsNode3, listNode4);
+        pfpartypeNode1 = new AFparTypeFparType(pdatatypeNode2, pemptybracketsNode3, listNode4);
         }
 	nodeList.add(pfpartypeNode1);
         return nodeList;
@@ -1706,7 +1706,7 @@ public class Parser
 
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new26() /* reduce AAfpartype3FparType */
+    ArrayList<Object> new26() /* reduce AAfpartypefpartype3FparType */
     {
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
@@ -1729,7 +1729,7 @@ public class Parser
 	}
         }
 
-        pfpartypeNode1 = new AFparType(pdatatypeNode2, null, listNode5);
+        pfpartypeNode1 = new AFparTypeFparType(pdatatypeNode2, null, listNode5);
         }
 	nodeList.add(pfpartypeNode1);
         return nodeList;
@@ -1738,7 +1738,7 @@ public class Parser
 
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new27() /* reduce AAfpartype4FparType */
+    ArrayList<Object> new27() /* reduce AAfpartypefpartype4FparType */
     {
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
@@ -1763,7 +1763,7 @@ public class Parser
 	}
         }
 
-        pfpartypeNode1 = new AFparType(pdatatypeNode2, pemptybracketsNode3, listNode5);
+        pfpartypeNode1 = new AFparTypeFparType(pdatatypeNode2, pemptybracketsNode3, listNode5);
         }
 	nodeList.add(pfpartypeNode1);
         return nodeList;
@@ -1772,34 +1772,25 @@ public class Parser
 
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new28() /* reduce AAvardefinition1VarDefinition */
+    ArrayList<Object> new28() /* reduce AAvardefinitionvardefinition1VarDefinition */
     {
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList5 = pop();
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList4 = pop();
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList3 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
         PVarDefinition pvardefinitionNode1;
         {
             // Block
-        TKwVar tkwvarNode2;
-        TIdentifier tidentifierNode3;
-        LinkedList<Object> listNode4 = new LinkedList<Object>();
-        TColon tcolonNode5;
-        PType ptypeNode6;
-        TSemicolon tsemicolonNode7;
-        tkwvarNode2 = (TKwVar)nodeArrayList1.get(0);
-        tidentifierNode3 = (TIdentifier)nodeArrayList2.get(0);
+        TIdentifier tidentifierNode2;
+        LinkedList<Object> listNode3 = new LinkedList<Object>();
+        PType ptypeNode4;
+        tidentifierNode2 = (TIdentifier)nodeArrayList1.get(0);
         {
             // Block
         }
-        tcolonNode5 = (TColon)nodeArrayList3.get(0);
-        ptypeNode6 = (PType)nodeArrayList4.get(0);
-        tsemicolonNode7 = (TSemicolon)nodeArrayList5.get(0);
+        ptypeNode4 = (PType)nodeArrayList2.get(0);
 
-        pvardefinitionNode1 = new AVarDefinition(tkwvarNode2, tidentifierNode3, listNode4, tcolonNode5, ptypeNode6, tsemicolonNode7);
+        pvardefinitionNode1 = new AVarDefinitionVarDefinition(tidentifierNode2, listNode3, ptypeNode4);
         }
 	nodeList.add(pvardefinitionNode1);
         return nodeList;
@@ -1808,41 +1799,32 @@ public class Parser
 
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new29() /* reduce AAvardefinition2VarDefinition */
+    ArrayList<Object> new29() /* reduce AAvardefinitionvardefinition2VarDefinition */
     {
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList6 = pop();
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList5 = pop();
-        @SuppressWarnings("unused") ArrayList<Object> nodeArrayList4 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList3 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
         PVarDefinition pvardefinitionNode1;
         {
             // Block
-        TKwVar tkwvarNode2;
-        TIdentifier tidentifierNode3;
-        LinkedList<Object> listNode5 = new LinkedList<Object>();
-        TColon tcolonNode6;
-        PType ptypeNode7;
-        TSemicolon tsemicolonNode8;
-        tkwvarNode2 = (TKwVar)nodeArrayList1.get(0);
-        tidentifierNode3 = (TIdentifier)nodeArrayList2.get(0);
+        TIdentifier tidentifierNode2;
+        LinkedList<Object> listNode4 = new LinkedList<Object>();
+        PType ptypeNode5;
+        tidentifierNode2 = (TIdentifier)nodeArrayList1.get(0);
         {
             // Block
-        LinkedList<Object> listNode4 = new LinkedList<Object>();
-        listNode4 = (LinkedList)nodeArrayList3.get(0);
-	if(listNode4 != null)
+        LinkedList<Object> listNode3 = new LinkedList<Object>();
+        listNode3 = (LinkedList)nodeArrayList2.get(0);
+	if(listNode3 != null)
 	{
-	  listNode5.addAll(listNode4);
+	  listNode4.addAll(listNode3);
 	}
         }
-        tcolonNode6 = (TColon)nodeArrayList4.get(0);
-        ptypeNode7 = (PType)nodeArrayList5.get(0);
-        tsemicolonNode8 = (TSemicolon)nodeArrayList6.get(0);
+        ptypeNode5 = (PType)nodeArrayList3.get(0);
 
-        pvardefinitionNode1 = new AVarDefinition(tkwvarNode2, tidentifierNode3, listNode5, tcolonNode6, ptypeNode7, tsemicolonNode8);
+        pvardefinitionNode1 = new AVarDefinitionVarDefinition(tidentifierNode2, listNode4, ptypeNode5);
         }
 	nodeList.add(pvardefinitionNode1);
         return nodeList;
@@ -1851,7 +1833,7 @@ public class Parser
 
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new30() /* reduce ANextIdentifier */
+    ArrayList<Object> new30() /* reduce ANextIdentifierNextIdentifier */
     {
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
@@ -1860,12 +1842,10 @@ public class Parser
         PNextIdentifier pnextidentifierNode1;
         {
             // Block
-        TComma tcommaNode2;
-        TIdentifier tidentifierNode3;
-        tcommaNode2 = (TComma)nodeArrayList1.get(0);
-        tidentifierNode3 = (TIdentifier)nodeArrayList2.get(0);
+        TIdentifier tidentifierNode2;
+        tidentifierNode2 = (TIdentifier)nodeArrayList2.get(0);
 
-        pnextidentifierNode1 = new ANextIdentifier(tcommaNode2, tidentifierNode3);
+        pnextidentifierNode1 = new ANextIdentifierNextIdentifier(tidentifierNode2);
         }
 	nodeList.add(pnextidentifierNode1);
         return nodeList;
@@ -3890,157 +3870,155 @@ public class Parser
 			{{-1, ERROR, 1}, {37, SHIFT, 5}, },
 			{{-1, ERROR, 2}, {41, ACCEPT, -1}, },
 			{{-1, REDUCE, 0}, },
-			{{-1, ERROR, 4}, {0, SHIFT, 1}, {1, SHIFT, 6}, {12, SHIFT, 7}, },
+			{{-1, ERROR, 4}, {0, SHIFT, 1}, {12, SHIFT, 6}, {37, SHIFT, 7}, },
 			{{-1, ERROR, 5}, {14, SHIFT, 15}, },
-			{{-1, ERROR, 6}, {37, SHIFT, 16}, },
-			{{-1, ERROR, 7}, {5, SHIFT, 17}, {6, SHIFT, 18}, {11, SHIFT, 19}, {12, SHIFT, 7}, {13, SHIFT, 20}, {19, SHIFT, 21}, {37, SHIFT, 22}, {40, SHIFT, 23}, },
+			{{-1, ERROR, 6}, {5, SHIFT, 16}, {6, SHIFT, 17}, {11, SHIFT, 18}, {12, SHIFT, 6}, {13, SHIFT, 19}, {19, SHIFT, 20}, {37, SHIFT, 21}, {40, SHIFT, 22}, },
+			{{-1, ERROR, 7}, {2, SHIFT, 29}, {3, SHIFT, 30}, {18, SHIFT, 31}, },
 			{{-1, REDUCE, 7}, },
-			{{-1, ERROR, 9}, {0, SHIFT, 1}, {1, SHIFT, 6}, {12, SHIFT, 7}, {19, SHIFT, 30}, },
+			{{-1, ERROR, 9}, {0, SHIFT, 1}, {12, SHIFT, 6}, {19, SHIFT, 36}, {37, SHIFT, 7}, },
 			{{-1, REDUCE, 112}, },
 			{{-1, REDUCE, 1}, },
 			{{-1, REDUCE, 8}, },
 			{{-1, REDUCE, 9}, },
-			{{-1, ERROR, 14}, {0, SHIFT, 1}, {1, SHIFT, 6}, {12, SHIFT, 7}, },
-			{{-1, ERROR, 15}, {9, SHIFT, 33}, {15, SHIFT, 34}, {19, SHIFT, 35}, {37, SHIFT, 36}, },
-			{{-1, ERROR, 16}, {18, SHIFT, 40}, {20, SHIFT, 41}, },
-			{{-1, ERROR, 17}, {14, SHIFT, 44}, {22, SHIFT, 45}, {23, SHIFT, 46}, {36, SHIFT, 47}, {37, SHIFT, 48}, {38, SHIFT, 49}, {39, SHIFT, 50}, {40, SHIFT, 51}, },
-			{{-1, ERROR, 18}, {14, SHIFT, 44}, {22, SHIFT, 45}, {23, SHIFT, 46}, {36, SHIFT, 47}, {37, SHIFT, 48}, {38, SHIFT, 49}, {39, SHIFT, 50}, {40, SHIFT, 51}, },
-			{{-1, ERROR, 19}, {14, SHIFT, 44}, {19, SHIFT, 67}, {22, SHIFT, 45}, {23, SHIFT, 46}, {37, SHIFT, 48}, {38, SHIFT, 49}, {39, SHIFT, 50}, {40, SHIFT, 51}, },
+			{{-1, ERROR, 14}, {0, SHIFT, 1}, {12, SHIFT, 6}, {37, SHIFT, 7}, },
+			{{-1, ERROR, 15}, {9, SHIFT, 39}, {15, SHIFT, 40}, {19, SHIFT, 41}, {37, SHIFT, 42}, },
+			{{-1, ERROR, 16}, {14, SHIFT, 46}, {22, SHIFT, 47}, {23, SHIFT, 48}, {36, SHIFT, 49}, {37, SHIFT, 50}, {38, SHIFT, 51}, {39, SHIFT, 52}, {40, SHIFT, 53}, },
+			{{-1, ERROR, 17}, {14, SHIFT, 46}, {22, SHIFT, 47}, {23, SHIFT, 48}, {36, SHIFT, 49}, {37, SHIFT, 50}, {38, SHIFT, 51}, {39, SHIFT, 52}, {40, SHIFT, 53}, },
+			{{-1, ERROR, 18}, {14, SHIFT, 46}, {19, SHIFT, 69}, {22, SHIFT, 47}, {23, SHIFT, 48}, {37, SHIFT, 50}, {38, SHIFT, 51}, {39, SHIFT, 52}, {40, SHIFT, 53}, },
 			{{-1, REDUCE, 10}, },
 			{{-1, REDUCE, 31}, },
-			{{-1, REDUCE, 55}, {14, SHIFT, 69}, },
+			{{-1, REDUCE, 55}, {14, SHIFT, 71}, },
 			{{-1, REDUCE, 56}, },
 			{{-1, REDUCE, 34}, },
 			{{-1, REDUCE, 116}, },
 			{{-1, REDUCE, 33}, },
-			{{-1, ERROR, 27}, {19, SHIFT, 70}, },
-			{{-1, ERROR, 28}, {16, SHIFT, 71}, {21, SHIFT, 72}, },
-			{{-1, ERROR, 29}, {5, SHIFT, 17}, {6, SHIFT, 18}, {11, SHIFT, 19}, {12, SHIFT, 7}, {13, SHIFT, 73}, {19, SHIFT, 21}, {37, SHIFT, 22}, {40, SHIFT, 23}, },
+			{{-1, ERROR, 26}, {19, SHIFT, 72}, },
+			{{-1, ERROR, 27}, {16, SHIFT, 73}, {21, SHIFT, 74}, },
+			{{-1, ERROR, 28}, {5, SHIFT, 16}, {6, SHIFT, 17}, {11, SHIFT, 18}, {12, SHIFT, 6}, {13, SHIFT, 75}, {19, SHIFT, 20}, {37, SHIFT, 21}, {40, SHIFT, 22}, },
+			{{-1, REDUCE, 20}, },
+			{{-1, REDUCE, 19}, },
+			{{-1, ERROR, 31}, {37, SHIFT, 77}, },
+			{{-1, REDUCE, 21}, {16, SHIFT, 78}, },
+			{{-1, REDUCE, 28}, },
+			{{-1, REDUCE, 118}, },
+			{{-1, ERROR, 35}, {2, SHIFT, 29}, {3, SHIFT, 30}, {18, SHIFT, 31}, },
 			{{-1, REDUCE, 23}, },
 			{{-1, REDUCE, 113}, },
 			{{-1, REDUCE, 2}, },
-			{{-1, ERROR, 33}, {37, SHIFT, 75}, },
-			{{-1, ERROR, 34}, {20, SHIFT, 76}, },
-			{{-1, ERROR, 35}, {9, SHIFT, 33}, {37, SHIFT, 36}, },
-			{{-1, ERROR, 36}, {18, SHIFT, 40}, {20, SHIFT, 78}, },
-			{{-1, ERROR, 37}, {15, SHIFT, 80}, {19, SHIFT, 35}, },
+			{{-1, ERROR, 39}, {37, SHIFT, 83}, },
+			{{-1, ERROR, 40}, {20, SHIFT, 84}, },
+			{{-1, ERROR, 41}, {9, SHIFT, 39}, {37, SHIFT, 42}, },
+			{{-1, ERROR, 42}, {18, SHIFT, 31}, {20, SHIFT, 86}, },
+			{{-1, ERROR, 43}, {15, SHIFT, 88}, {19, SHIFT, 41}, },
 			{{-1, REDUCE, 114}, },
-			{{-1, ERROR, 39}, {15, SHIFT, 82}, {19, SHIFT, 35}, },
-			{{-1, ERROR, 40}, {37, SHIFT, 84}, },
-			{{-1, ERROR, 41}, {2, SHIFT, 85}, {3, SHIFT, 86}, },
-			{{-1, REDUCE, 118}, },
-			{{-1, ERROR, 43}, {18, SHIFT, 40}, {20, SHIFT, 89}, },
-			{{-1, ERROR, 44}, {14, SHIFT, 91}, {22, SHIFT, 45}, {23, SHIFT, 46}, {37, SHIFT, 48}, {38, SHIFT, 49}, {39, SHIFT, 92}, {40, SHIFT, 93}, },
+			{{-1, ERROR, 45}, {15, SHIFT, 90}, {19, SHIFT, 41}, },
+			{{-1, ERROR, 46}, {14, SHIFT, 92}, {22, SHIFT, 47}, {23, SHIFT, 48}, {37, SHIFT, 50}, {38, SHIFT, 51}, {39, SHIFT, 93}, {40, SHIFT, 94}, },
 			{{-1, REDUCE, 72}, },
 			{{-1, REDUCE, 73}, },
-			{{-1, ERROR, 47}, {14, SHIFT, 44}, {22, SHIFT, 45}, {23, SHIFT, 46}, {36, SHIFT, 47}, {37, SHIFT, 48}, {38, SHIFT, 49}, {39, SHIFT, 50}, {40, SHIFT, 51}, },
-			{{-1, REDUCE, 97}, {14, SHIFT, 69}, {16, SHIFT, 100}, },
+			{{-1, ERROR, 49}, {14, SHIFT, 46}, {22, SHIFT, 47}, {23, SHIFT, 48}, {36, SHIFT, 49}, {37, SHIFT, 50}, {38, SHIFT, 51}, {39, SHIFT, 52}, {40, SHIFT, 53}, },
+			{{-1, REDUCE, 97}, {14, SHIFT, 71}, {16, SHIFT, 101}, },
 			{{-1, REDUCE, 95}, },
 			{{-1, REDUCE, 61}, },
 			{{-1, REDUCE, 60}, },
 			{{-1, REDUCE, 62}, },
 			{{-1, REDUCE, 111}, },
-			{{-1, ERROR, 54}, {4, SHIFT, 103}, },
-			{{-1, ERROR, 55}, {14, SHIFT, 44}, {22, SHIFT, 45}, {23, SHIFT, 46}, {37, SHIFT, 48}, {38, SHIFT, 49}, {39, SHIFT, 50}, {40, SHIFT, 51}, },
+			{{-1, ERROR, 56}, {4, SHIFT, 104}, },
+			{{-1, ERROR, 57}, {14, SHIFT, 46}, {22, SHIFT, 47}, {23, SHIFT, 48}, {37, SHIFT, 50}, {38, SHIFT, 51}, {39, SHIFT, 52}, {40, SHIFT, 53}, },
 			{{-1, REDUCE, 59}, },
-			{{-1, REDUCE, 65}, {22, SHIFT, 105}, {23, SHIFT, 106}, },
-			{{-1, REDUCE, 89}, {24, SHIFT, 107}, {26, SHIFT, 108}, {27, SHIFT, 109}, },
+			{{-1, REDUCE, 65}, {22, SHIFT, 106}, {23, SHIFT, 107}, },
+			{{-1, REDUCE, 89}, {24, SHIFT, 108}, {26, SHIFT, 109}, {27, SHIFT, 110}, },
 			{{-1, REDUCE, 93}, },
 			{{-1, REDUCE, 94}, },
-			{{-1, REDUCE, 71}, {29, SHIFT, 110}, },
-			{{-1, REDUCE, 99}, {28, SHIFT, 111}, },
+			{{-1, REDUCE, 71}, {29, SHIFT, 111}, },
+			{{-1, REDUCE, 99}, {28, SHIFT, 112}, },
 			{{-1, REDUCE, 101}, },
-			{{-1, REDUCE, 103}, {30, SHIFT, 112}, {31, SHIFT, 113}, {32, SHIFT, 114}, {33, SHIFT, 115}, {34, SHIFT, 116}, {35, SHIFT, 117}, },
+			{{-1, REDUCE, 103}, {30, SHIFT, 113}, {31, SHIFT, 114}, {32, SHIFT, 115}, {33, SHIFT, 116}, {34, SHIFT, 117}, {35, SHIFT, 118}, },
 			{{-1, REDUCE, 110}, },
-			{{-1, ERROR, 66}, {8, SHIFT, 118}, },
+			{{-1, ERROR, 68}, {8, SHIFT, 119}, },
 			{{-1, REDUCE, 37}, },
-			{{-1, ERROR, 68}, {19, SHIFT, 119}, },
-			{{-1, ERROR, 69}, {14, SHIFT, 44}, {15, SHIFT, 120}, {22, SHIFT, 45}, {23, SHIFT, 46}, {37, SHIFT, 48}, {38, SHIFT, 49}, {39, SHIFT, 50}, {40, SHIFT, 51}, },
+			{{-1, ERROR, 70}, {19, SHIFT, 120}, },
+			{{-1, ERROR, 71}, {14, SHIFT, 46}, {15, SHIFT, 121}, {22, SHIFT, 47}, {23, SHIFT, 48}, {37, SHIFT, 50}, {38, SHIFT, 51}, {39, SHIFT, 52}, {40, SHIFT, 53}, },
 			{{-1, REDUCE, 35}, },
-			{{-1, ERROR, 71}, {14, SHIFT, 44}, {17, SHIFT, 123}, {22, SHIFT, 45}, {23, SHIFT, 46}, {37, SHIFT, 48}, {38, SHIFT, 49}, {39, SHIFT, 50}, {40, SHIFT, 51}, },
-			{{-1, ERROR, 72}, {14, SHIFT, 44}, {22, SHIFT, 45}, {23, SHIFT, 46}, {37, SHIFT, 48}, {38, SHIFT, 49}, {39, SHIFT, 50}, {40, SHIFT, 51}, },
+			{{-1, ERROR, 73}, {14, SHIFT, 46}, {17, SHIFT, 124}, {22, SHIFT, 47}, {23, SHIFT, 48}, {37, SHIFT, 50}, {38, SHIFT, 51}, {39, SHIFT, 52}, {40, SHIFT, 53}, },
+			{{-1, ERROR, 74}, {14, SHIFT, 46}, {22, SHIFT, 47}, {23, SHIFT, 48}, {37, SHIFT, 50}, {38, SHIFT, 51}, {39, SHIFT, 52}, {40, SHIFT, 53}, },
 			{{-1, REDUCE, 11}, },
 			{{-1, REDUCE, 117}, },
-			{{-1, ERROR, 75}, {18, SHIFT, 40}, {20, SHIFT, 126}, },
-			{{-1, ERROR, 76}, {2, SHIFT, 85}, {3, SHIFT, 86}, {10, SHIFT, 128}, },
-			{{-1, REDUCE, 16}, },
-			{{-1, ERROR, 78}, {2, SHIFT, 85}, {3, SHIFT, 86}, },
-			{{-1, ERROR, 79}, {18, SHIFT, 40}, {20, SHIFT, 133}, },
-			{{-1, ERROR, 80}, {20, SHIFT, 134}, },
-			{{-1, ERROR, 81}, {15, SHIFT, 135}, {19, SHIFT, 35}, },
-			{{-1, ERROR, 82}, {20, SHIFT, 136}, },
-			{{-1, REDUCE, 115}, },
 			{{-1, REDUCE, 30}, },
-			{{-1, REDUCE, 20}, },
-			{{-1, REDUCE, 19}, },
-			{{-1, REDUCE, 21}, {16, SHIFT, 137}, },
-			{{-1, ERROR, 88}, {19, SHIFT, 140}, },
-			{{-1, ERROR, 89}, {2, SHIFT, 85}, {3, SHIFT, 86}, },
+			{{-1, ERROR, 78}, {38, SHIFT, 127}, },
+			{{-1, REDUCE, 120}, },
+			{{-1, REDUCE, 22}, {16, SHIFT, 78}, },
+			{{-1, REDUCE, 29}, },
 			{{-1, REDUCE, 119}, },
-			{{-1, ERROR, 91}, {14, SHIFT, 91}, {37, SHIFT, 142}, {38, SHIFT, 49}, },
+			{{-1, ERROR, 83}, {18, SHIFT, 31}, {20, SHIFT, 129}, },
+			{{-1, ERROR, 84}, {2, SHIFT, 29}, {3, SHIFT, 30}, {10, SHIFT, 131}, },
+			{{-1, REDUCE, 16}, },
+			{{-1, ERROR, 86}, {2, SHIFT, 29}, {3, SHIFT, 30}, },
+			{{-1, ERROR, 87}, {18, SHIFT, 31}, {20, SHIFT, 136}, },
+			{{-1, ERROR, 88}, {20, SHIFT, 137}, },
+			{{-1, ERROR, 89}, {15, SHIFT, 138}, {19, SHIFT, 41}, },
+			{{-1, ERROR, 90}, {20, SHIFT, 139}, },
+			{{-1, REDUCE, 115}, },
+			{{-1, ERROR, 92}, {14, SHIFT, 92}, {37, SHIFT, 140}, {38, SHIFT, 51}, },
 			{{-1, REDUCE, 68}, },
 			{{-1, REDUCE, 67}, },
 			{{-1, REDUCE, 69}, },
-			{{-1, ERROR, 95}, {15, SHIFT, 143}, },
-			{{-1, ERROR, 96}, {14, SHIFT, 44}, {22, SHIFT, 45}, {23, SHIFT, 46}, {37, SHIFT, 48}, {38, SHIFT, 49}, {39, SHIFT, 50}, {40, SHIFT, 51}, },
+			{{-1, ERROR, 96}, {15, SHIFT, 141}, },
+			{{-1, ERROR, 97}, {14, SHIFT, 46}, {22, SHIFT, 47}, {23, SHIFT, 48}, {37, SHIFT, 50}, {38, SHIFT, 51}, {39, SHIFT, 52}, {40, SHIFT, 53}, },
 			{{-1, REDUCE, 66}, },
-			{{-1, ERROR, 98}, {15, SHIFT, 145}, {22, SHIFT, 105}, {23, SHIFT, 106}, },
+			{{-1, ERROR, 99}, {15, SHIFT, 143}, {22, SHIFT, 106}, {23, SHIFT, 107}, },
 			{{-1, REDUCE, 102}, },
-			{{-1, ERROR, 100}, {14, SHIFT, 44}, {22, SHIFT, 45}, {23, SHIFT, 46}, {37, SHIFT, 48}, {38, SHIFT, 49}, {39, SHIFT, 50}, {40, SHIFT, 51}, },
+			{{-1, ERROR, 101}, {14, SHIFT, 46}, {22, SHIFT, 47}, {23, SHIFT, 48}, {37, SHIFT, 50}, {38, SHIFT, 51}, {39, SHIFT, 52}, {40, SHIFT, 53}, },
 			{{-1, REDUCE, 124}, },
-			{{-1, REDUCE, 76}, {16, SHIFT, 100}, },
-			{{-1, ERROR, 103}, {5, SHIFT, 17}, {6, SHIFT, 18}, {11, SHIFT, 19}, {12, SHIFT, 7}, {19, SHIFT, 21}, {37, SHIFT, 22}, {40, SHIFT, 23}, },
+			{{-1, REDUCE, 76}, {16, SHIFT, 101}, },
+			{{-1, ERROR, 104}, {5, SHIFT, 16}, {6, SHIFT, 17}, {11, SHIFT, 18}, {12, SHIFT, 6}, {19, SHIFT, 20}, {37, SHIFT, 21}, {40, SHIFT, 22}, },
 			{{-1, REDUCE, 64}, },
-			{{-1, ERROR, 105}, {14, SHIFT, 91}, {37, SHIFT, 142}, {38, SHIFT, 49}, },
-			{{-1, ERROR, 106}, {14, SHIFT, 91}, {37, SHIFT, 142}, {38, SHIFT, 49}, },
-			{{-1, ERROR, 107}, {14, SHIFT, 91}, {37, SHIFT, 142}, {38, SHIFT, 49}, },
-			{{-1, ERROR, 108}, {14, SHIFT, 91}, {37, SHIFT, 142}, {38, SHIFT, 49}, },
-			{{-1, ERROR, 109}, {14, SHIFT, 91}, {37, SHIFT, 142}, {38, SHIFT, 49}, },
-			{{-1, ERROR, 110}, {14, SHIFT, 44}, {22, SHIFT, 45}, {23, SHIFT, 46}, {36, SHIFT, 47}, {37, SHIFT, 48}, {38, SHIFT, 49}, {39, SHIFT, 50}, {40, SHIFT, 51}, },
-			{{-1, ERROR, 111}, {14, SHIFT, 44}, {22, SHIFT, 45}, {23, SHIFT, 46}, {36, SHIFT, 47}, {37, SHIFT, 48}, {38, SHIFT, 49}, {39, SHIFT, 50}, {40, SHIFT, 51}, },
-			{{-1, ERROR, 112}, {14, SHIFT, 44}, {22, SHIFT, 45}, {23, SHIFT, 46}, {37, SHIFT, 48}, {38, SHIFT, 49}, {39, SHIFT, 50}, {40, SHIFT, 51}, },
-			{{-1, ERROR, 113}, {14, SHIFT, 44}, {22, SHIFT, 45}, {23, SHIFT, 46}, {37, SHIFT, 48}, {38, SHIFT, 49}, {39, SHIFT, 50}, {40, SHIFT, 51}, },
-			{{-1, ERROR, 114}, {14, SHIFT, 44}, {22, SHIFT, 45}, {23, SHIFT, 46}, {37, SHIFT, 48}, {38, SHIFT, 49}, {39, SHIFT, 50}, {40, SHIFT, 51}, },
-			{{-1, ERROR, 115}, {14, SHIFT, 44}, {22, SHIFT, 45}, {23, SHIFT, 46}, {37, SHIFT, 48}, {38, SHIFT, 49}, {39, SHIFT, 50}, {40, SHIFT, 51}, },
-			{{-1, ERROR, 116}, {14, SHIFT, 44}, {22, SHIFT, 45}, {23, SHIFT, 46}, {37, SHIFT, 48}, {38, SHIFT, 49}, {39, SHIFT, 50}, {40, SHIFT, 51}, },
-			{{-1, ERROR, 117}, {14, SHIFT, 44}, {22, SHIFT, 45}, {23, SHIFT, 46}, {37, SHIFT, 48}, {38, SHIFT, 49}, {39, SHIFT, 50}, {40, SHIFT, 51}, },
-			{{-1, ERROR, 118}, {5, SHIFT, 162}, {6, SHIFT, 163}, {11, SHIFT, 164}, {12, SHIFT, 7}, {19, SHIFT, 165}, {37, SHIFT, 22}, {40, SHIFT, 23}, },
+			{{-1, ERROR, 106}, {14, SHIFT, 92}, {37, SHIFT, 140}, {38, SHIFT, 51}, },
+			{{-1, ERROR, 107}, {14, SHIFT, 92}, {37, SHIFT, 140}, {38, SHIFT, 51}, },
+			{{-1, ERROR, 108}, {14, SHIFT, 92}, {37, SHIFT, 140}, {38, SHIFT, 51}, },
+			{{-1, ERROR, 109}, {14, SHIFT, 92}, {37, SHIFT, 140}, {38, SHIFT, 51}, },
+			{{-1, ERROR, 110}, {14, SHIFT, 92}, {37, SHIFT, 140}, {38, SHIFT, 51}, },
+			{{-1, ERROR, 111}, {14, SHIFT, 46}, {22, SHIFT, 47}, {23, SHIFT, 48}, {36, SHIFT, 49}, {37, SHIFT, 50}, {38, SHIFT, 51}, {39, SHIFT, 52}, {40, SHIFT, 53}, },
+			{{-1, ERROR, 112}, {14, SHIFT, 46}, {22, SHIFT, 47}, {23, SHIFT, 48}, {36, SHIFT, 49}, {37, SHIFT, 50}, {38, SHIFT, 51}, {39, SHIFT, 52}, {40, SHIFT, 53}, },
+			{{-1, ERROR, 113}, {14, SHIFT, 46}, {22, SHIFT, 47}, {23, SHIFT, 48}, {37, SHIFT, 50}, {38, SHIFT, 51}, {39, SHIFT, 52}, {40, SHIFT, 53}, },
+			{{-1, ERROR, 114}, {14, SHIFT, 46}, {22, SHIFT, 47}, {23, SHIFT, 48}, {37, SHIFT, 50}, {38, SHIFT, 51}, {39, SHIFT, 52}, {40, SHIFT, 53}, },
+			{{-1, ERROR, 115}, {14, SHIFT, 46}, {22, SHIFT, 47}, {23, SHIFT, 48}, {37, SHIFT, 50}, {38, SHIFT, 51}, {39, SHIFT, 52}, {40, SHIFT, 53}, },
+			{{-1, ERROR, 116}, {14, SHIFT, 46}, {22, SHIFT, 47}, {23, SHIFT, 48}, {37, SHIFT, 50}, {38, SHIFT, 51}, {39, SHIFT, 52}, {40, SHIFT, 53}, },
+			{{-1, ERROR, 117}, {14, SHIFT, 46}, {22, SHIFT, 47}, {23, SHIFT, 48}, {37, SHIFT, 50}, {38, SHIFT, 51}, {39, SHIFT, 52}, {40, SHIFT, 53}, },
+			{{-1, ERROR, 118}, {14, SHIFT, 46}, {22, SHIFT, 47}, {23, SHIFT, 48}, {37, SHIFT, 50}, {38, SHIFT, 51}, {39, SHIFT, 52}, {40, SHIFT, 53}, },
+			{{-1, ERROR, 119}, {5, SHIFT, 160}, {6, SHIFT, 161}, {11, SHIFT, 162}, {12, SHIFT, 6}, {19, SHIFT, 163}, {37, SHIFT, 21}, {40, SHIFT, 22}, },
 			{{-1, REDUCE, 38}, },
 			{{-1, REDUCE, 50}, },
-			{{-1, ERROR, 121}, {15, SHIFT, 172}, },
-			{{-1, REDUCE, 52}, {18, SHIFT, 173}, },
+			{{-1, ERROR, 122}, {15, SHIFT, 170}, },
+			{{-1, REDUCE, 52}, {18, SHIFT, 171}, },
 			{{-1, REDUCE, 57}, },
-			{{-1, ERROR, 124}, {17, SHIFT, 176}, },
-			{{-1, ERROR, 125}, {19, SHIFT, 177}, },
-			{{-1, ERROR, 126}, {2, SHIFT, 85}, {3, SHIFT, 86}, },
-			{{-1, ERROR, 127}, {18, SHIFT, 40}, {20, SHIFT, 179}, },
+			{{-1, ERROR, 125}, {17, SHIFT, 174}, },
+			{{-1, ERROR, 126}, {19, SHIFT, 175}, },
+			{{-1, ERROR, 127}, {17, SHIFT, 176}, },
+			{{-1, REDUCE, 121}, },
+			{{-1, ERROR, 129}, {2, SHIFT, 29}, {3, SHIFT, 30}, },
+			{{-1, ERROR, 130}, {18, SHIFT, 31}, {20, SHIFT, 178}, },
 			{{-1, REDUCE, 18}, },
 			{{-1, REDUCE, 3}, },
 			{{-1, REDUCE, 17}, },
-			{{-1, REDUCE, 24}, {16, SHIFT, 180}, },
+			{{-1, REDUCE, 24}, {16, SHIFT, 179}, },
 			{{-1, REDUCE, 12}, },
-			{{-1, ERROR, 133}, {2, SHIFT, 85}, {3, SHIFT, 86}, },
-			{{-1, ERROR, 134}, {2, SHIFT, 85}, {3, SHIFT, 86}, {10, SHIFT, 128}, },
-			{{-1, ERROR, 135}, {20, SHIFT, 185}, },
-			{{-1, ERROR, 136}, {2, SHIFT, 85}, {3, SHIFT, 86}, {10, SHIFT, 128}, },
-			{{-1, ERROR, 137}, {38, SHIFT, 187}, },
-			{{-1, REDUCE, 120}, },
-			{{-1, REDUCE, 22}, {16, SHIFT, 137}, },
-			{{-1, REDUCE, 28}, },
-			{{-1, ERROR, 141}, {19, SHIFT, 189}, },
+			{{-1, ERROR, 136}, {2, SHIFT, 29}, {3, SHIFT, 30}, },
+			{{-1, ERROR, 137}, {2, SHIFT, 29}, {3, SHIFT, 30}, {10, SHIFT, 131}, },
+			{{-1, ERROR, 138}, {20, SHIFT, 184}, },
+			{{-1, ERROR, 139}, {2, SHIFT, 29}, {3, SHIFT, 30}, {10, SHIFT, 131}, },
 			{{-1, REDUCE, 97}, },
 			{{-1, REDUCE, 63}, },
 			{{-1, REDUCE, 70}, },
 			{{-1, REDUCE, 96}, },
-			{{-1, ERROR, 146}, {17, SHIFT, 190}, },
+			{{-1, ERROR, 144}, {17, SHIFT, 186}, },
 			{{-1, REDUCE, 125}, },
 			{{-1, REDUCE, 36}, },
-			{{-1, REDUCE, 87}, {24, SHIFT, 107}, {26, SHIFT, 108}, {27, SHIFT, 109}, },
-			{{-1, REDUCE, 88}, {24, SHIFT, 107}, {26, SHIFT, 108}, {27, SHIFT, 109}, },
+			{{-1, REDUCE, 87}, {24, SHIFT, 108}, {26, SHIFT, 109}, {27, SHIFT, 110}, },
+			{{-1, REDUCE, 88}, {24, SHIFT, 108}, {26, SHIFT, 109}, {27, SHIFT, 110}, },
 			{{-1, REDUCE, 90}, },
 			{{-1, REDUCE, 92}, },
 			{{-1, REDUCE, 91}, },
-			{{-1, REDUCE, 98}, {28, SHIFT, 111}, },
+			{{-1, REDUCE, 98}, {28, SHIFT, 112}, },
 			{{-1, REDUCE, 100}, },
 			{{-1, REDUCE, 105}, },
 			{{-1, REDUCE, 104}, },
@@ -4048,58 +4026,55 @@ public class Parser
 			{{-1, REDUCE, 109}, },
 			{{-1, REDUCE, 107}, },
 			{{-1, REDUCE, 108}, },
-			{{-1, ERROR, 162}, {14, SHIFT, 44}, {22, SHIFT, 45}, {23, SHIFT, 46}, {36, SHIFT, 47}, {37, SHIFT, 48}, {38, SHIFT, 49}, {39, SHIFT, 50}, {40, SHIFT, 51}, },
-			{{-1, ERROR, 163}, {14, SHIFT, 44}, {22, SHIFT, 45}, {23, SHIFT, 46}, {36, SHIFT, 47}, {37, SHIFT, 48}, {38, SHIFT, 49}, {39, SHIFT, 50}, {40, SHIFT, 51}, },
-			{{-1, ERROR, 164}, {14, SHIFT, 44}, {19, SHIFT, 193}, {22, SHIFT, 45}, {23, SHIFT, 46}, {37, SHIFT, 48}, {38, SHIFT, 49}, {39, SHIFT, 50}, {40, SHIFT, 51}, },
+			{{-1, ERROR, 160}, {14, SHIFT, 46}, {22, SHIFT, 47}, {23, SHIFT, 48}, {36, SHIFT, 49}, {37, SHIFT, 50}, {38, SHIFT, 51}, {39, SHIFT, 52}, {40, SHIFT, 53}, },
+			{{-1, ERROR, 161}, {14, SHIFT, 46}, {22, SHIFT, 47}, {23, SHIFT, 48}, {36, SHIFT, 49}, {37, SHIFT, 50}, {38, SHIFT, 51}, {39, SHIFT, 52}, {40, SHIFT, 53}, },
+			{{-1, ERROR, 162}, {14, SHIFT, 46}, {19, SHIFT, 189}, {22, SHIFT, 47}, {23, SHIFT, 48}, {37, SHIFT, 50}, {38, SHIFT, 51}, {39, SHIFT, 52}, {40, SHIFT, 53}, },
 			{{-1, REDUCE, 31}, {7, REDUCE, 41}, },
 			{{-1, REDUCE, 34}, {7, REDUCE, 44}, },
 			{{-1, REDUCE, 39}, },
-			{{-1, ERROR, 168}, {7, SHIFT, 195}, },
+			{{-1, ERROR, 166}, {7, SHIFT, 191}, },
 			{{-1, REDUCE, 43}, },
-			{{-1, ERROR, 170}, {19, SHIFT, 196}, },
-			{{-1, ERROR, 171}, {16, SHIFT, 71}, {21, SHIFT, 197}, },
+			{{-1, ERROR, 168}, {19, SHIFT, 192}, },
+			{{-1, ERROR, 169}, {16, SHIFT, 73}, {21, SHIFT, 193}, },
 			{{-1, REDUCE, 51}, },
-			{{-1, ERROR, 173}, {14, SHIFT, 44}, {22, SHIFT, 45}, {23, SHIFT, 46}, {37, SHIFT, 48}, {38, SHIFT, 49}, {39, SHIFT, 50}, {40, SHIFT, 51}, },
+			{{-1, ERROR, 171}, {14, SHIFT, 46}, {22, SHIFT, 47}, {23, SHIFT, 48}, {37, SHIFT, 50}, {38, SHIFT, 51}, {39, SHIFT, 52}, {40, SHIFT, 53}, },
 			{{-1, REDUCE, 122}, },
-			{{-1, REDUCE, 53}, {18, SHIFT, 173}, },
+			{{-1, REDUCE, 53}, {18, SHIFT, 171}, },
 			{{-1, REDUCE, 58}, },
 			{{-1, REDUCE, 32}, },
+			{{-1, REDUCE, 74}, },
 			{{-1, REDUCE, 13}, },
-			{{-1, ERROR, 179}, {2, SHIFT, 85}, {3, SHIFT, 86}, },
-			{{-1, ERROR, 180}, {17, SHIFT, 201}, {38, SHIFT, 187}, },
-			{{-1, REDUCE, 25}, {16, SHIFT, 137}, },
-			{{-1, REDUCE, 26}, {16, SHIFT, 137}, },
+			{{-1, ERROR, 178}, {2, SHIFT, 29}, {3, SHIFT, 30}, },
+			{{-1, ERROR, 179}, {17, SHIFT, 197}, {38, SHIFT, 127}, },
+			{{-1, REDUCE, 25}, {16, SHIFT, 78}, },
+			{{-1, REDUCE, 26}, {16, SHIFT, 78}, },
 			{{-1, REDUCE, 14}, },
 			{{-1, REDUCE, 4}, },
-			{{-1, ERROR, 185}, {2, SHIFT, 85}, {3, SHIFT, 86}, {10, SHIFT, 128}, },
+			{{-1, ERROR, 184}, {2, SHIFT, 29}, {3, SHIFT, 30}, {10, SHIFT, 131}, },
 			{{-1, REDUCE, 5}, },
-			{{-1, ERROR, 187}, {17, SHIFT, 204}, },
-			{{-1, REDUCE, 121}, },
-			{{-1, REDUCE, 29}, },
 			{{-1, REDUCE, 77}, },
-			{{-1, ERROR, 191}, {4, SHIFT, 205}, },
-			{{-1, ERROR, 192}, {8, SHIFT, 206}, },
+			{{-1, ERROR, 187}, {4, SHIFT, 200}, },
+			{{-1, ERROR, 188}, {8, SHIFT, 201}, },
 			{{-1, REDUCE, 37}, {7, REDUCE, 47}, },
-			{{-1, ERROR, 194}, {19, SHIFT, 207}, },
-			{{-1, ERROR, 195}, {5, SHIFT, 17}, {6, SHIFT, 18}, {11, SHIFT, 19}, {12, SHIFT, 7}, {19, SHIFT, 21}, {37, SHIFT, 22}, {40, SHIFT, 23}, },
+			{{-1, ERROR, 190}, {19, SHIFT, 202}, },
+			{{-1, ERROR, 191}, {5, SHIFT, 16}, {6, SHIFT, 17}, {11, SHIFT, 18}, {12, SHIFT, 6}, {19, SHIFT, 20}, {37, SHIFT, 21}, {40, SHIFT, 22}, },
 			{{-1, REDUCE, 35}, {7, REDUCE, 45}, },
-			{{-1, ERROR, 197}, {14, SHIFT, 44}, {22, SHIFT, 45}, {23, SHIFT, 46}, {37, SHIFT, 48}, {38, SHIFT, 49}, {39, SHIFT, 50}, {40, SHIFT, 51}, },
+			{{-1, ERROR, 193}, {14, SHIFT, 46}, {22, SHIFT, 47}, {23, SHIFT, 48}, {37, SHIFT, 50}, {38, SHIFT, 51}, {39, SHIFT, 52}, {40, SHIFT, 53}, },
 			{{-1, REDUCE, 54}, },
 			{{-1, REDUCE, 123}, },
 			{{-1, REDUCE, 15}, },
 			{{-1, REDUCE, 75}, },
-			{{-1, REDUCE, 27}, {16, SHIFT, 137}, },
+			{{-1, REDUCE, 27}, {16, SHIFT, 78}, },
 			{{-1, REDUCE, 6}, },
-			{{-1, REDUCE, 74}, },
-			{{-1, ERROR, 205}, {5, SHIFT, 162}, {6, SHIFT, 163}, {11, SHIFT, 164}, {12, SHIFT, 7}, {19, SHIFT, 165}, {37, SHIFT, 22}, {40, SHIFT, 23}, },
-			{{-1, ERROR, 206}, {5, SHIFT, 162}, {6, SHIFT, 163}, {11, SHIFT, 164}, {12, SHIFT, 7}, {19, SHIFT, 165}, {37, SHIFT, 22}, {40, SHIFT, 23}, },
+			{{-1, ERROR, 200}, {5, SHIFT, 160}, {6, SHIFT, 161}, {11, SHIFT, 162}, {12, SHIFT, 6}, {19, SHIFT, 163}, {37, SHIFT, 21}, {40, SHIFT, 22}, },
+			{{-1, ERROR, 201}, {5, SHIFT, 160}, {6, SHIFT, 161}, {11, SHIFT, 162}, {12, SHIFT, 6}, {19, SHIFT, 163}, {37, SHIFT, 21}, {40, SHIFT, 22}, },
 			{{-1, REDUCE, 38}, {7, REDUCE, 48}, },
 			{{-1, REDUCE, 40}, },
-			{{-1, ERROR, 209}, {19, SHIFT, 212}, },
+			{{-1, ERROR, 204}, {19, SHIFT, 207}, },
 			{{-1, REDUCE, 46}, },
-			{{-1, ERROR, 211}, {7, SHIFT, 213}, },
+			{{-1, ERROR, 206}, {7, SHIFT, 208}, },
 			{{-1, REDUCE, 32}, {7, REDUCE, 42}, },
-			{{-1, ERROR, 213}, {5, SHIFT, 162}, {6, SHIFT, 163}, {11, SHIFT, 164}, {12, SHIFT, 7}, {19, SHIFT, 165}, {37, SHIFT, 22}, {40, SHIFT, 23}, },
+			{{-1, ERROR, 208}, {5, SHIFT, 160}, {6, SHIFT, 161}, {11, SHIFT, 162}, {12, SHIFT, 6}, {19, SHIFT, 163}, {37, SHIFT, 21}, {40, SHIFT, 22}, },
 			{{-1, REDUCE, 49}, },
         };*/
     private static int[][][] gotoTable;
@@ -4107,74 +4082,77 @@ public class Parser
 			{{-1, 2}, },
 			{{-1, 8}, {0, 3}, },
 			{{-1, 9}, {0, 4}, },
-			{{-1, 10}, {14, 31}, },
-			{{-1, 24}, {4, 11}, {9, 11}, {14, 32}, {118, 166}, {205, 166}, {206, 166}, {213, 166}, },
-			{{-1, 37}, {35, 77}, },
-			{{-1, 38}, {39, 83}, {81, 83}, },
-			{{-1, 129}, {134, 184}, {136, 186}, {185, 203}, },
-			{{-1, 131}, {41, 87}, {76, 130}, {89, 87}, {134, 130}, {136, 130}, {185, 130}, },
-			{{-1, 88}, {89, 141}, },
+			{{-1, 10}, {14, 37}, },
+			{{-1, 23}, {4, 11}, {9, 11}, {14, 38}, {119, 164}, {200, 164}, {201, 164}, {208, 164}, },
+			{{-1, 43}, {41, 85}, },
+			{{-1, 44}, {45, 91}, {89, 91}, },
+			{{-1, 132}, {137, 183}, {139, 185}, {184, 199}, },
+			{{-1, 134}, {7, 32}, {35, 32}, {84, 133}, {137, 133}, {139, 133}, {184, 133}, },
+			{{-1, 33}, {35, 81}, },
 			{{-1, 12}, },
-			{{-1, 132}, {126, 178}, {133, 183}, {179, 200}, },
+			{{-1, 135}, {129, 177}, {136, 182}, {178, 196}, },
 			{{-1, 13}, },
-			{{-1, 42}, {43, 90}, {79, 90}, {127, 90}, },
-			{{-1, 148}, {7, 25}, {29, 74}, {118, 167}, {195, 208}, {206, 167}, {213, 208}, },
-			{{-1, 26}, },
-			{{-1, 168}, {205, 210}, {206, 211}, {213, 214}, },
-			{{-1, 169}, },
-			{{-1, 52}, {7, 27}, {29, 27}, {44, 94}, {103, 27}, {118, 170}, {195, 27}, {205, 170}, {206, 170}, {213, 170}, },
-			{{-1, 121}, },
-			{{-1, 174}, {175, 199}, },
-			{{-1, 28}, {118, 171}, {205, 171}, {206, 171}, {213, 171}, },
-			{{-1, 53}, {19, 68}, {55, 104}, {69, 122}, {71, 124}, {72, 125}, {96, 144}, {100, 146}, {164, 194}, {173, 198}, {197, 209}, },
-			{{-1, 95}, },
-			{{-1, 54}, {18, 66}, {162, 191}, {163, 192}, },
-			{{-1, 55}, {44, 96}, },
-			{{-1, 138}, {139, 188}, {182, 188}, {202, 188}, },
-			{{-1, 181}, },
-			{{-1, 56}, {44, 97}, },
-			{{-1, 101}, {102, 147}, },
+			{{-1, 34}, {35, 82}, {87, 82}, {130, 82}, },
+			{{-1, 146}, {6, 24}, {28, 76}, {119, 165}, {191, 203}, {201, 165}, {208, 203}, },
+			{{-1, 25}, },
+			{{-1, 166}, {200, 205}, {201, 206}, {208, 209}, },
+			{{-1, 167}, },
+			{{-1, 54}, {6, 26}, {28, 26}, {46, 95}, {104, 26}, {119, 168}, {191, 26}, {200, 168}, {201, 168}, {208, 168}, },
+			{{-1, 122}, },
+			{{-1, 172}, {173, 195}, },
+			{{-1, 27}, {119, 169}, {200, 169}, {201, 169}, {208, 169}, },
+			{{-1, 55}, {18, 70}, {57, 105}, {71, 123}, {73, 125}, {74, 126}, {97, 142}, {101, 144}, {162, 190}, {171, 194}, {193, 204}, },
+			{{-1, 96}, },
+			{{-1, 56}, {17, 68}, {160, 187}, {161, 188}, },
+			{{-1, 57}, {46, 97}, },
+			{{-1, 79}, {80, 128}, {181, 128}, {198, 128}, },
+			{{-1, 180}, },
+			{{-1, 58}, {46, 98}, },
+			{{-1, 102}, {103, 145}, },
 			{{-1, -1}, },
 			{{-1, -1}, },
-			{{-1, 57}, {44, 98}, {91, 98}, },
-			{{-1, 58}, {105, 149}, {106, 150}, },
-			{{-1, 59}, {107, 151}, {108, 152}, {109, 153}, },
-			{{-1, 60}, },
-			{{-1, 61}, },
-			{{-1, 62}, {110, 154}, },
-			{{-1, 63}, {47, 99}, {111, 155}, },
-			{{-1, 64}, },
-			{{-1, 65}, {112, 156}, {113, 157}, {114, 158}, {115, 159}, {116, 160}, {117, 161}, },
+			{{-1, 59}, {46, 99}, {92, 99}, },
+			{{-1, 60}, {106, 147}, {107, 148}, },
+			{{-1, 61}, {108, 149}, {109, 150}, {110, 151}, },
+			{{-1, 62}, },
+			{{-1, 63}, },
+			{{-1, 64}, {111, 152}, },
+			{{-1, 65}, {49, 100}, {112, 153}, },
+			{{-1, 66}, },
+			{{-1, 67}, {113, 154}, {114, 155}, {115, 156}, {116, 157}, {117, 158}, {118, 159}, },
 			{{-1, 14}, },
-			{{-1, 39}, {37, 81}, },
-			{{-1, 29}, },
-			{{-1, 43}, {36, 79}, {75, 127}, },
-			{{-1, 139}, {131, 182}, {181, 202}, },
-			{{-1, 175}, },
-			{{-1, 102}, },
+			{{-1, 45}, {43, 89}, },
+			{{-1, 28}, },
+			{{-1, 35}, {42, 87}, {83, 130}, },
+			{{-1, 80}, {134, 181}, {180, 198}, },
+			{{-1, 173}, },
+			{{-1, 103}, },
         };*/
     private static String[] errorMessages;
 /*      {
 			"expecting: 'fun'",
 			"expecting: identifier",
 			"expecting: EOF",
-			"expecting: 'fun', 'var', '{'",
+			"expecting: 'fun', '{', identifier",
 			"expecting: '('",
 			"expecting: 'while', 'if', 'return', '{', '}', semicolon, identifier, string literal",
-			"expecting: 'fun', 'var', '{', semicolon",
-			"expecting: 'fun', 'var', '{', EOF",
+			"expecting: 'char', 'int', ','",
+			"expecting: 'fun', '{', semicolon, identifier",
+			"expecting: 'fun', '{', identifier, EOF",
 			"expecting: 'ref', ')', semicolon, identifier",
-			"expecting: ',', ':'",
 			"expecting: '(', '+', '-', 'not', identifier, int const, char const, string literal",
 			"expecting: '(', semicolon, '+', '-', identifier, int const, char const, string literal",
-			"expecting: 'fun', 'var', 'while', 'if', 'else', 'return', '{', '}', semicolon, identifier, string literal, EOF",
+			"expecting: 'fun', 'while', 'if', 'else', 'return', '{', '}', semicolon, identifier, string literal, EOF",
 			"expecting: '(', '[', '<-'",
 			"expecting: '[', '<-'",
 			"expecting: semicolon",
+			"expecting: 'fun', '{', ')', '[', semicolon, identifier",
+			"expecting: 'fun', '{', '[', identifier",
+			"expecting: 'char', 'int', ',', ':'",
 			"expecting: ':'",
 			"expecting: 'ref', identifier",
+			"expecting: ',', ':'",
 			"expecting: ')', semicolon",
-			"expecting: 'char', 'int'",
 			"expecting: '(', '+', '-', identifier, int const, char const, string literal",
 			"expecting: 'do', 'then', '(', ')', '[', ']', ',', semicolon, '+', '-', '*', 'mod', 'div', 'and', 'or', '#', '=', '<', '<=', '>', '>='",
 			"expecting: 'do', 'then', ')', ']', ',', semicolon, '+', '-', '*', 'mod', 'div', 'and', 'or', '#', '=', '<', '<=', '>', '>='",
@@ -4187,9 +4165,9 @@ public class Parser
 			"expecting: 'then'",
 			"expecting: '(', ')', '+', '-', identifier, int const, char const, string literal",
 			"expecting: '(', ']', '+', '-', identifier, int const, char const, string literal",
+			"expecting: int const",
 			"expecting: 'char', 'int', 'nothing'",
-			"expecting: 'fun', 'var', '{', ')', '[', semicolon",
-			"expecting: '[', semicolon",
+			"expecting: 'char', 'int'",
 			"expecting: '(', identifier, int const",
 			"expecting: ')'",
 			"expecting: ')', '+', '-'",
@@ -4198,14 +4176,13 @@ public class Parser
 			"expecting: ')', ','",
 			"expecting: ']'",
 			"expecting: ')', '[', semicolon",
-			"expecting: int const",
 			"expecting: 'while', 'if', 'else', 'return', '{', '}', semicolon, identifier, string literal",
 			"expecting: 'else'",
 			"expecting: ']', int const",
         };*/
     private static int[] errors;
 /*      {
-			0, 1, 2, 2, 3, 4, 1, 5, 3, 6, 3, 7, 3, 3, 3, 8, 9, 10, 10, 11, 12, 5, 13, 14, 5, 5, 5, 15, 14, 5, 3, 3, 7, 1, 16, 17, 9, 18, 18, 18, 1, 19, 9, 9, 20, 20, 20, 10, 21, 22, 23, 23, 23, 24, 25, 20, 23, 26, 22, 22, 22, 27, 28, 28, 24, 24, 29, 5, 15, 30, 5, 31, 20, 12, 5, 9, 32, 18, 19, 9, 16, 18, 16, 18, 9, 33, 33, 34, 15, 19, 9, 35, 36, 36, 36, 36, 20, 36, 37, 28, 20, 38, 38, 39, 23, 35, 35, 35, 35, 35, 10, 10, 20, 20, 20, 20, 20, 20, 39, 5, 23, 36, 40, 14, 41, 15, 19, 9, 6, 6, 6, 42, 18, 19, 32, 16, 32, 43, 42, 34, 3, 15, 22, 23, 36, 22, 41, 38, 5, 22, 22, 22, 22, 22, 28, 28, 24, 24, 24, 24, 24, 24, 10, 10, 11, 44, 44, 5, 45, 45, 15, 14, 23, 20, 40, 40, 14, 5, 18, 19, 46, 42, 42, 18, 6, 32, 6, 41, 42, 3, 38, 25, 29, 44, 15, 39, 44, 20, 40, 40, 18, 42, 42, 6, 42, 39, 39, 44, 5, 15, 45, 45, 44, 39, 45, 
+			0, 1, 2, 2, 3, 4, 5, 6, 3, 7, 3, 8, 3, 3, 3, 9, 10, 10, 11, 12, 5, 13, 14, 5, 5, 5, 15, 14, 5, 16, 16, 1, 17, 3, 18, 6, 3, 3, 8, 1, 19, 20, 21, 22, 22, 22, 23, 23, 23, 10, 24, 25, 26, 26, 26, 27, 28, 23, 26, 29, 25, 25, 25, 30, 31, 31, 27, 27, 32, 5, 15, 33, 5, 34, 23, 12, 5, 18, 35, 16, 17, 3, 18, 21, 36, 22, 37, 21, 19, 22, 19, 22, 38, 39, 39, 39, 39, 23, 39, 40, 31, 23, 41, 41, 42, 26, 38, 38, 38, 38, 38, 10, 10, 23, 23, 23, 23, 23, 23, 42, 5, 26, 39, 43, 14, 44, 15, 44, 16, 37, 21, 7, 7, 7, 45, 22, 37, 36, 19, 36, 25, 26, 39, 25, 44, 41, 5, 25, 25, 25, 25, 25, 31, 31, 27, 27, 27, 27, 27, 27, 10, 10, 11, 46, 46, 5, 47, 47, 15, 14, 26, 23, 43, 43, 14, 5, 16, 22, 37, 48, 45, 45, 22, 7, 36, 7, 41, 28, 32, 46, 15, 42, 46, 23, 43, 43, 22, 45, 45, 7, 42, 42, 46, 5, 15, 47, 47, 46, 42, 47, 
         };*/
 
     static 

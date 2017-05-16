@@ -165,19 +165,19 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAFparType(AFparType node)
+    public void caseAFparTypeFparType(AFparTypeFparType node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAVarDefinition(AVarDefinition node)
+    public void caseAVarDefinitionVarDefinition(AVarDefinitionVarDefinition node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseANextIdentifier(ANextIdentifier node)
+    public void caseANextIdentifierNextIdentifier(ANextIdentifierNextIdentifier node)
     {
         defaultCase(node);
     }
