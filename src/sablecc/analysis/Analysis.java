@@ -12,21 +12,19 @@ public interface Analysis extends Switch
     void setOut(Node node, Object o);
 
     void caseStart(Start node);
-    void caseAProgram(AProgram node);
-    void caseAFunctionDefinition(AFunctionDefinition node);
-    void caseAHeader(AHeader node);
+    void caseAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node);
+    void caseAHeaderHeader(AHeaderHeader node);
     void caseAFDefLocalDefinition(AFDefLocalDefinition node);
     void caseAFDeclLocalDefinition(AFDeclLocalDefinition node);
     void caseAVarDefLocalDefinition(AVarDefLocalDefinition node);
-    void caseABlock(ABlock node);
-    void caseAFparDefinition(AFparDefinition node);
-    void caseANextFparDefinition(ANextFparDefinition node);
+    void caseAFparDefinitionFparDefinition(AFparDefinitionFparDefinition node);
+    void caseANextFparDefinitionNextFparDefinition(ANextFparDefinitionNextFparDefinition node);
     void caseADataTypeRetType(ADataTypeRetType node);
     void caseANothingRetType(ANothingRetType node);
     void caseAIntegerDataType(AIntegerDataType node);
     void caseACharacterDataType(ACharacterDataType node);
-    void caseAType(AType node);
-    void caseAFunctionDeclaration(AFunctionDeclaration node);
+    void caseATypeType(ATypeType node);
+    void caseAFunctionDeclarationFunctionDeclaration(AFunctionDeclarationFunctionDeclaration node);
     void caseAFparTypeFparType(AFparTypeFparType node);
     void caseAVarDefinitionVarDefinition(AVarDefinitionVarDefinition node);
     void caseANextIdentifierNextIdentifier(ANextIdentifierNextIdentifier node);

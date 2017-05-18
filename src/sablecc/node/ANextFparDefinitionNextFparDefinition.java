@@ -5,46 +5,46 @@ package sablecc.node;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class ABlockStatement extends PStatement
+public final class ANextFparDefinitionNextFparDefinition extends PNextFparDefinition
 {
-    private PStatement _statement_;
+    private PFparDefinition _fparDefinition_;
 
-    public ABlockStatement()
+    public ANextFparDefinitionNextFparDefinition()
     {
         // Constructor
     }
 
-    public ABlockStatement(
-        @SuppressWarnings("hiding") PStatement _statement_)
+    public ANextFparDefinitionNextFparDefinition(
+        @SuppressWarnings("hiding") PFparDefinition _fparDefinition_)
     {
         // Constructor
-        setStatement(_statement_);
+        setFparDefinition(_fparDefinition_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new ABlockStatement(
-            cloneNode(this._statement_));
+        return new ANextFparDefinitionNextFparDefinition(
+            cloneNode(this._fparDefinition_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseABlockStatement(this);
+        ((Analysis) sw).caseANextFparDefinitionNextFparDefinition(this);
     }
 
-    public PStatement getStatement()
+    public PFparDefinition getFparDefinition()
     {
-        return this._statement_;
+        return this._fparDefinition_;
     }
 
-    public void setStatement(PStatement node)
+    public void setFparDefinition(PFparDefinition node)
     {
-        if(this._statement_ != null)
+        if(this._fparDefinition_ != null)
         {
-            this._statement_.parent(null);
+            this._fparDefinition_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class ABlockStatement extends PStatement
             node.parent(this);
         }
 
-        this._statement_ = node;
+        this._fparDefinition_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._statement_);
+            + toString(this._fparDefinition_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._statement_ == child)
+        if(this._fparDefinition_ == child)
         {
-            this._statement_ = null;
+            this._fparDefinition_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class ABlockStatement extends PStatement
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._statement_ == oldChild)
+        if(this._fparDefinition_ == oldChild)
         {
-            setStatement((PStatement) newChild);
+            setFparDefinition((PFparDefinition) newChild);
             return;
         }
 

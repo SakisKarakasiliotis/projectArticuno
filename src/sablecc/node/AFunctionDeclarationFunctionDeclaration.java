@@ -5,46 +5,46 @@ package sablecc.node;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class ABlockStatement extends PStatement
+public final class AFunctionDeclarationFunctionDeclaration extends PFunctionDeclaration
 {
-    private PStatement _statement_;
+    private PHeader _header_;
 
-    public ABlockStatement()
+    public AFunctionDeclarationFunctionDeclaration()
     {
         // Constructor
     }
 
-    public ABlockStatement(
-        @SuppressWarnings("hiding") PStatement _statement_)
+    public AFunctionDeclarationFunctionDeclaration(
+        @SuppressWarnings("hiding") PHeader _header_)
     {
         // Constructor
-        setStatement(_statement_);
+        setHeader(_header_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new ABlockStatement(
-            cloneNode(this._statement_));
+        return new AFunctionDeclarationFunctionDeclaration(
+            cloneNode(this._header_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseABlockStatement(this);
+        ((Analysis) sw).caseAFunctionDeclarationFunctionDeclaration(this);
     }
 
-    public PStatement getStatement()
+    public PHeader getHeader()
     {
-        return this._statement_;
+        return this._header_;
     }
 
-    public void setStatement(PStatement node)
+    public void setHeader(PHeader node)
     {
-        if(this._statement_ != null)
+        if(this._header_ != null)
         {
-            this._statement_.parent(null);
+            this._header_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class ABlockStatement extends PStatement
             node.parent(this);
         }
 
-        this._statement_ = node;
+        this._header_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._statement_);
+            + toString(this._header_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._statement_ == child)
+        if(this._header_ == child)
         {
-            this._statement_ = null;
+            this._header_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class ABlockStatement extends PStatement
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._statement_ == oldChild)
+        if(this._header_ == oldChild)
         {
-            setStatement((PStatement) newChild);
+            setHeader((PHeader) newChild);
             return;
         }
 

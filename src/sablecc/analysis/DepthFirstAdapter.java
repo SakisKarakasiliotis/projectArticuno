@@ -31,46 +31,25 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseStart(Start node)
     {
         inStart(node);
-        node.getPProgram().apply(this);
+        node.getPFunctionDefinition().apply(this);
         node.getEOF().apply(this);
         outStart(node);
     }
 
-    public void inAProgram(AProgram node)
+    public void inAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node)
     {
         defaultIn(node);
     }
 
-    public void outAProgram(AProgram node)
+    public void outAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAProgram(AProgram node)
+    public void caseAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node)
     {
-        inAProgram(node);
-        if(node.getFunctionDefinition() != null)
-        {
-            node.getFunctionDefinition().apply(this);
-        }
-        outAProgram(node);
-    }
-
-    public void inAFunctionDefinition(AFunctionDefinition node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAFunctionDefinition(AFunctionDefinition node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAFunctionDefinition(AFunctionDefinition node)
-    {
-        inAFunctionDefinition(node);
+        inAFunctionDefinitionFunctionDefinition(node);
         if(node.getHeader() != null)
         {
             node.getHeader().apply(this);
@@ -82,38 +61,30 @@ public class DepthFirstAdapter extends AnalysisAdapter
                 e.apply(this);
             }
         }
-        if(node.getBlock() != null)
+        if(node.getStatement() != null)
         {
-            node.getBlock().apply(this);
+            node.getStatement().apply(this);
         }
-        outAFunctionDefinition(node);
+        outAFunctionDefinitionFunctionDefinition(node);
     }
 
-    public void inAHeader(AHeader node)
+    public void inAHeaderHeader(AHeaderHeader node)
     {
         defaultIn(node);
     }
 
-    public void outAHeader(AHeader node)
+    public void outAHeaderHeader(AHeaderHeader node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAHeader(AHeader node)
+    public void caseAHeaderHeader(AHeaderHeader node)
     {
-        inAHeader(node);
-        if(node.getKwFun() != null)
-        {
-            node.getKwFun().apply(this);
-        }
+        inAHeaderHeader(node);
         if(node.getIdentifier() != null)
         {
             node.getIdentifier().apply(this);
-        }
-        if(node.getLparen() != null)
-        {
-            node.getLparen().apply(this);
         }
         if(node.getFparDefinition() != null)
         {
@@ -126,19 +97,11 @@ public class DepthFirstAdapter extends AnalysisAdapter
                 e.apply(this);
             }
         }
-        if(node.getRparen() != null)
-        {
-            node.getRparen().apply(this);
-        }
-        if(node.getColon() != null)
-        {
-            node.getColon().apply(this);
-        }
         if(node.getRetType() != null)
         {
             node.getRetType().apply(this);
         }
-        outAHeader(node);
+        outAHeaderHeader(node);
     }
 
     public void inAFDefLocalDefinition(AFDefLocalDefinition node)
@@ -204,52 +167,20 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outAVarDefLocalDefinition(node);
     }
 
-    public void inABlock(ABlock node)
+    public void inAFparDefinitionFparDefinition(AFparDefinitionFparDefinition node)
     {
         defaultIn(node);
     }
 
-    public void outABlock(ABlock node)
+    public void outAFparDefinitionFparDefinition(AFparDefinitionFparDefinition node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseABlock(ABlock node)
+    public void caseAFparDefinitionFparDefinition(AFparDefinitionFparDefinition node)
     {
-        inABlock(node);
-        if(node.getLbrace() != null)
-        {
-            node.getLbrace().apply(this);
-        }
-        {
-            List<PStatement> copy = new ArrayList<PStatement>(node.getStatement());
-            for(PStatement e : copy)
-            {
-                e.apply(this);
-            }
-        }
-        if(node.getRbrace() != null)
-        {
-            node.getRbrace().apply(this);
-        }
-        outABlock(node);
-    }
-
-    public void inAFparDefinition(AFparDefinition node)
-    {
-        defaultIn(node);
-    }
-
-    public void outAFparDefinition(AFparDefinition node)
-    {
-        defaultOut(node);
-    }
-
-    @Override
-    public void caseAFparDefinition(AFparDefinition node)
-    {
-        inAFparDefinition(node);
+        inAFparDefinitionFparDefinition(node);
         if(node.getKwRef() != null)
         {
             node.getKwRef().apply(this);
@@ -265,40 +196,32 @@ public class DepthFirstAdapter extends AnalysisAdapter
                 e.apply(this);
             }
         }
-        if(node.getColon() != null)
-        {
-            node.getColon().apply(this);
-        }
         if(node.getFparType() != null)
         {
             node.getFparType().apply(this);
         }
-        outAFparDefinition(node);
+        outAFparDefinitionFparDefinition(node);
     }
 
-    public void inANextFparDefinition(ANextFparDefinition node)
+    public void inANextFparDefinitionNextFparDefinition(ANextFparDefinitionNextFparDefinition node)
     {
         defaultIn(node);
     }
 
-    public void outANextFparDefinition(ANextFparDefinition node)
+    public void outANextFparDefinitionNextFparDefinition(ANextFparDefinitionNextFparDefinition node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseANextFparDefinition(ANextFparDefinition node)
+    public void caseANextFparDefinitionNextFparDefinition(ANextFparDefinitionNextFparDefinition node)
     {
-        inANextFparDefinition(node);
-        if(node.getSemicolon() != null)
-        {
-            node.getSemicolon().apply(this);
-        }
+        inANextFparDefinitionNextFparDefinition(node);
         if(node.getFparDefinition() != null)
         {
             node.getFparDefinition().apply(this);
         }
-        outANextFparDefinition(node);
+        outANextFparDefinitionNextFparDefinition(node);
     }
 
     public void inADataTypeRetType(ADataTypeRetType node)
@@ -385,20 +308,20 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outACharacterDataType(node);
     }
 
-    public void inAType(AType node)
+    public void inATypeType(ATypeType node)
     {
         defaultIn(node);
     }
 
-    public void outAType(AType node)
+    public void outATypeType(ATypeType node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAType(AType node)
+    public void caseATypeType(ATypeType node)
     {
-        inAType(node);
+        inATypeType(node);
         if(node.getDataType() != null)
         {
             node.getDataType().apply(this);
@@ -410,32 +333,28 @@ public class DepthFirstAdapter extends AnalysisAdapter
                 e.apply(this);
             }
         }
-        outAType(node);
+        outATypeType(node);
     }
 
-    public void inAFunctionDeclaration(AFunctionDeclaration node)
+    public void inAFunctionDeclarationFunctionDeclaration(AFunctionDeclarationFunctionDeclaration node)
     {
         defaultIn(node);
     }
 
-    public void outAFunctionDeclaration(AFunctionDeclaration node)
+    public void outAFunctionDeclarationFunctionDeclaration(AFunctionDeclarationFunctionDeclaration node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAFunctionDeclaration(AFunctionDeclaration node)
+    public void caseAFunctionDeclarationFunctionDeclaration(AFunctionDeclarationFunctionDeclaration node)
     {
-        inAFunctionDeclaration(node);
+        inAFunctionDeclarationFunctionDeclaration(node);
         if(node.getHeader() != null)
         {
             node.getHeader().apply(this);
         }
-        if(node.getSemicolon() != null)
-        {
-            node.getSemicolon().apply(this);
-        }
-        outAFunctionDeclaration(node);
+        outAFunctionDeclarationFunctionDeclaration(node);
     }
 
     public void inAFparTypeFparType(AFparTypeFparType node)
@@ -637,9 +556,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseABlockStatement(ABlockStatement node)
     {
         inABlockStatement(node);
-        if(node.getBlock() != null)
+        if(node.getStatement() != null)
         {
-            node.getBlock().apply(this);
+            node.getStatement().apply(this);
         }
         outABlockStatement(node);
     }

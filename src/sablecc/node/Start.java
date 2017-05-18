@@ -7,7 +7,7 @@ import sablecc.analysis.*;
 @SuppressWarnings("nls")
 public final class Start extends Node
 {
-    private PProgram _pProgram_;
+    private PFunctionDefinition _pFunctionDefinition_;
     private EOF _eof_;
 
     public Start()
@@ -16,10 +16,10 @@ public final class Start extends Node
     }
 
     public Start(
-        @SuppressWarnings("hiding") PProgram _pProgram_,
+        @SuppressWarnings("hiding") PFunctionDefinition _pFunctionDefinition_,
         @SuppressWarnings("hiding") EOF _eof_)
     {
-        setPProgram(_pProgram_);
+        setPFunctionDefinition(_pFunctionDefinition_);
         setEOF(_eof_);
     }
 
@@ -27,7 +27,7 @@ public final class Start extends Node
     public Object clone()
     {
         return new Start(
-            cloneNode(this._pProgram_),
+            cloneNode(this._pFunctionDefinition_),
             cloneNode(this._eof_));
     }
 
@@ -37,16 +37,16 @@ public final class Start extends Node
         ((Analysis) sw).caseStart(this);
     }
 
-    public PProgram getPProgram()
+    public PFunctionDefinition getPFunctionDefinition()
     {
-        return this._pProgram_;
+        return this._pFunctionDefinition_;
     }
 
-    public void setPProgram(PProgram node)
+    public void setPFunctionDefinition(PFunctionDefinition node)
     {
-        if(this._pProgram_ != null)
+        if(this._pFunctionDefinition_ != null)
         {
-            this._pProgram_.parent(null);
+            this._pFunctionDefinition_.parent(null);
         }
 
         if(node != null)
@@ -59,7 +59,7 @@ public final class Start extends Node
             node.parent(this);
         }
 
-        this._pProgram_ = node;
+        this._pFunctionDefinition_ = node;
     }
 
     public EOF getEOF()
@@ -90,9 +90,9 @@ public final class Start extends Node
     @Override
     void removeChild(Node child)
     {
-        if(this._pProgram_ == child)
+        if(this._pFunctionDefinition_ == child)
         {
-            this._pProgram_ = null;
+            this._pFunctionDefinition_ = null;
             return;
         }
 
@@ -108,9 +108,9 @@ public final class Start extends Node
     @Override
     void replaceChild(Node oldChild, Node newChild)
     {
-        if(this._pProgram_ == oldChild)
+        if(this._pFunctionDefinition_ == oldChild)
         {
-            setPProgram((PProgram) newChild);
+            setPFunctionDefinition((PFunctionDefinition) newChild);
             return;
         }
 
@@ -127,7 +127,7 @@ public final class Start extends Node
     public String toString()
     {
         return "" +
-            toString(this._pProgram_) +
+            toString(this._pFunctionDefinition_) +
             toString(this._eof_);
     }
 }

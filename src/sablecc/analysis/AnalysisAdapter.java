@@ -75,19 +75,13 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAProgram(AProgram node)
+    public void caseAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAFunctionDefinition(AFunctionDefinition node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseAHeader(AHeader node)
+    public void caseAHeaderHeader(AHeaderHeader node)
     {
         defaultCase(node);
     }
@@ -111,19 +105,13 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseABlock(ABlock node)
+    public void caseAFparDefinitionFparDefinition(AFparDefinitionFparDefinition node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAFparDefinition(AFparDefinition node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseANextFparDefinition(ANextFparDefinition node)
+    public void caseANextFparDefinitionNextFparDefinition(ANextFparDefinitionNextFparDefinition node)
     {
         defaultCase(node);
     }
@@ -153,13 +141,13 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAType(AType node)
+    public void caseATypeType(ATypeType node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAFunctionDeclaration(AFunctionDeclaration node)
+    public void caseAFunctionDeclarationFunctionDeclaration(AFunctionDeclarationFunctionDeclaration node)
     {
         defaultCase(node);
     }

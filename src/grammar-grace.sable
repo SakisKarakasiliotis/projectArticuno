@@ -79,31 +79,31 @@ Ignored Tokens
   comments;
 
 Productions
-  program = function_definition;
+  program {->function_definition}= function_definition{->function_definition};
 
-  function_definition = header local_definition* block;
+  function_definition {->function_definition}={function_definition} header local_definition* block{-> New function_definition.function_definition(header, [local_definition], block.statement)};
 
-  header = kw_fun identifier lparen fpar_definition? next_fpar_definition* rparen colon ret_type;
+  header  {-> header}={header } kw_fun identifier lparen fpar_definition? next_fpar_definition* rparen colon ret_type{-> New header.header(identifier, fpar_definition, [next_fpar_definition], ret_type)};
 
-  local_definition = {f_def} function_definition |
-                     {f_decl} function_declaration |
-                     {var_def} var_definition;
+  local_definition {->local_definition}= {f_def} function_definition {-> New local_definition.f_def(function_definition)}|
+                                         {f_decl} function_declaration {-> New local_definition.f_decl(function_declaration)}|
+                                         {var_def} var_definition{-> New local_definition.var_def(var_definition)};
 
-  block = lbrace statement* rbrace;
+  block {-> statement*}= lbrace statement* rbrace{-> [statement]};
 
-  fpar_definition = kw_ref? identifier  next_identifier* colon fpar_type;
+  fpar_definition {-> fpar_definition}={fpar_definition} kw_ref? identifier  next_identifier* colon fpar_type {-> New fpar_definition.fpar_definition(kw_ref, identifier, [next_identifier], fpar_type)};
 
-  next_fpar_definition = semicolon fpar_definition;
+  next_fpar_definition {-> next_fpar_definition}={ next_fpar_definition} semicolon fpar_definition{-> New next_fpar_definition.next_fpar_definition(fpar_definition)};
 
-  ret_type = {data_type} data_type |
-             {nothing} kw_nothing;
+  ret_type {->ret_type}= {data_type} data_type {->New ret_type.data_type(data_type)}|
+                         {nothing} kw_nothing {-> New ret_type.nothing(kw_nothing)};
 
-  data_type = {integer} kw_int|
-              {character} kw_char;
+  data_type{->data_type} = {integer} kw_int|
+                           {character} kw_char;
 
-  type = data_type array_size*;
+  type {->type}={type} data_type array_size* {-> New type.type(data_type ,[array_size])};
 
-  function_declaration = header semicolon;
+  function_declaration {-> function_declaration}={function_declaration} header semicolon{-> New function_declaration.function_declaration(header)};
 
   fpar_type {-> fpar_type}={fpar_type} data_type empty_brackets? array_size* {-> New fpar_type.fpar_type(data_type, empty_brackets, [array_size])};
 
@@ -118,7 +118,7 @@ Productions
   statement {-> statement}= {noop} semicolon {->New statement.noop(semicolon) }|
                             {assignment} l_value assign expression semicolon {-> New statement.assignment(l_value, expression)} |
                             {if} if_stmt {-> if_stmt.statement}|
-                            {block} block {-> New statement.block(block)}|
+                            {block} block {-> New statement.block(block.statement)}|
                             {f_call} func_call semicolon {-> New statement.f_call(func_call)}|
                             {while_do} kw_while condition kw_do statement {-> New statement.while_do(condition,statement)}|
                             {return} kw_return expression? semicolon {-> New statement.return(expression)};
@@ -129,7 +129,7 @@ Productions
   stmt_with_else {-> statement} = {noop} semicolon {->New statement.noop(semicolon) }|
                                   {assignment} l_value assign expression semicolon {-> New statement.assignment(l_value, expression)}|
                                   {if} if_else_stmt {-> if_else_stmt.statement}|
-                                  {block} block {-> New statement.block(block)}|
+                                  {block} block {-> New statement.block(block.statement)}|
                                   {f_call} func_call semicolon {-> New statement.f_call(func_call)}|
                                   {while_do} kw_while condition kw_do stmt_with_else {-> New statement.while_do(condition,stmt_with_else.statement)}|
                                   {return} kw_return expression? semicolon {-> New statement.return(expression)};
@@ -232,21 +232,20 @@ Productions
 
 Abstract Syntax Tree
 
-  program = function_definition;
 
-  function_definition = header local_definition* block;
+  function_definition ={function_definition} header local_definition* statement?;
 
-  header = kw_fun identifier lparen fpar_definition? next_fpar_definition* rparen colon ret_type;
+  header ={header }  identifier  fpar_definition? next_fpar_definition*  ret_type;
 
   local_definition = {f_def} function_definition |
                      {f_decl} function_declaration |
                      {var_def} var_definition;
 
-  block = lbrace statement* rbrace;
+  //block = lbrace statement* rbrace;
 
-  fpar_definition = kw_ref? identifier  next_identifier* colon fpar_type;
+  fpar_definition ={fpar_definition} kw_ref? identifier  next_identifier*  fpar_type;
 
-  next_fpar_definition = semicolon fpar_definition;
+  next_fpar_definition ={next_fpar_definition}  fpar_definition;
 
   ret_type = {data_type} data_type |
              {nothing} kw_nothing;
@@ -254,13 +253,13 @@ Abstract Syntax Tree
   data_type = {integer} kw_int|
               {character} kw_char;
 
-  type = data_type array_size*;
+  type ={type} data_type array_size*;
+    //----------------------------ABSTARCT -----------------------
 
-  function_declaration = header semicolon;
+  function_declaration ={function_declaration} header;
 
   fpar_type ={fpar_type} data_type empty_brackets? array_size*;
 
-    //----------------------------ABSTARCT -----------------------
 
 
   var_definition = {var_definition} identifier next_identifier*  type ;
@@ -273,7 +272,7 @@ Abstract Syntax Tree
               {assignment} l_value  expression  |
               {no_else}  condition  [then_stmt]:statement |
               {with_else}  condition  [then_stmt]:statement  [else_stmt]:statement|
-              {block} block |
+              {block} statement? |
               {f_call} func_call  |
               {while_do}  condition statement |
               {return}  expression? |
