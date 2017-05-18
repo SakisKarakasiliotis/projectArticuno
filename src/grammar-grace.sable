@@ -109,7 +109,7 @@ Productions
 
 
 
-  var_definition {-> var_definition }= {var_definition} identifier next_identifier*  type {-> New var_definition.var_definition(identifier, [next_identifier], type)};
+  var_definition {-> var_definition }= {var_definition}kw_var identifier next_identifier* colon type semicolon{-> New var_definition.var_definition(identifier, [next_identifier], type)};
 
   next_identifier {-> next_identifier}={next_identifier} comma identifier {-> New next_identifier.next_identifier(identifier)};
 
