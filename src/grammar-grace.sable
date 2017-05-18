@@ -79,9 +79,9 @@ Ignored Tokens
   comments;
 
 Productions
-  program {->function_definition}= function_definition{->function_definition};
+  program {->program}={program} function_definition{-> New program.program(function_definition)};
 
-  function_definition {->function_definition}={function_definition} header local_definition* block{-> New function_definition.function_definition(header, [local_definition], block.statement)};
+  function_definition {->function_definition}={function_definition} header local_definition* block{-> New function_definition.function_definition(header, [local_definition], block)};
 
   header  {-> header}={header } kw_fun identifier lparen fpar_definition? next_fpar_definition* rparen colon ret_type{-> New header.header(identifier, fpar_definition, [next_fpar_definition], ret_type)};
 
@@ -89,7 +89,7 @@ Productions
                                          {f_decl} function_declaration {-> New local_definition.f_decl(function_declaration)}|
                                          {var_def} var_definition{-> New local_definition.var_def(var_definition)};
 
-  block {-> statement*}= lbrace statement* rbrace{-> [statement]};
+  block {-> block}={block} lbrace statement* rbrace{-> New block.block( [statement])};
 
   fpar_definition {-> fpar_definition}={fpar_definition} kw_ref? identifier  next_identifier* colon fpar_type {-> New fpar_definition.fpar_definition(kw_ref, identifier, [next_identifier], fpar_type)};
 
@@ -107,7 +107,6 @@ Productions
 
   fpar_type {-> fpar_type}={fpar_type} data_type empty_brackets? array_size* {-> New fpar_type.fpar_type(data_type, empty_brackets, [array_size])};
 
-  //----------------------------------PRODUCTION SEP------------------------------------------------------------
 
 
   var_definition {-> var_definition }= {var_definition} identifier next_identifier*  type {-> New var_definition.var_definition(identifier, [next_identifier], type)};
@@ -118,7 +117,7 @@ Productions
   statement {-> statement}= {noop} semicolon {->New statement.noop(semicolon) }|
                             {assignment} l_value assign expression semicolon {-> New statement.assignment(l_value, expression)} |
                             {if} if_stmt {-> if_stmt.statement}|
-                            {block} block {-> New statement.block(block.statement)}|
+                            {block} block {-> New statement.block(block)}|
                             {f_call} func_call semicolon {-> New statement.f_call(func_call)}|
                             {while_do} kw_while condition kw_do statement {-> New statement.while_do(condition,statement)}|
                             {return} kw_return expression? semicolon {-> New statement.return(expression)};
@@ -129,7 +128,7 @@ Productions
   stmt_with_else {-> statement} = {noop} semicolon {->New statement.noop(semicolon) }|
                                   {assignment} l_value assign expression semicolon {-> New statement.assignment(l_value, expression)}|
                                   {if} if_else_stmt {-> if_else_stmt.statement}|
-                                  {block} block {-> New statement.block(block.statement)}|
+                                  {block} block {-> New statement.block(block)}|
                                   {f_call} func_call semicolon {-> New statement.f_call(func_call)}|
                                   {while_do} kw_while condition kw_do stmt_with_else {-> New statement.while_do(condition,stmt_with_else.statement)}|
                                   {return} kw_return expression? semicolon {-> New statement.return(expression)};
@@ -227,13 +226,10 @@ Productions
 
  comp_final {-> comp_final} = {expr}expression {-> New comp_final.expr(expression)};
 
-
-//------------------------------------ABSTARCT-------------------------------------------------------------------------------------------------
-
 Abstract Syntax Tree
+   program ={program} function_definition;
 
-
-  function_definition ={function_definition} header local_definition* statement?;
+  function_definition ={function_definition} header local_definition* block;
 
   header ={header }  identifier  fpar_definition? next_fpar_definition*  ret_type;
 
@@ -241,8 +237,7 @@ Abstract Syntax Tree
                      {f_decl} function_declaration |
                      {var_def} var_definition;
 
-  //block = lbrace statement* rbrace;
-
+  block ={block} statement*;
   fpar_definition ={fpar_definition} kw_ref? identifier  next_identifier*  fpar_type;
 
   next_fpar_definition ={next_fpar_definition}  fpar_definition;
@@ -254,7 +249,6 @@ Abstract Syntax Tree
               {character} kw_char;
 
   type ={type} data_type array_size*;
-    //----------------------------ABSTARCT -----------------------
 
   function_declaration ={function_declaration} header;
 
@@ -272,7 +266,7 @@ Abstract Syntax Tree
               {assignment} l_value  expression  |
               {no_else}  condition  [then_stmt]:statement |
               {with_else}  condition  [then_stmt]:statement  [else_stmt]:statement|
-              {block} statement? |
+              {block} block |
               {f_call} func_call  |
               {while_do}  condition statement |
               {return}  expression? |

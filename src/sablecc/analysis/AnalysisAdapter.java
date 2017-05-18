@@ -75,6 +75,12 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseAProgramProgram(AProgramProgram node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node)
     {
         defaultCase(node);
@@ -100,6 +106,12 @@ public class AnalysisAdapter implements Analysis
 
     @Override
     public void caseAVarDefLocalDefinition(AVarDefLocalDefinition node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseABlockBlock(ABlockBlock node)
     {
         defaultCase(node);
     }

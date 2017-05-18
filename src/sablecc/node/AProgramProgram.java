@@ -5,46 +5,46 @@ package sablecc.node;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AFCallExpressionB extends PExpressionB
+public final class AProgramProgram extends PProgram
 {
-    private PFuncCall _funcCall_;
+    private PFunctionDefinition _functionDefinition_;
 
-    public AFCallExpressionB()
+    public AProgramProgram()
     {
         // Constructor
     }
 
-    public AFCallExpressionB(
-        @SuppressWarnings("hiding") PFuncCall _funcCall_)
+    public AProgramProgram(
+        @SuppressWarnings("hiding") PFunctionDefinition _functionDefinition_)
     {
         // Constructor
-        setFuncCall(_funcCall_);
+        setFunctionDefinition(_functionDefinition_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new AFCallExpressionB(
-            cloneNode(this._funcCall_));
+        return new AProgramProgram(
+            cloneNode(this._functionDefinition_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAFCallExpressionB(this);
+        ((Analysis) sw).caseAProgramProgram(this);
     }
 
-    public PFuncCall getFuncCall()
+    public PFunctionDefinition getFunctionDefinition()
     {
-        return this._funcCall_;
+        return this._functionDefinition_;
     }
 
-    public void setFuncCall(PFuncCall node)
+    public void setFunctionDefinition(PFunctionDefinition node)
     {
-        if(this._funcCall_ != null)
+        if(this._functionDefinition_ != null)
         {
-            this._funcCall_.parent(null);
+            this._functionDefinition_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class AFCallExpressionB extends PExpressionB
             node.parent(this);
         }
 
-        this._funcCall_ = node;
+        this._functionDefinition_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._funcCall_);
+            + toString(this._functionDefinition_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._funcCall_ == child)
+        if(this._functionDefinition_ == child)
         {
-            this._funcCall_ = null;
+            this._functionDefinition_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class AFCallExpressionB extends PExpressionB
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._funcCall_ == oldChild)
+        if(this._functionDefinition_ == oldChild)
         {
-            setFuncCall((PFuncCall) newChild);
+            setFunctionDefinition((PFunctionDefinition) newChild);
             return;
         }
 

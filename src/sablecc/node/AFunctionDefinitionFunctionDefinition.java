@@ -10,7 +10,7 @@ public final class AFunctionDefinitionFunctionDefinition extends PFunctionDefini
 {
     private PHeader _header_;
     private final LinkedList<PLocalDefinition> _localDefinition_ = new LinkedList<PLocalDefinition>();
-    private PStatement _statement_;
+    private PBlock _block_;
 
     public AFunctionDefinitionFunctionDefinition()
     {
@@ -20,14 +20,14 @@ public final class AFunctionDefinitionFunctionDefinition extends PFunctionDefini
     public AFunctionDefinitionFunctionDefinition(
         @SuppressWarnings("hiding") PHeader _header_,
         @SuppressWarnings("hiding") List<?> _localDefinition_,
-        @SuppressWarnings("hiding") PStatement _statement_)
+        @SuppressWarnings("hiding") PBlock _block_)
     {
         // Constructor
         setHeader(_header_);
 
         setLocalDefinition(_localDefinition_);
 
-        setStatement(_statement_);
+        setBlock(_block_);
 
     }
 
@@ -37,7 +37,7 @@ public final class AFunctionDefinitionFunctionDefinition extends PFunctionDefini
         return new AFunctionDefinitionFunctionDefinition(
             cloneNode(this._header_),
             cloneList(this._localDefinition_),
-            cloneNode(this._statement_));
+            cloneNode(this._block_));
     }
 
     @Override
@@ -97,16 +97,16 @@ public final class AFunctionDefinitionFunctionDefinition extends PFunctionDefini
         }
     }
 
-    public PStatement getStatement()
+    public PBlock getBlock()
     {
-        return this._statement_;
+        return this._block_;
     }
 
-    public void setStatement(PStatement node)
+    public void setBlock(PBlock node)
     {
-        if(this._statement_ != null)
+        if(this._block_ != null)
         {
-            this._statement_.parent(null);
+            this._block_.parent(null);
         }
 
         if(node != null)
@@ -119,7 +119,7 @@ public final class AFunctionDefinitionFunctionDefinition extends PFunctionDefini
             node.parent(this);
         }
 
-        this._statement_ = node;
+        this._block_ = node;
     }
 
     @Override
@@ -128,7 +128,7 @@ public final class AFunctionDefinitionFunctionDefinition extends PFunctionDefini
         return ""
             + toString(this._header_)
             + toString(this._localDefinition_)
-            + toString(this._statement_);
+            + toString(this._block_);
     }
 
     @Override
@@ -146,9 +146,9 @@ public final class AFunctionDefinitionFunctionDefinition extends PFunctionDefini
             return;
         }
 
-        if(this._statement_ == child)
+        if(this._block_ == child)
         {
-            this._statement_ = null;
+            this._block_ = null;
             return;
         }
 
@@ -183,9 +183,9 @@ public final class AFunctionDefinitionFunctionDefinition extends PFunctionDefini
             }
         }
 
-        if(this._statement_ == oldChild)
+        if(this._block_ == oldChild)
         {
-            setStatement((PStatement) newChild);
+            setBlock((PBlock) newChild);
             return;
         }
 

@@ -173,7 +173,7 @@ public class Parser
                 case ACCEPT:
                     {
                         EOF node2 = (EOF) this.lexer.next();
-                        PFunctionDefinition node1 = (PFunctionDefinition) pop().get(0);
+                        PProgram node1 = (PProgram) pop().get(0);
                         Start node = new Start(node1, node2);
                         return node;
                     }
@@ -189,7 +189,7 @@ public class Parser
     {
         switch(reduction)
         {
-            case 0: /* reduce AProgram */
+            case 0: /* reduce AProgramProgram */
             {
                 ArrayList<Object> list = new0();
                 push(goTo(0), list);
@@ -249,13 +249,13 @@ public class Parser
                 push(goTo(3), list);
             }
             break;
-            case 10: /* reduce AAblock1Block */
+            case 10: /* reduce AAblockblock1Block */
             {
                 ArrayList<Object> list = new10();
                 push(goTo(4), list);
             }
             break;
-            case 11: /* reduce AAblock2Block */
+            case 11: /* reduce AAblockblock2Block */
             {
                 ArrayList<Object> list = new11();
                 push(goTo(4), list);
@@ -951,14 +951,20 @@ public class Parser
 
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new0() /* reduce AProgram */
+    ArrayList<Object> new0() /* reduce AProgramProgram */
     {
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PFunctionDefinition pfunctiondefinitionNode1;
-        pfunctiondefinitionNode1 = (PFunctionDefinition)nodeArrayList1.get(0);
-	nodeList.add(pfunctiondefinitionNode1);
+        PProgram pprogramNode1;
+        {
+            // Block
+        PFunctionDefinition pfunctiondefinitionNode2;
+        pfunctiondefinitionNode2 = (PFunctionDefinition)nodeArrayList1.get(0);
+
+        pprogramNode1 = new AProgramProgram(pfunctiondefinitionNode2);
+        }
+	nodeList.add(pprogramNode1);
         return nodeList;
     }
 
@@ -976,14 +982,14 @@ public class Parser
             // Block
         PHeader pheaderNode2;
         LinkedList<Object> listNode3 = new LinkedList<Object>();
-        LinkedList<Object> listNode4 = new LinkedList<Object>();
+        PBlock pblockNode4;
         pheaderNode2 = (PHeader)nodeArrayList1.get(0);
         {
             // Block
         }
-        listNode4 = (LinkedList)nodeArrayList2.get(0);
+        pblockNode4 = (PBlock)nodeArrayList2.get(0);
 
-        pfunctiondefinitionNode1 = new AFunctionDefinitionFunctionDefinition(pheaderNode2, listNode3, listNode4);
+        pfunctiondefinitionNode1 = new AFunctionDefinitionFunctionDefinition(pheaderNode2, listNode3, pblockNode4);
         }
 	nodeList.add(pfunctiondefinitionNode1);
         return nodeList;
@@ -1004,7 +1010,7 @@ public class Parser
             // Block
         PHeader pheaderNode2;
         LinkedList<Object> listNode4 = new LinkedList<Object>();
-        LinkedList<Object> listNode5 = new LinkedList<Object>();
+        PBlock pblockNode5;
         pheaderNode2 = (PHeader)nodeArrayList1.get(0);
         {
             // Block
@@ -1015,9 +1021,9 @@ public class Parser
 	  listNode4.addAll(listNode3);
 	}
         }
-        listNode5 = (LinkedList)nodeArrayList3.get(0);
+        pblockNode5 = (PBlock)nodeArrayList3.get(0);
 
-        pfunctiondefinitionNode1 = new AFunctionDefinitionFunctionDefinition(pheaderNode2, listNode4, listNode5);
+        pfunctiondefinitionNode1 = new AFunctionDefinitionFunctionDefinition(pheaderNode2, listNode4, pblockNode5);
         }
 	nodeList.add(pfunctiondefinitionNode1);
         return nodeList;
@@ -1232,41 +1238,53 @@ public class Parser
 
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new10() /* reduce AAblock1Block */
+    ArrayList<Object> new10() /* reduce AAblockblock1Block */
     {
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        LinkedList<Object> listNode1 = new LinkedList<Object>();
+        PBlock pblockNode1;
+        {
+            // Block
+        LinkedList<Object> listNode2 = new LinkedList<Object>();
         {
             // Block
         }
-	nodeList.add(listNode1);
+
+        pblockNode1 = new ABlockBlock(listNode2);
+        }
+	nodeList.add(pblockNode1);
         return nodeList;
     }
 
 
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new11() /* reduce AAblock2Block */
+    ArrayList<Object> new11() /* reduce AAblockblock2Block */
     {
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList3 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        LinkedList<Object> listNode2 = new LinkedList<Object>();
+        PBlock pblockNode1;
         {
             // Block
-        LinkedList<Object> listNode1 = new LinkedList<Object>();
-        listNode1 = (LinkedList)nodeArrayList2.get(0);
-	if(listNode1 != null)
+        LinkedList<Object> listNode3 = new LinkedList<Object>();
+        {
+            // Block
+        LinkedList<Object> listNode2 = new LinkedList<Object>();
+        listNode2 = (LinkedList)nodeArrayList2.get(0);
+	if(listNode2 != null)
 	{
-	  listNode2.addAll(listNode1);
+	  listNode3.addAll(listNode2);
 	}
         }
-	nodeList.add(listNode2);
+
+        pblockNode1 = new ABlockBlock(listNode3);
+        }
+	nodeList.add(pblockNode1);
         return nodeList;
     }
 
@@ -1851,10 +1869,10 @@ public class Parser
         PStatement pstatementNode1;
         {
             // Block
-        LinkedList<Object> listNode2 = new LinkedList<Object>();
-        listNode2 = (LinkedList)nodeArrayList1.get(0);
+        PBlock pblockNode2;
+        pblockNode2 = (PBlock)nodeArrayList1.get(0);
 
-        pstatementNode1 = new ABlockStatement(listNode2);
+        pstatementNode1 = new ABlockStatement(pblockNode2);
         }
 	nodeList.add(pstatementNode1);
         return nodeList;
@@ -2072,10 +2090,10 @@ public class Parser
         PStatement pstatementNode1;
         {
             // Block
-        LinkedList<Object> listNode2 = new LinkedList<Object>();
-        listNode2 = (LinkedList)nodeArrayList1.get(0);
+        PBlock pblockNode2;
+        pblockNode2 = (PBlock)nodeArrayList1.get(0);
 
-        pstatementNode1 = new ABlockStatement(listNode2);
+        pstatementNode1 = new ABlockStatement(pblockNode2);
         }
 	nodeList.add(pstatementNode1);
         return nodeList;

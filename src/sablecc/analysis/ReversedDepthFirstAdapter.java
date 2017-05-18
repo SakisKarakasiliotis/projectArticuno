@@ -32,8 +32,29 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     {
         inStart(node);
         node.getEOF().apply(this);
-        node.getPFunctionDefinition().apply(this);
+        node.getPProgram().apply(this);
         outStart(node);
+    }
+
+    public void inAProgramProgram(AProgramProgram node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAProgramProgram(AProgramProgram node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAProgramProgram(AProgramProgram node)
+    {
+        inAProgramProgram(node);
+        if(node.getFunctionDefinition() != null)
+        {
+            node.getFunctionDefinition().apply(this);
+        }
+        outAProgramProgram(node);
     }
 
     public void inAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node)
@@ -50,9 +71,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node)
     {
         inAFunctionDefinitionFunctionDefinition(node);
-        if(node.getStatement() != null)
+        if(node.getBlock() != null)
         {
-            node.getStatement().apply(this);
+            node.getBlock().apply(this);
         }
         {
             List<PLocalDefinition> copy = new ArrayList<PLocalDefinition>(node.getLocalDefinition());
@@ -167,6 +188,31 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
             node.getVarDefinition().apply(this);
         }
         outAVarDefLocalDefinition(node);
+    }
+
+    public void inABlockBlock(ABlockBlock node)
+    {
+        defaultIn(node);
+    }
+
+    public void outABlockBlock(ABlockBlock node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseABlockBlock(ABlockBlock node)
+    {
+        inABlockBlock(node);
+        {
+            List<PStatement> copy = new ArrayList<PStatement>(node.getStatement());
+            Collections.reverse(copy);
+            for(PStatement e : copy)
+            {
+                e.apply(this);
+            }
+        }
+        outABlockBlock(node);
     }
 
     public void inAFparDefinitionFparDefinition(AFparDefinitionFparDefinition node)
@@ -562,9 +608,9 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseABlockStatement(ABlockStatement node)
     {
         inABlockStatement(node);
-        if(node.getStatement() != null)
+        if(node.getBlock() != null)
         {
-            node.getStatement().apply(this);
+            node.getBlock().apply(this);
         }
         outABlockStatement(node);
     }

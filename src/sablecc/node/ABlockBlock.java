@@ -6,69 +6,34 @@ import java.util.*;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class ABlock extends PBlock
+public final class ABlockBlock extends PBlock
 {
-    private TLbrace _lbrace_;
     private final LinkedList<PStatement> _statement_ = new LinkedList<PStatement>();
-    private TRbrace _rbrace_;
 
-    public ABlock()
+    public ABlockBlock()
     {
         // Constructor
     }
 
-    public ABlock(
-        @SuppressWarnings("hiding") TLbrace _lbrace_,
-        @SuppressWarnings("hiding") List<?> _statement_,
-        @SuppressWarnings("hiding") TRbrace _rbrace_)
+    public ABlockBlock(
+        @SuppressWarnings("hiding") List<?> _statement_)
     {
         // Constructor
-        setLbrace(_lbrace_);
-
         setStatement(_statement_);
-
-        setRbrace(_rbrace_);
 
     }
 
     @Override
     public Object clone()
     {
-        return new ABlock(
-            cloneNode(this._lbrace_),
-            cloneList(this._statement_),
-            cloneNode(this._rbrace_));
+        return new ABlockBlock(
+            cloneList(this._statement_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseABlock(this);
-    }
-
-    public TLbrace getLbrace()
-    {
-        return this._lbrace_;
-    }
-
-    public void setLbrace(TLbrace node)
-    {
-        if(this._lbrace_ != null)
-        {
-            this._lbrace_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._lbrace_ = node;
+        ((Analysis) sw).caseABlockBlock(this);
     }
 
     public LinkedList<PStatement> getStatement()
@@ -97,58 +62,19 @@ public final class ABlock extends PBlock
         }
     }
 
-    public TRbrace getRbrace()
-    {
-        return this._rbrace_;
-    }
-
-    public void setRbrace(TRbrace node)
-    {
-        if(this._rbrace_ != null)
-        {
-            this._rbrace_.parent(null);
-        }
-
-        if(node != null)
-        {
-            if(node.parent() != null)
-            {
-                node.parent().removeChild(node);
-            }
-
-            node.parent(this);
-        }
-
-        this._rbrace_ = node;
-    }
-
     @Override
     public String toString()
     {
         return ""
-            + toString(this._lbrace_)
-            + toString(this._statement_)
-            + toString(this._rbrace_);
+            + toString(this._statement_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._lbrace_ == child)
-        {
-            this._lbrace_ = null;
-            return;
-        }
-
         if(this._statement_.remove(child))
         {
-            return;
-        }
-
-        if(this._rbrace_ == child)
-        {
-            this._rbrace_ = null;
             return;
         }
 
@@ -159,12 +85,6 @@ public final class ABlock extends PBlock
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._lbrace_ == oldChild)
-        {
-            setLbrace((TLbrace) newChild);
-            return;
-        }
-
         for(ListIterator<PStatement> i = this._statement_.listIterator(); i.hasNext();)
         {
             if(i.next() == oldChild)
@@ -181,12 +101,6 @@ public final class ABlock extends PBlock
                 oldChild.parent(null);
                 return;
             }
-        }
-
-        if(this._rbrace_ == oldChild)
-        {
-            setRbrace((TRbrace) newChild);
-            return;
         }
 
         throw new RuntimeException("Not a child.");

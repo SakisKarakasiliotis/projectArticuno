@@ -31,9 +31,30 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseStart(Start node)
     {
         inStart(node);
-        node.getPFunctionDefinition().apply(this);
+        node.getPProgram().apply(this);
         node.getEOF().apply(this);
         outStart(node);
+    }
+
+    public void inAProgramProgram(AProgramProgram node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAProgramProgram(AProgramProgram node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAProgramProgram(AProgramProgram node)
+    {
+        inAProgramProgram(node);
+        if(node.getFunctionDefinition() != null)
+        {
+            node.getFunctionDefinition().apply(this);
+        }
+        outAProgramProgram(node);
     }
 
     public void inAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node)
@@ -61,9 +82,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
                 e.apply(this);
             }
         }
-        if(node.getStatement() != null)
+        if(node.getBlock() != null)
         {
-            node.getStatement().apply(this);
+            node.getBlock().apply(this);
         }
         outAFunctionDefinitionFunctionDefinition(node);
     }
@@ -165,6 +186,30 @@ public class DepthFirstAdapter extends AnalysisAdapter
             node.getVarDefinition().apply(this);
         }
         outAVarDefLocalDefinition(node);
+    }
+
+    public void inABlockBlock(ABlockBlock node)
+    {
+        defaultIn(node);
+    }
+
+    public void outABlockBlock(ABlockBlock node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseABlockBlock(ABlockBlock node)
+    {
+        inABlockBlock(node);
+        {
+            List<PStatement> copy = new ArrayList<PStatement>(node.getStatement());
+            for(PStatement e : copy)
+            {
+                e.apply(this);
+            }
+        }
+        outABlockBlock(node);
     }
 
     public void inAFparDefinitionFparDefinition(AFparDefinitionFparDefinition node)
@@ -556,9 +601,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseABlockStatement(ABlockStatement node)
     {
         inABlockStatement(node);
-        if(node.getStatement() != null)
+        if(node.getBlock() != null)
         {
-            node.getStatement().apply(this);
+            node.getBlock().apply(this);
         }
         outABlockStatement(node);
     }

@@ -12,11 +12,13 @@ public interface Analysis extends Switch
     void setOut(Node node, Object o);
 
     void caseStart(Start node);
+    void caseAProgramProgram(AProgramProgram node);
     void caseAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node);
     void caseAHeaderHeader(AHeaderHeader node);
     void caseAFDefLocalDefinition(AFDefLocalDefinition node);
     void caseAFDeclLocalDefinition(AFDeclLocalDefinition node);
     void caseAVarDefLocalDefinition(AVarDefLocalDefinition node);
+    void caseABlockBlock(ABlockBlock node);
     void caseAFparDefinitionFparDefinition(AFparDefinitionFparDefinition node);
     void caseANextFparDefinitionNextFparDefinition(ANextFparDefinitionNextFparDefinition node);
     void caseADataTypeRetType(ADataTypeRetType node);

@@ -21,42 +21,7 @@ public class PrintingVisitor extends DepthFirstAdapter{
         System.out.print(String.join("", Collections.nCopies(indentation, " ")));
     }
 
-    @Override
-    public void inAProgram(AProgram node){
-        printIndentation();
-        System.out.println("[Program] "+node.toString());
-        addIndentationLevel();
-    }
 
-    @Override
-    public void outAProgram(AProgram node){
-        removeIndentationLevel();
-    }@Override
-    public void inAFunctionDefinition(AFunctionDefinition node){
-        printIndentation();
-        System.out.println("[FunctionDefinition] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outAFunctionDefinition(AFunctionDefinition node){
-        removeIndentationLevel();
-    }@Override
-    public void inAHeader(AHeader node){
-        printIndentation();
-        System.out.println("[Header] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outAHeader(AHeader node){
-        removeIndentationLevel();
-    }@Override
-    public void inAFDefLocalDefinition(AFDefLocalDefinition node){
-        printIndentation();
-        System.out.println("[FDefLocalDefinition] "+node.toString());
-        addIndentationLevel();
-    }
 
     @Override
     public void outAFDefLocalDefinition(AFDefLocalDefinition node){
@@ -78,45 +43,8 @@ public class PrintingVisitor extends DepthFirstAdapter{
         addIndentationLevel();
     }
 
-    @Override
-    public void outAVarDefLocalDefinition(AVarDefLocalDefinition node){
-        removeIndentationLevel();
-    }@Override
-    public void inABlock(ABlock node){
-        printIndentation();
-        System.out.println("[Block] "+node.toString());
-        addIndentationLevel();
-    }
 
-    @Override
-    public void outABlock(ABlock node){
-        removeIndentationLevel();
-    }@Override
-    public void inAFparDefinition(AFparDefinition node){
-        printIndentation();
-        System.out.println("[FparDefinition] "+node.toString());
-        addIndentationLevel();
-    }
 
-    @Override
-    public void outAFparDefinition(AFparDefinition node){
-        removeIndentationLevel();
-    }@Override
-    public void inANextFparDefinition(ANextFparDefinition node){
-        printIndentation();
-        System.out.println("[NextFparDefinition] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outANextFparDefinition(ANextFparDefinition node){
-        removeIndentationLevel();
-    }@Override
-    public void inADataTypeRetType(ADataTypeRetType node){
-        printIndentation();
-        System.out.println("[DataTypeRetType] "+node.toString());
-        addIndentationLevel();
-    }
 
     @Override
     public void outADataTypeRetType(ADataTypeRetType node){
@@ -148,65 +76,7 @@ public class PrintingVisitor extends DepthFirstAdapter{
         addIndentationLevel();
     }
 
-    @Override
-    public void outACharacterDataType(ACharacterDataType node){
-        removeIndentationLevel();
-    }@Override
-    public void inAType(AType node){
-        printIndentation();
-        System.out.println("[Type] "+node.toString());
-        addIndentationLevel();
-    }
 
-    @Override
-    public void outAType(AType node){
-        removeIndentationLevel();
-    }@Override
-    public void inAFunctionDeclaration(AFunctionDeclaration node){
-        printIndentation();
-        System.out.println("[FunctionDeclaration] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outAFunctionDeclaration(AFunctionDeclaration node){
-        removeIndentationLevel();
-    }@Override
-    public void inAFparType(AFparType node){
-        printIndentation();
-        System.out.println("[FparType] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outAFparType(AFparType node){
-        removeIndentationLevel();
-    }@Override
-    public void inAVarDefinition(AVarDefinition node){
-        printIndentation();
-        System.out.println("[VarDefinition] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outAVarDefinition(AVarDefinition node){
-        removeIndentationLevel();
-    }@Override
-    public void inANextIdentifier(ANextIdentifier node){
-        printIndentation();
-        System.out.println("[NextIdentifier] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outANextIdentifier(ANextIdentifier node){
-        removeIndentationLevel();
-    }@Override
-    public void inANoopStatement(ANoopStatement node){
-        printIndentation();
-        System.out.println("[NoopStatement] "+node.toString());
-        addIndentationLevel();
-    }
 
     @Override
     public void outANoopStatement(ANoopStatement node){
@@ -218,25 +88,7 @@ public class PrintingVisitor extends DepthFirstAdapter{
         addIndentationLevel();
     }
 
-    @Override
-    public void outAAssignmentStatement(AAssignmentStatement node){
-        removeIndentationLevel();
-    }@Override
-    public void inAIfStatement(AIfStatement node){
-        printIndentation();
-        System.out.println("[IfStatement] "+node.toString());
-        addIndentationLevel();
-    }
 
-    @Override
-    public void outAIfStatement(AIfStatement node){
-        removeIndentationLevel();
-    }@Override
-    public void inABlockStatement(ABlockStatement node){
-        printIndentation();
-        System.out.println("[BlockStatement] "+node.toString());
-        addIndentationLevel();
-    }
 
     @Override
     public void outABlockStatement(ABlockStatement node){
@@ -268,125 +120,9 @@ public class PrintingVisitor extends DepthFirstAdapter{
         addIndentationLevel();
     }
 
-    @Override
-    public void outAReturnStatement(AReturnStatement node){
-        removeIndentationLevel();
-    }@Override
-    public void inANoElseIfStmt(ANoElseIfStmt node){
-        printIndentation();
-        System.out.println("[NoElseIfStmt] "+node.toString());
-        addIndentationLevel();
-    }
 
-    @Override
-    public void outANoElseIfStmt(ANoElseIfStmt node){
-        removeIndentationLevel();
-    }@Override
-    public void inAWithElseIfStmt(AWithElseIfStmt node){
-        printIndentation();
-        System.out.println("[WithElseIfStmt] "+node.toString());
-        addIndentationLevel();
-    }
 
-    @Override
-    public void outAWithElseIfStmt(AWithElseIfStmt node){
-        removeIndentationLevel();
-    }@Override
-    public void inANoopStmtWithElse(ANoopStmtWithElse node){
-        printIndentation();
-        System.out.println("[NoopStmtWithElse] "+node.toString());
-        addIndentationLevel();
-    }
 
-    @Override
-    public void outANoopStmtWithElse(ANoopStmtWithElse node){
-        removeIndentationLevel();
-    }@Override
-    public void inAAssignmentStmtWithElse(AAssignmentStmtWithElse node){
-        printIndentation();
-        System.out.println("[AssignmentStmtWithElse] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outAAssignmentStmtWithElse(AAssignmentStmtWithElse node){
-        removeIndentationLevel();
-    }@Override
-    public void inAIfStmtWithElse(AIfStmtWithElse node){
-        printIndentation();
-        System.out.println("[IfStmtWithElse] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outAIfStmtWithElse(AIfStmtWithElse node){
-        removeIndentationLevel();
-    }@Override
-    public void inABlockStmtWithElse(ABlockStmtWithElse node){
-        printIndentation();
-        System.out.println("[BlockStmtWithElse] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outABlockStmtWithElse(ABlockStmtWithElse node){
-        removeIndentationLevel();
-    }@Override
-    public void inAFCallStmtWithElse(AFCallStmtWithElse node){
-        printIndentation();
-        System.out.println("[FCallStmtWithElse] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outAFCallStmtWithElse(AFCallStmtWithElse node){
-        removeIndentationLevel();
-    }@Override
-    public void inAWhileDoStmtWithElse(AWhileDoStmtWithElse node){
-        printIndentation();
-        System.out.println("[WhileDoStmtWithElse] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outAWhileDoStmtWithElse(AWhileDoStmtWithElse node){
-        removeIndentationLevel();
-    }@Override
-    public void inAReturnStmtWithElse(AReturnStmtWithElse node){
-        printIndentation();
-        System.out.println("[ReturnStmtWithElse] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outAReturnStmtWithElse(AReturnStmtWithElse node){
-        removeIndentationLevel();
-    }@Override
-    public void inAIfElseStmt(AIfElseStmt node){
-        printIndentation();
-        System.out.println("[IfElseStmt] "+node.toString());
-        addIndentationLevel();
-    }
-
-//    @Override
-//    public void outAIfElseStmt(AIfElseStmt node){
-//        removeIndentationLevel();
-//    }@Override
-//    public void inAFuncCall(AFuncCall node){
-//        printIndentation();
-//        System.out.println("[FuncCall] "+node.toString());
-//        addIndentationLevel();
-//    }
-//
-//    @Override
-//    public void outAFuncCall(AFuncCall node){
-//        removeIndentationLevel();
-//    }@Override
-//    public void inAIdentifierLValue(AIdentifierLValue node){
-//        printIndentation();
-//        System.out.println("[IdentifierLValue] "+node.toString());
-//        addIndentationLevel();
-//    }
 
     @Override
     public void outAIdentifierLValue(AIdentifierLValue node){
@@ -478,65 +214,8 @@ public class PrintingVisitor extends DepthFirstAdapter{
         addIndentationLevel();
     }
 
-    @Override
-    public void outANumOperExpression(ANumOperExpression node){
-        removeIndentationLevel();
-    }@Override
-    public void inAArrayExpressionB(AArrayExpressionB node){
-        printIndentation();
-        System.out.println("[ArrayExpressionB] "+node.toString());
-        addIndentationLevel();
-    }
 
-    @Override
-    public void outAArrayExpressionB(AArrayExpressionB node){
-        removeIndentationLevel();
-    }@Override
-    public void inAStringExpressionB(AStringExpressionB node){
-        printIndentation();
-        System.out.println("[StringExpressionB] "+node.toString());
-        addIndentationLevel();
-    }
 
-    @Override
-    public void outAStringExpressionB(AStringExpressionB node){
-        removeIndentationLevel();
-    }@Override
-    public void inACharConstExpressionB(ACharConstExpressionB node){
-        printIndentation();
-        System.out.println("[CharConstExpressionB] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outACharConstExpressionB(ACharConstExpressionB node){
-        removeIndentationLevel();
-    }@Override
-    public void inAFCallExpressionB(AFCallExpressionB node){
-        printIndentation();
-        System.out.println("[FCallExpressionB] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outAFCallExpressionB(AFCallExpressionB node){
-        removeIndentationLevel();
-    }@Override
-    public void inASignedExpressionExpressionB(ASignedExpressionExpressionB node){
-        printIndentation();
-        System.out.println("[SignedExpressionExpressionB] "+node.toString());
-        addIndentationLevel();
-    }
-
-    @Override
-    public void outASignedExpressionExpressionB(ASignedExpressionExpressionB node){
-        removeIndentationLevel();
-    }@Override
-    public void inACondExpCondition(ACondExpCondition node){
-        printIndentation();
-        System.out.println("[CondExpCondition] "+node.toString());
-        addIndentationLevel();
-    }
 
     @Override
     public void outACondExpCondition(ACondExpCondition node){
@@ -558,165 +237,7 @@ public class PrintingVisitor extends DepthFirstAdapter{
         addIndentationLevel();
     }
 
-//    @Override
-//    public void outAMinusSign(AMinusSign node){
-//        removeIndentationLevel();
-//    }@Override
-//    public void inANextExpression(ANextExpression node){
-//        printIndentation();
-//        System.out.println("[NextExpression] "+node.toString());
-//        addIndentationLevel();
-//    }
-//
-//    @Override
-//    public void outANextExpression(ANextExpression node){
-//        removeIndentationLevel();
-//    }@Override
-//    public void inAMultipleExpressions(AMultipleExpressions node){
-//        printIndentation();
-//        System.out.println("[MultipleExpressions] "+node.toString());
-//        addIndentationLevel();
-//    }
-//
-//    @Override
-//    public void outAMultipleExpressions(AMultipleExpressions node){
-//        removeIndentationLevel();
-//    }@Override
-//    public void inAArraySize(AArraySize node){
-//        printIndentation();
-//        System.out.println("[ArraySize] "+node.toString());
-//        addIndentationLevel();
-//    }
-//
-//    @Override
-//    public void outAArraySize(AArraySize node){
-//        removeIndentationLevel();
-//    }@Override
-//    public void inAEmptyBrackets(AEmptyBrackets node){
-//        printIndentation();
-//        System.out.println("[EmptyBrackets] "+node.toString());
-//        addIndentationLevel();
-//    }
-//
-//    @Override
-//    public void outAEmptyBrackets(AEmptyBrackets node){
-//        removeIndentationLevel();
-//    }@Override
-//    public void inAArray(AArray node){
-//        printIndentation();
-//        System.out.println("[Array] "+node.toString());
-//        addIndentationLevel();
-//    }
-//
-//    @Override
-//    public void outAArray(AArray node){
-//        removeIndentationLevel();
-//    }@Override
-//    public void inAArrayPosition(AArrayPosition node){
-//        printIndentation();
-//        System.out.println("[ArrayPosition] "+node.toString());
-//        addIndentationLevel();
-//    }
-//
-//    @Override
-//    public void outAArrayPosition(AArrayPosition node){
-//        removeIndentationLevel();
-//    }@Override
-//    public void inAOrLogicOperations(AOrLogicOperations node){
-//        printIndentation();
-//        System.out.println("[OrLogicOperations] "+node.toString());
-//        addIndentationLevel();
-//    }
-//
-//    @Override
-//    public void outAOrLogicOperations(AOrLogicOperations node){
-//        removeIndentationLevel();
-//    }@Override
-//    public void inAAndLogicOperations(AAndLogicOperations node){
-//        printIndentation();
-//        System.out.println("[AndLogicOperations] "+node.toString());
-//        addIndentationLevel();
-//    }
-//
-//    @Override
-//    public void outAAndLogicOperations(AAndLogicOperations node){
-//        removeIndentationLevel();
-//    }@Override
-//    public void inANotLogicOperations(ANotLogicOperations node){
-//        printIndentation();
-//        System.out.println("[NotLogicOperations] "+node.toString());
-//        addIndentationLevel();
-//    }
-//
-//    @Override
-//    public void outANotLogicOperations(ANotLogicOperations node){
-//        removeIndentationLevel();
-//    }@Override
-//    public void inAEqualsComparisonSymbols(AEqualsComparisonSymbols node){
-//        printIndentation();
-//        System.out.println("[EqualsComparisonSymbols] "+node.toString());
-//        addIndentationLevel();
-//    }
-//
-//    @Override
-//    public void outAEqualsComparisonSymbols(AEqualsComparisonSymbols node){
-//        removeIndentationLevel();
-//    }@Override
-//    public void inANotEqualsComparisonSymbols(ANotEqualsComparisonSymbols node){
-//        printIndentation();
-//        System.out.println("[NotEqualsComparisonSymbols] "+node.toString());
-//        addIndentationLevel();
-//    }
-//
-//    @Override
-//    public void outANotEqualsComparisonSymbols(ANotEqualsComparisonSymbols node){
-//        removeIndentationLevel();
-//    }@Override
-//    public void inALessThanComparisonSymbols(ALessThanComparisonSymbols node){
-//        printIndentation();
-//        System.out.println("[LessThanComparisonSymbols] "+node.toString());
-//        addIndentationLevel();
-//    }
-//
-//    @Override
-//    public void outALessThanComparisonSymbols(ALessThanComparisonSymbols node){
-//        removeIndentationLevel();
-//    }@Override
-//    public void inAGreaterThanComparisonSymbols(AGreaterThanComparisonSymbols node){
-//        printIndentation();
-//        System.out.println("[GreaterThanComparisonSymbols] "+node.toString());
-//        addIndentationLevel();
-//    }
-//
-//    @Override
-//    public void outAGreaterThanComparisonSymbols(AGreaterThanComparisonSymbols node){
-//        removeIndentationLevel();
-//    }@Override
-//    public void inAGreaterOrEqualComparisonSymbols(AGreaterOrEqualComparisonSymbols node){
-//        printIndentation();
-//        System.out.println("[GreaterOrEqualComparisonSymbols] "+node.toString());
-//        addIndentationLevel();
-//    }
-//
-//    @Override
-//    public void outAGreaterOrEqualComparisonSymbols(AGreaterOrEqualComparisonSymbols node){
-//        removeIndentationLevel();
-//    }@Override
-//    public void inALessOrEqualComparisonSymbols(ALessOrEqualComparisonSymbols node){
-//        printIndentation();
-//        System.out.println("[LessOrEqualComparisonSymbols] "+node.toString());
-//        addIndentationLevel();
-//    }
-//
-//    @Override
-//    public void outALessOrEqualComparisonSymbols(ALessOrEqualComparisonSymbols node){
-//        removeIndentationLevel();
-//    }@Override
-//    public void inAPlusExpNExp(APlusExpNExp node){
-//        printIndentation();
-//        System.out.println("[PlusExpNExp] "+node.toString());
-//        addIndentationLevel();
-//    }
+
 
     @Override
     public void outAPlusExpNExp(APlusExpNExp node){
@@ -732,67 +253,7 @@ public class PrintingVisitor extends DepthFirstAdapter{
         public void outAMinusExpNExp(AMinusExpNExp node){
             removeIndentationLevel();
         }
-//        @Override
-//        public void inATermNExp(ATermNExp node){
-//            printIndentation();
-//            System.out.println("[TermNExp] "+node.toString());
-//            addIndentationLevel();
-//        }
-//
-//        @Override
-//        public void outATermNExp(ATermNExp node){
-//            removeIndentationLevel();
-//        }@Override
-//        public void inATermMultTerm(ATermMultTerm node){
-//            printIndentation();
-//            System.out.println("[TermMultTerm] "+node.toString());
-//            addIndentationLevel();
-//        }
-//
-//        @Override
-//        public void outATermMultTerm(ATermMultTerm node){
-//            removeIndentationLevel();
-//        }@Override
-//        public void inATermDivTerm(ATermDivTerm node){
-//            printIndentation();
-//            System.out.println("[TermDivTerm] "+node.toString());
-//            addIndentationLevel();
-//        }
-//
-//        @Override
-//        public void outATermDivTerm(ATermDivTerm node){
-//            removeIndentationLevel();
-//        }@Override
-//        public void inATermModTerm(ATermModTerm node){
-//            printIndentation();
-//            System.out.println("[TermModTerm] "+node.toString());
-//            addIndentationLevel();
-//        }
-//
-//        @Override
-//        public void outATermModTerm(ATermModTerm node){
-//            removeIndentationLevel();
-//        }@Override
-//        public void inAExponentTerm(AExponentTerm node){
-//            printIndentation();
-//        System.out.println("[ExponentTerm] "+node.toString());
-//        addIndentationLevel();
-//    }
-//
-//    @Override
-//    public void outAExponentTerm(AExponentTerm node){
-//        removeIndentationLevel();
-//    }@Override
-//    public void inAUnsignedExponent(AUnsignedExponent node){
-//        printIndentation();
-//        System.out.println("[UnsignedExponent] "+node.toString());
-//        addIndentationLevel();
-//    }
-//
-//    @Override
-//    public void outAUnsignedExponent(AUnsignedExponent node){
-//        removeIndentationLevel();
-//    }
+
  @Override
     public void inANonParenFinal(ANonParenFinal node){
         printIndentation();
