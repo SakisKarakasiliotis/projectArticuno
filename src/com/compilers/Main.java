@@ -21,7 +21,7 @@ public class Main {
             Lexer l = new Lexer(new PushbackReader(new BufferedReader(infile),1024));
             Parser p = new Parser(l);
             tree = p.parse();
-//            tree.apply(new PrintingVisitor());
+            tree.apply(new SemanticAnalyzer());
         } catch (LexerException e) {
             System.err.printf("Lexing error: %s\n", e.getMessage());
         } catch (IOException e) {

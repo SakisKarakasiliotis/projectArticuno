@@ -711,6 +711,12 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
+    public void caseTErroneousNumber(TErroneousNumber node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
     public void caseTWhitespace(TWhitespace node)
     {
         defaultCase(node);

@@ -3822,7 +3822,7 @@ public class Parser
 /*      {
 			{{-1, ERROR, 0}, {0, SHIFT, 1}, },
 			{{-1, ERROR, 1}, {37, SHIFT, 5}, },
-			{{-1, ERROR, 2}, {41, ACCEPT, -1}, },
+			{{-1, ERROR, 2}, {42, ACCEPT, -1}, },
 			{{-1, REDUCE, 0}, },
 			{{-1, ERROR, 4}, {0, SHIFT, 1}, {1, SHIFT, 6}, {12, SHIFT, 7}, },
 			{{-1, ERROR, 5}, {14, SHIFT, 15}, },

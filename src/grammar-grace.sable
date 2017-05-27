@@ -62,11 +62,13 @@ Tokens
   greater_than_equal = '>=';
   kw_not = 'not';
 
+
 //Names
   identifier = (lowercase_ch|uppercase_ch) (alpha_num|underscore)*;
   int_const = (number)*;
   char_const = sq (escape_char | alpha_num) sq;
   string_literal = dq (escape_char | alpha_num | any)+ dq;
+  erroneous_number = (number)+ (alpha_num|'_'|escape_char)+;
 
 //Ignored and Comments
   whitespace = ' ' | cr | lf | tab;

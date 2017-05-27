@@ -119,6 +119,7 @@ public interface Analysis extends Switch
     void caseTIntConst(TIntConst node);
     void caseTCharConst(TCharConst node);
     void caseTStringLiteral(TStringLiteral node);
+    void caseTErroneousNumber(TErroneousNumber node);
     void caseTWhitespace(TWhitespace node);
     void caseTComment(TComment node);
     void caseTComments(TComments node);
