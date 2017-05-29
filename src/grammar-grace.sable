@@ -20,6 +20,8 @@ Helpers
   eol = cr lf | cr | lf;
   not_cr_lf = [any - [cr + lf]];
   not_dollar = [not_cr_lf - dollar];
+  comments = doubledollar any* doubledollar;
+  comment = dollar not_dollar not_cr_lf* eol;
 Tokens
 //Keywords Definitions
   kw_fun = 'fun';
@@ -72,13 +74,11 @@ Tokens
 
 //Ignored and Comments
   whitespace = ' ' | cr | lf | tab;
-  comment = dollar not_dollar not_cr_lf* eol;
-  comments = doubledollar any* doubledollar;
+  comm = comments | comment;
 
 Ignored Tokens
   whitespace,
-  comment,
-  comments;
+  comm;
 
 Productions
   program {->program}={program} function_definition{-> New program.program(function_definition)};
