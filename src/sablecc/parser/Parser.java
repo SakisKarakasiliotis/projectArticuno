@@ -327,7 +327,7 @@ public class Parser
                 push(goTo(9), list);
             }
             break;
-            case 23: /* reduce AFunctionDeclarationFunctionDeclaration */
+            case 23: /* reduce AFunctionDeclarationHeaderFunctionDeclaration */
             {
                 ArrayList<Object> list = new23();
                 push(goTo(10), list);
@@ -1206,10 +1206,10 @@ public class Parser
         PLocalDefinition plocaldefinitionNode1;
         {
             // Block
-        PFunctionDeclaration pfunctiondeclarationNode2;
-        pfunctiondeclarationNode2 = (PFunctionDeclaration)nodeArrayList1.get(0);
+        PHeader pheaderNode2;
+        pheaderNode2 = (PHeader)nodeArrayList1.get(0);
 
-        plocaldefinitionNode1 = new AFDeclLocalDefinition(pfunctiondeclarationNode2);
+        plocaldefinitionNode1 = new AFDeclLocalDefinition(pheaderNode2);
         }
 	nodeList.add(plocaldefinitionNode1);
         return nodeList;
@@ -1581,21 +1581,15 @@ public class Parser
 
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    ArrayList<Object> new23() /* reduce AFunctionDeclarationFunctionDeclaration */
+    ArrayList<Object> new23() /* reduce AFunctionDeclarationHeaderFunctionDeclaration */
     {
         @SuppressWarnings("hiding") ArrayList<Object> nodeList = new ArrayList<Object>();
 
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList2 = pop();
         @SuppressWarnings("unused") ArrayList<Object> nodeArrayList1 = pop();
-        PFunctionDeclaration pfunctiondeclarationNode1;
-        {
-            // Block
-        PHeader pheaderNode2;
-        pheaderNode2 = (PHeader)nodeArrayList1.get(0);
-
-        pfunctiondeclarationNode1 = new AFunctionDeclarationFunctionDeclaration(pheaderNode2);
-        }
-	nodeList.add(pfunctiondeclarationNode1);
+        PHeader pheaderNode1;
+        pheaderNode1 = (PHeader)nodeArrayList1.get(0);
+	nodeList.add(pheaderNode1);
         return nodeList;
     }
 

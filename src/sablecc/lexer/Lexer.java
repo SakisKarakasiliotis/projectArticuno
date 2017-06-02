@@ -622,17 +622,6 @@ public class Lexer
                             this.line = accept_line;
                             return token;
                         }
-                    case 44:
-                        {
-                            @SuppressWarnings("hiding") Token token = new44(
-                                getText(accept_length),
-                                start_line + 1,
-                                start_pos + 1);
-                            pushBack(accept_length);
-                            this.pos = accept_pos;
-                            this.line = accept_line;
-                            return token;
-                        }
                     }
                 }
                 else
@@ -697,8 +686,7 @@ public class Lexer
     Token new40(@SuppressWarnings("hiding") String text, @SuppressWarnings("hiding") int line, @SuppressWarnings("hiding") int pos) { return new TStringLiteral(text, line, pos); }
     Token new41(@SuppressWarnings("hiding") String text, @SuppressWarnings("hiding") int line, @SuppressWarnings("hiding") int pos) { return new TErroneousNumber(text, line, pos); }
     Token new42(@SuppressWarnings("hiding") String text, @SuppressWarnings("hiding") int line, @SuppressWarnings("hiding") int pos) { return new TWhitespace(text, line, pos); }
-    Token new43(@SuppressWarnings("hiding") String text, @SuppressWarnings("hiding") int line, @SuppressWarnings("hiding") int pos) { return new TComment(text, line, pos); }
-    Token new44(@SuppressWarnings("hiding") String text, @SuppressWarnings("hiding") int line, @SuppressWarnings("hiding") int pos) { return new TComments(text, line, pos); }
+    Token new43(@SuppressWarnings("hiding") String text, @SuppressWarnings("hiding") int line, @SuppressWarnings("hiding") int pos) { return new TComm(text, line, pos); }
 
     private int getChar() throws IOException
     {
@@ -893,7 +881,7 @@ public class Lexer
     private static int[][] accept;
 /*  {
         // INITIAL
-        {38, 42, 42, 42, 42, -1, 30, -1, -1, 14, 15, 24, 22, 18, 23, 25, 38, 20, 19, 32, 31, 34, 37, 16, 17, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 12, 13, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 41, 41, 41, 41, 41, 41, 38, 41, 41, 41, 21, 33, 35, 37, 37, 37, 37, 37, 37, 37, 4, 37, 37, 6, 37, 37, 37, 29, 37, 37, 37, 37, 40, -1, 43, 43, -1, -1, 39, 41, 28, 37, 27, 37, 0, 3, 26, 36, 9, 37, 37, 1, 37, 43, 44, 2, 7, 37, 37, 8, 37, 37, 37, 5, 37, 11, 10, },
+        {38, 42, 42, 42, 42, -1, 30, -1, -1, 14, 15, 24, 22, 18, 23, 25, 38, 20, 19, 32, 31, 34, 37, 16, 17, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 37, 12, 13, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 41, 41, 41, 41, 41, 41, 38, 41, 41, 41, 21, 33, 35, 37, 37, 37, 37, 37, 37, 37, 4, 37, 37, 6, 37, 37, 37, 29, 37, 37, 37, 37, 40, -1, 43, 43, -1, -1, 39, 41, 28, 37, 27, 37, 0, 3, 26, 36, 9, 37, 37, 1, 37, 43, 43, 2, 7, 37, 37, 8, 37, 37, 37, 5, 37, 11, 10, },
 
     };*/
 

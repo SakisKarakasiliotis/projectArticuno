@@ -7,7 +7,7 @@ import sablecc.analysis.*;
 @SuppressWarnings("nls")
 public final class AFDeclLocalDefinition extends PLocalDefinition
 {
-    private PFunctionDeclaration _functionDeclaration_;
+    private PHeader _header_;
 
     public AFDeclLocalDefinition()
     {
@@ -15,10 +15,10 @@ public final class AFDeclLocalDefinition extends PLocalDefinition
     }
 
     public AFDeclLocalDefinition(
-        @SuppressWarnings("hiding") PFunctionDeclaration _functionDeclaration_)
+        @SuppressWarnings("hiding") PHeader _header_)
     {
         // Constructor
-        setFunctionDeclaration(_functionDeclaration_);
+        setHeader(_header_);
 
     }
 
@@ -26,7 +26,7 @@ public final class AFDeclLocalDefinition extends PLocalDefinition
     public Object clone()
     {
         return new AFDeclLocalDefinition(
-            cloneNode(this._functionDeclaration_));
+            cloneNode(this._header_));
     }
 
     @Override
@@ -35,16 +35,16 @@ public final class AFDeclLocalDefinition extends PLocalDefinition
         ((Analysis) sw).caseAFDeclLocalDefinition(this);
     }
 
-    public PFunctionDeclaration getFunctionDeclaration()
+    public PHeader getHeader()
     {
-        return this._functionDeclaration_;
+        return this._header_;
     }
 
-    public void setFunctionDeclaration(PFunctionDeclaration node)
+    public void setHeader(PHeader node)
     {
-        if(this._functionDeclaration_ != null)
+        if(this._header_ != null)
         {
-            this._functionDeclaration_.parent(null);
+            this._header_.parent(null);
         }
 
         if(node != null)
@@ -57,23 +57,23 @@ public final class AFDeclLocalDefinition extends PLocalDefinition
             node.parent(this);
         }
 
-        this._functionDeclaration_ = node;
+        this._header_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._functionDeclaration_);
+            + toString(this._header_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._functionDeclaration_ == child)
+        if(this._header_ == child)
         {
-            this._functionDeclaration_ = null;
+            this._header_ = null;
             return;
         }
 
@@ -84,9 +84,9 @@ public final class AFDeclLocalDefinition extends PLocalDefinition
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._functionDeclaration_ == oldChild)
+        if(this._header_ == oldChild)
         {
-            setFunctionDeclaration((PFunctionDeclaration) newChild);
+            setHeader((PHeader) newChild);
             return;
         }
 

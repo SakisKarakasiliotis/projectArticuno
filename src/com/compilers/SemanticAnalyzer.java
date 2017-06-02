@@ -1,17 +1,17 @@
 package com.compilers;
+
 import sablecc.analysis.DepthFirstAdapter;
 import sablecc.node.*;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Created by Windows 8 on 09-Apr-17.
  */
-public class SemanticAnalyzer extends DepthFirstAdapter{
+public class SemanticAnalyzer extends DepthFirstAdapter {
     int indentation = 0;
+
+    List<symbolTableEntry> fParams = new LinkedList<>();
 
     private void addIndentationLevel() {
         indentation++;
@@ -21,16 +21,22 @@ public class SemanticAnalyzer extends DepthFirstAdapter{
         indentation--;
     }
 
+
     private void printIndentation() {
-        System.out.print(String.join("", Collections.nCopies(indentation, " ")));
+        //System.out.print(String.join("", Collections.nCopies(indentation, " ")));
     }
+
+    List<String> errorLog = new LinkedList<>();
 
     SymbolTable symbolTable = new SymbolTable();
 
-    public void outAProgramProgram(AProgramProgram node){
+    public void outAProgramProgram(AProgramProgram node) {
         printIndentation();
-        System.out.println("[ProgramProgram]: "+node.toString());
+        //System.out.println("[ProgramProgram]: "+node.toString());
         addIndentationLevel();
+        for (String e : errorLog) {
+            System.out.println(e);
+        }
     }
 
     /*
@@ -38,405 +44,424 @@ public class SemanticAnalyzer extends DepthFirstAdapter{
     * Function Defintition
     *
      */
-    public void inAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node){
-        System.out.println("[FunctionDefinition]: "+node.toString());
+    public void inAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node) {
+        //System.out.println("[FunctionDefinition]: "+node.toString());
         symbolTable.enter();
     }
-    public void outAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node){
+
+    public void outAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node) {
         symbolTable.exit();
     }
+
     /*
     *
     * Header
     *
      */
-    public void inAHeaderHeader(AHeaderHeader node){
-        System.out.println("[Header]: "+node.toString());
-        if(!symbolTable.lookup(node.getIdentifier().getText())){
-            int insert = symbolTable.insert(node.getIdentifier().getText(), "function Name");
+    public void caseAHeaderHeader(AHeaderHeader node) {
+        inAHeaderHeader(node);
+        String id = node.getIdentifier().getText();
+        String parentClass = node.parent().getClass().toString();
+        EntryType et = EntryType.entryType;
+        String retType = node.getRetType().toString();
+        symbolTableEntry s = symbolTable.lookupWithScope(id);
+        System.out.println(s);
+        if (s == null) {
+            if (node.getFparDefinition() != null) {
+                node.getFparDefinition().apply(this);
+            }
+            {
+                List<PNextFparDefinition> copy = new ArrayList<PNextFparDefinition>(node.getNextFparDefinition());
+                for (PNextFparDefinition e : copy) {
+                    e.apply(this);
+                }
+            }
+            symbolTableEntry temp = new symbolTableEntry(id, EntryType.FUNC_NAME, et.getEntryType(parentClass));
+            temp.setfParams(fParams);
+            temp.setRetType(retType);
+            int insert = symbolTable.insertToParent(temp);
+        } else {
+            if (Objects.equals(s.getParent(), EntryType.FUNC_DECL) && Objects.equals(et.getEntryType(parentClass), EntryType.FUNC_DEF)) {
+                //ok but have to check params
+                if (node.getFparDefinition() != null) {
+                    node.getFparDefinition().apply(this);
+                }
+                {
+                    List<PNextFparDefinition> copy = new ArrayList<PNextFparDefinition>(node.getNextFparDefinition());
+                    for (PNextFparDefinition e : copy) {
+                        e.apply(this);
+                    }
+                }
+                if (!s.getfParams().equals(fParams) || !s.getRetType().equals(retType)) {
+                    errorLog.add("definition of " + id + " doesn't match declaration on line " + node.getIdentifier().getLine() + " " + node.getIdentifier().getPos());
+                } else {
+                    symbolTableEntry temp = new symbolTableEntry(id, EntryType.FUNC_NAME, et.getEntryType(parentClass));
+                    temp.setfParams(fParams);
+                    temp.setRetType(retType);
+                    int insert = symbolTable.insertToParent(temp);
+                }
+
+            } else if (Objects.equals(s.getParent(), EntryType.FUNC_DEF) && Objects.equals(et.getEntryType(parentClass), EntryType.FUNC_DECL)) {
+                errorLog.add("definition of " + id + " must not proceed declaration on line " + node.getIdentifier().getLine() + " " + node.getIdentifier().getPos());
+            } else {
+                errorLog.add("Redeclaration of " + id + " on line " + node.getIdentifier().getLine() + " " + node.getIdentifier().getPos());
+            }
         }
-
-
-    }
-    public void outAHeaderHeader(AHeaderHeader node){
-        System.out.println("THIS SHOULD WORK "+node.getNextFparDefinition());
-
+        outAHeaderHeader(node);
     }
 
-    public void outAFDefLocalDefinition(AFDefLocalDefinition node){
-        printIndentation();
-        System.out.println("[FDefLocalDefinition]: "+node.toString());
-        addIndentationLevel();
+    public void outAHeaderHeader(AHeaderHeader node) {
+        fParams.clear();
+
     }
 
-    public void outAFDeclLocalDefinition(AFDeclLocalDefinition node){
-        printIndentation();
-        System.out.println("[FDeclLocalDefinition]: "+node.toString());
-        addIndentationLevel();
-    }
+    //removed localdef func def
 
-    public void outAVarDefLocalDefinition(AVarDefLocalDefinition node){
-        printIndentation();
-        System.out.println("[VarDefLocalDefinition]: "+node.toString());
-        addIndentationLevel();
-    }
-    //new scope
-    public void outABlockBlock(ABlockBlock node){
-        printIndentation();
-        System.out.println("[BlockBlock]: "+node.toString());
-        addIndentationLevel();
-    }
+    //removed localdef func decl
+
+    // removed localdef var def
+
+
+    //removed block
+
     //new  st
-    public void outAFparDefinitionFparDefinition(AFparDefinitionFparDefinition node){
-        printIndentation();
-        System.out.println("[FparDefinitionFparDefinition]: "+node.toString());
-        addIndentationLevel();
-
-
+    public void caseAFparDefinitionFparDefinition(AFparDefinitionFparDefinition node) {
+        inAFparDefinitionFparDefinition(node);
+        String parName = node.getIdentifier().toString();
+        String parType = node.getFparType().toString();
+        symbolTableEntry temp = new symbolTableEntry(parName, EntryType.FUNC_PARAM);
+        temp.setfParType(parType);
+        fParams.add(temp);
+        List<PNextIdentifier> copy = new ArrayList<PNextIdentifier>(node.getNextIdentifier());
+        for (PNextIdentifier e : copy) {
+            symbolTableEntry nextTemp = new symbolTableEntry(parName, EntryType.FUNC_PARAM);
+            nextTemp.setfParType(parType);
+            fParams.add(nextTemp);
+        }
+        outAFparDefinitionFparDefinition(node);
     }
 
-    public void outANextFparDefinitionNextFparDefinition(ANextFparDefinitionNextFparDefinition node){
-        printIndentation();
-        System.out.println("[NextFparDefinitionNextFparDefinition]: "+node.toString());
-        addIndentationLevel();
+
+    // removed return data type
+    // removed nothing return type
+
+    //removed int & char type
+
+    // removed type
+
+
+    //removed fpartype
+
+    public void caseAVarDefinitionVarDefinition(AVarDefinitionVarDefinition node) {
+        inAVarDefinitionVarDefinition(node);
+        String parName = node.getIdentifier().toString();
+        String parType = node.getType().toString();
+        symbolTableEntry temp = new symbolTableEntry(parName, EntryType.VAR);
+        temp.setfParType(parType);
+        symbolTableEntry s = symbolTable.lookup() // need lookoup for vars
+        if (s == null) {
+            symbolTable.insert(temp);
+        } else {
+            errorLog.add("Redefinition of variable " + parName + " on line " + node.getIdentifier().getLine() + " " + node.getIdentifier().getPos());
+
+        }
+        List<PNextIdentifier> copy = new ArrayList<PNextIdentifier>(node.getNextIdentifier());
+        for (PNextIdentifier e : copy) {
+            parName = e.toString();
+
+            symbolTableEntry s = symbolTable.lookup() // need lookoup for vars
+            if (s == null) {
+                symbolTableEntry nextTemp = new symbolTableEntry(parName, EntryType.VAR);
+                nextTemp.setfParType(parType);
+                symbolTable.insert(nextTemp);
+            } else {
+                errorLog.add("Redefinition of variable " + parName + " on line " + node.getIdentifier().getLine() + " " + node.getIdentifier().getPos());
+
+            }
+        }
+        outAVarDefinitionVarDefinition(node);
     }
 
-    public void outADataTypeRetType(ADataTypeRetType node){
-        printIndentation();
-        System.out.println("[DataTypeRetType]: "+node.toString());
-        addIndentationLevel();
-    }
+    //removed next identifier
 
-    public void outANothingRetType(ANothingRetType node){
-        printIndentation();
-        System.out.println("[NothingRetType]: "+node.toString());
-        addIndentationLevel();
-    }
+   //removed noop statement
 
-    public void outAIntegerDataType(AIntegerDataType node){
-        printIndentation();
-        System.out.println("[IntegerDataType]: "+node.toString());
-        addIndentationLevel();
-    }
-
-    public void outACharacterDataType(ACharacterDataType node){
-        printIndentation();
-        System.out.println("[CharacterDataType]: "+node.toString());
-        addIndentationLevel();
-    }
-
-    public void outATypeType(ATypeType node){
-        printIndentation();
-        System.out.println("[TypeType]: "+node.toString());
-        addIndentationLevel();
-    }
-
-    public void outAFunctionDeclarationFunctionDeclaration(AFunctionDeclarationFunctionDeclaration node){
-        printIndentation();
-        System.out.println("[FunctionDeclarationFunctionDeclaration]: "+node.toString());
-        addIndentationLevel();
-    }
-
-    public void outAFparTypeFparType(AFparTypeFparType node){
-        printIndentation();
-        System.out.println("[FparTypeFparType]: "+node.toString());
-        addIndentationLevel();
-    }
-
-    public void outAVarDefinitionVarDefinition(AVarDefinitionVarDefinition node){
-        printIndentation();
-        System.out.println("[VarDefinitionVarDefinition]: "+node.toString());
-        addIndentationLevel();
-    }
-
-    public void outANextIdentifierNextIdentifier(ANextIdentifierNextIdentifier node){
-        printIndentation();
-        System.out.println("[NextIdentifierNextIdentifier]: "+node.toString());
-        addIndentationLevel();
-    }
-
-    public void outANoopStatement(ANoopStatement node){
-        printIndentation();
-        System.out.println("[NoopStatement]: "+node.toString());
-        addIndentationLevel();
-    }
     //check type on st
-    public void outAAssignmentStatement(AAssignmentStatement node){
+    public void outAAssignmentStatement(AAssignmentStatement node) {
         printIndentation();
-        System.out.println("[AssignmentStatement]: "+node.toString());
+        //   System.out.println("[AssignmentStatement]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outANoElseStatement(ANoElseStatement node){
+    public void outANoElseStatement(ANoElseStatement node) {
         printIndentation();
-        System.out.println("[NoElseStatement]: "+node.toString());
+        //  System.out.println("[NoElseStatement]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAWithElseStatement(AWithElseStatement node){
+    public void outAWithElseStatement(AWithElseStatement node) {
         printIndentation();
-        System.out.println("[WithElseStatement]: "+node.toString());
+        //  System.out.println("[WithElseStatement]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outABlockStatement(ABlockStatement node){
+    public void outABlockStatement(ABlockStatement node) {
         printIndentation();
-        System.out.println("[BlockStatement]: "+node.toString());
+        //  System.out.println("[BlockStatement]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAFCallStatement(AFCallStatement node){
+    public void outAFCallStatement(AFCallStatement node) {
         printIndentation();
-        System.out.println("[FCallStatement]: "+node.toString());
+        //  System.out.println("[FCallStatement]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAWhileDoStatement(AWhileDoStatement node){
+    public void outAWhileDoStatement(AWhileDoStatement node) {
         printIndentation();
-        System.out.println("[WhileDoStatement]: "+node.toString());
+        //  System.out.println("[WhileDoStatement]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAReturnStatement(AReturnStatement node){
+    public void outAReturnStatement(AReturnStatement node) {
         printIndentation();
-        System.out.println("[ReturnStatement]: "+node.toString());
+        //  System.out.println("[ReturnStatement]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAStatementWithElseStatement(AStatementWithElseStatement node){
+    public void outAStatementWithElseStatement(AStatementWithElseStatement node) {
         printIndentation();
-        System.out.println("[StatementWithElseStatement]: "+node.toString());
+        //  System.out.println("[StatementWithElseStatement]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAFuncCallFuncCall(AFuncCallFuncCall node){
+    public void outAFuncCallFuncCall(AFuncCallFuncCall node) {
         printIndentation();
-        System.out.println("[FuncCallFuncCall]: "+node.toString());
+        //  System.out.println("[FuncCallFuncCall]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAIdentifierLValue(AIdentifierLValue node){
+    public void outAIdentifierLValue(AIdentifierLValue node) {
         printIndentation();
-        System.out.println("[IdentifierLValue]: "+node.toString());
+        // System.out.println("[IdentifierLValue]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAStringLitLValue(AStringLitLValue node){
+    public void outAStringLitLValue(AStringLitLValue node) {
         printIndentation();
-        System.out.println("[StringLitLValue]: "+node.toString());
+        //  System.out.println("[StringLitLValue]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAArrayAssignLValue(AArrayAssignLValue node){
+    public void outAArrayAssignLValue(AArrayAssignLValue node) {
         printIndentation();
-        System.out.println("[ArrayAssignLValue]: "+node.toString());
+        //  System.out.println("[ArrayAssignLValue]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAArrayExpression(AArrayExpression node){
+    public void outAArrayExpression(AArrayExpression node) {
         printIndentation();
-        System.out.println("[ArrayExpression]: "+node.toString());
+        //  System.out.println("[ArrayExpression]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAStringExpression(AStringExpression node){
+    public void outAStringExpression(AStringExpression node) {
         printIndentation();
-        System.out.println("[StringExpression]: "+node.toString());
+        //  System.out.println("[StringExpression]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outACharConstExpression(ACharConstExpression node){
+    public void outACharConstExpression(ACharConstExpression node) {
         printIndentation();
-        System.out.println("[CharConstExpression]: "+node.toString());
+        //   System.out.println("[CharConstExpression]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAFCallExpression(AFCallExpression node){
+    public void outAFCallExpression(AFCallExpression node) {
         printIndentation();
-        System.out.println("[FCallExpression]: "+node.toString());
+        //   System.out.println("[FCallExpression]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAParenExpressionExpression(AParenExpressionExpression node){
+    public void outAParenExpressionExpression(AParenExpressionExpression node) {
         printIndentation();
-        System.out.println("[ParenExpressionExpression]: "+node.toString());
+        //   System.out.println("[ParenExpressionExpression]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outASignedExpressionExpression(ASignedExpressionExpression node){
+    public void outASignedExpressionExpression(ASignedExpressionExpression node) {
         printIndentation();
-        System.out.println("[SignedExpressionExpression]: "+node.toString());
+        //    System.out.println("[SignedExpressionExpression]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outANumOperExpression(ANumOperExpression node){
+    public void outANumOperExpression(ANumOperExpression node) {
         printIndentation();
-        System.out.println("[NumOperExpression]: "+node.toString());
+        //    System.out.println("[NumOperExpression]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outACondExpCondition(ACondExpCondition node){
+    public void outACondExpCondition(ACondExpCondition node) {
         printIndentation();
-        System.out.println("[CondExpCondition]: "+node.toString());
+        //   System.out.println("[CondExpCondition]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAPlusSign(APlusSign node){
+    public void outAPlusSign(APlusSign node) {
         printIndentation();
-        System.out.println("[PlusSign]: "+node.toString());
+        //   System.out.println("[PlusSign]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAMinusSign(AMinusSign node){
+    public void outAMinusSign(AMinusSign node) {
         printIndentation();
-        System.out.println("[MinusSign]: "+node.toString());
+        //   System.out.println("[MinusSign]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAArraySizeArraySize(AArraySizeArraySize node){
+    public void outAArraySizeArraySize(AArraySizeArraySize node) {
         printIndentation();
-        System.out.println("[ArraySizeArraySize]: "+node.toString());
+        //    System.out.println("[ArraySizeArraySize]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAEmptyBrackets(AEmptyBrackets node){
+    public void outAEmptyBrackets(AEmptyBrackets node) {
         printIndentation();
-        System.out.println("[EmptyBrackets]: "+node.toString());
+        //   System.out.println("[EmptyBrackets]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAArrayArray(AArrayArray node){
+    public void outAArrayArray(AArrayArray node) {
         printIndentation();
-        System.out.println("[ArrayArray]: "+node.toString());
+        //    System.out.println("[ArrayArray]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAPlusExpNExp(APlusExpNExp node){
+    public void outAPlusExpNExp(APlusExpNExp node) {
         printIndentation();
-        System.out.println("[PlusExpNExp]: "+node.toString());
+        //    System.out.println("[PlusExpNExp]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAMinusExpNExp(AMinusExpNExp node){
+    public void outAMinusExpNExp(AMinusExpNExp node) {
         printIndentation();
-        System.out.println("[MinusExpNExp]: "+node.toString());
+        //    System.out.println("[MinusExpNExp]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outATermMultNExp(ATermMultNExp node){
+    public void outATermMultNExp(ATermMultNExp node) {
         printIndentation();
-        System.out.println("[TermMultNExp]: "+node.toString());
+        //    System.out.println("[TermMultNExp]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outATermDivNExp(ATermDivNExp node){
+    public void outATermDivNExp(ATermDivNExp node) {
         printIndentation();
-        System.out.println("[TermDivNExp]: "+node.toString());
+        //    System.out.println("[TermDivNExp]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outATermModNExp(ATermModNExp node){
+    public void outATermModNExp(ATermModNExp node) {
         printIndentation();
-        System.out.println("[TermModNExp]: "+node.toString());
+        //    System.out.println("[TermModNExp]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAExponentNExp(AExponentNExp node){
+    public void outAExponentNExp(AExponentNExp node) {
         printIndentation();
-        System.out.println("[ExponentNExp]: "+node.toString());
+        //    System.out.println("[ExponentNExp]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outANonParenFinal(ANonParenFinal node){
+    public void outANonParenFinal(ANonParenFinal node) {
         printIndentation();
-        System.out.println("[NonParenFinal]: "+node.toString());
+        //    System.out.println("[NonParenFinal]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAParenExpFinal(AParenExpFinal node){
+    public void outAParenExpFinal(AParenExpFinal node) {
         printIndentation();
-        System.out.println("[ParenExpFinal]: "+node.toString());
+        //    System.out.println("[ParenExpFinal]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAIdenFinal(AIdenFinal node){
+    public void outAIdenFinal(AIdenFinal node) {
         printIndentation();
-        System.out.println("[IdenFinal]: "+node.toString());
+        //    System.out.println("[IdenFinal]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAOrExpCompExp(AOrExpCompExp node){
+    public void outAOrExpCompExp(AOrExpCompExp node) {
         printIndentation();
-        System.out.println("[OrExpCompExp]: "+node.toString());
+        //    System.out.println("[OrExpCompExp]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAAndExpCompExp(AAndExpCompExp node){
+    public void outAAndExpCompExp(AAndExpCompExp node) {
         printIndentation();
-        System.out.println("[AndExpCompExp]: "+node.toString());
+        //    System.out.println("[AndExpCompExp]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outANotExpCompExp(ANotExpCompExp node){
+    public void outANotExpCompExp(ANotExpCompExp node) {
         printIndentation();
-        System.out.println("[NotExpCompExp]: "+node.toString());
+        //    System.out.println("[NotExpCompExp]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAPlainExpCompExp(APlainExpCompExp node){
+    public void outAPlainExpCompExp(APlainExpCompExp node) {
         printIndentation();
-        System.out.println("[PlainExpCompExp]: "+node.toString());
+        //    System.out.println("[PlainExpCompExp]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAEqualsCompVal(AEqualsCompVal node){
+    public void outAEqualsCompVal(AEqualsCompVal node) {
         printIndentation();
-        System.out.println("[EqualsCompVal]: "+node.toString());
+        //    System.out.println("[EqualsCompVal]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outANotEqualsCompVal(ANotEqualsCompVal node){
+    public void outANotEqualsCompVal(ANotEqualsCompVal node) {
         printIndentation();
-        System.out.println("[NotEqualsCompVal]: "+node.toString());
+        //   System.out.println("[NotEqualsCompVal]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outALessThanCompVal(ALessThanCompVal node){
+    public void outALessThanCompVal(ALessThanCompVal node) {
         printIndentation();
-        System.out.println("[LessThanCompVal]: "+node.toString());
+        //    System.out.println("[LessThanCompVal]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAGreaterThanCompVal(AGreaterThanCompVal node){
+    public void outAGreaterThanCompVal(AGreaterThanCompVal node) {
         printIndentation();
-        System.out.println("[GreaterThanCompVal]: "+node.toString());
+        //    System.out.println("[GreaterThanCompVal]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAGreaterOrEqualCompVal(AGreaterOrEqualCompVal node){
+    public void outAGreaterOrEqualCompVal(AGreaterOrEqualCompVal node) {
         printIndentation();
-        System.out.println("[GreaterOrEqualCompVal]: "+node.toString());
+        //    System.out.println("[GreaterOrEqualCompVal]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outALessOrEqualCompVal(ALessOrEqualCompVal node){
+    public void outALessOrEqualCompVal(ALessOrEqualCompVal node) {
         printIndentation();
-        System.out.println("[LessOrEqualCompVal]: "+node.toString());
+        //    System.out.println("[LessOrEqualCompVal]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outACompFinalCompVal(ACompFinalCompVal node){
+    public void outACompFinalCompVal(ACompFinalCompVal node) {
         printIndentation();
-        System.out.println("[CompFinalCompVal]: "+node.toString());
+        //    System.out.println("[CompFinalCompVal]: "+node.toString());
         addIndentationLevel();
     }
 
-    public void outAExprCompFinal(AExprCompFinal node){
+    public void outAExprCompFinal(AExprCompFinal node) {
         printIndentation();
-        System.out.println("[ExprCompFinal]: "+node.toString());
+        //   System.out.println("[ExprCompFinal]: "+node.toString());
         addIndentationLevel();
     }
-
 
 
 }

@@ -5,14 +5,14 @@ package sablecc.node;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class TComments extends Token
+public final class TComm extends Token
 {
-    public TComments(String text)
+    public TComm(String text)
     {
         setText(text);
     }
 
-    public TComments(String text, int line, int pos)
+    public TComm(String text, int line, int pos)
     {
         setText(text);
         setLine(line);
@@ -22,12 +22,12 @@ public final class TComments extends Token
     @Override
     public Object clone()
     {
-      return new TComments(getText(), getLine(), getPos());
+      return new TComm(getText(), getLine(), getPos());
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseTComments(this);
+        ((Analysis) sw).caseTComm(this);
     }
 }

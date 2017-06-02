@@ -159,7 +159,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseAFunctionDeclarationFunctionDeclaration(AFunctionDeclarationFunctionDeclaration node)
+    public void caseAFunctionDeclarationHeaderFunctionDeclaration(AFunctionDeclarationHeaderFunctionDeclaration node)
     {
         defaultCase(node);
     }
@@ -723,13 +723,7 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseTComment(TComment node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTComments(TComments node)
+    public void caseTComm(TComm node)
     {
         defaultCase(node);
     }

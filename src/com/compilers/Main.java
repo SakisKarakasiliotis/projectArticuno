@@ -15,6 +15,7 @@ public class Main {
 
     public static void main(String[] args) {
 
+
         try {
             Start tree = null;
             FileReader infile = new FileReader(args[0]);

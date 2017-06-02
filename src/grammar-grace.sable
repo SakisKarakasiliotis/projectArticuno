@@ -88,7 +88,7 @@ Productions
   header  {-> header}={header } kw_fun identifier lparen fpar_definition? next_fpar_definition* rparen colon ret_type{-> New header.header(identifier, fpar_definition, [next_fpar_definition], ret_type)};
 
   local_definition {->local_definition}= {f_def} function_definition {-> New local_definition.f_def(function_definition)}|
-                                         {f_decl} function_declaration {-> New local_definition.f_decl(function_declaration)}|
+                                         {f_decl} function_declaration {-> New local_definition.f_decl(function_declaration.header)}|
                                          {var_def} var_definition{-> New local_definition.var_def(var_definition)};
 
   block {-> block}={block} lbrace statement* rbrace{-> New block.block( [statement])};
@@ -105,7 +105,7 @@ Productions
 
   type {->type}={type} data_type array_size* {-> New type.type(data_type ,[array_size])};
 
-  function_declaration {-> function_declaration}={function_declaration} header semicolon{-> New function_declaration.function_declaration(header)};
+  function_declaration {-> header}={function_declaration_header} header semicolon{-> header};
 
   fpar_type {-> fpar_type}={fpar_type} data_type empty_brackets? array_size* {-> New fpar_type.fpar_type(data_type, empty_brackets, [array_size])};
 
@@ -228,7 +228,9 @@ Productions
 
  comp_final {-> comp_final} = {expr}expression {-> New comp_final.expr(expression)};
 
+
 Abstract Syntax Tree
+
    program ={program} function_definition;
 
   function_definition ={function_definition} header local_definition* block;
@@ -236,7 +238,7 @@ Abstract Syntax Tree
   header ={header }  identifier  fpar_definition? next_fpar_definition*  ret_type;
 
   local_definition = {f_def} function_definition |
-                     {f_decl} function_declaration |
+                     {f_decl} header |
                      {var_def} var_definition;
 
   block ={block} statement*;
@@ -252,7 +254,7 @@ Abstract Syntax Tree
 
   type ={type} data_type array_size*;
 
-  function_declaration ={function_declaration} header;
+  function_declaration ={function_declaration_header} header;
 
   fpar_type ={fpar_type} data_type empty_brackets? array_size*;
 

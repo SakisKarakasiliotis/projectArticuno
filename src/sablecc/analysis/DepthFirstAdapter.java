@@ -160,9 +160,9 @@ public class DepthFirstAdapter extends AnalysisAdapter
     public void caseAFDeclLocalDefinition(AFDeclLocalDefinition node)
     {
         inAFDeclLocalDefinition(node);
-        if(node.getFunctionDeclaration() != null)
+        if(node.getHeader() != null)
         {
-            node.getFunctionDeclaration().apply(this);
+            node.getHeader().apply(this);
         }
         outAFDeclLocalDefinition(node);
     }
@@ -381,25 +381,25 @@ public class DepthFirstAdapter extends AnalysisAdapter
         outATypeType(node);
     }
 
-    public void inAFunctionDeclarationFunctionDeclaration(AFunctionDeclarationFunctionDeclaration node)
+    public void inAFunctionDeclarationHeaderFunctionDeclaration(AFunctionDeclarationHeaderFunctionDeclaration node)
     {
         defaultIn(node);
     }
 
-    public void outAFunctionDeclarationFunctionDeclaration(AFunctionDeclarationFunctionDeclaration node)
+    public void outAFunctionDeclarationHeaderFunctionDeclaration(AFunctionDeclarationHeaderFunctionDeclaration node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAFunctionDeclarationFunctionDeclaration(AFunctionDeclarationFunctionDeclaration node)
+    public void caseAFunctionDeclarationHeaderFunctionDeclaration(AFunctionDeclarationHeaderFunctionDeclaration node)
     {
-        inAFunctionDeclarationFunctionDeclaration(node);
+        inAFunctionDeclarationHeaderFunctionDeclaration(node);
         if(node.getHeader() != null)
         {
             node.getHeader().apply(this);
         }
-        outAFunctionDeclarationFunctionDeclaration(node);
+        outAFunctionDeclarationHeaderFunctionDeclaration(node);
     }
 
     public void inAFparTypeFparType(AFparTypeFparType node)

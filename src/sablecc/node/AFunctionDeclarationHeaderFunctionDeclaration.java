@@ -5,16 +5,16 @@ package sablecc.node;
 import sablecc.analysis.*;
 
 @SuppressWarnings("nls")
-public final class AFunctionDeclarationFunctionDeclaration extends PFunctionDeclaration
+public final class AFunctionDeclarationHeaderFunctionDeclaration extends PFunctionDeclaration
 {
     private PHeader _header_;
 
-    public AFunctionDeclarationFunctionDeclaration()
+    public AFunctionDeclarationHeaderFunctionDeclaration()
     {
         // Constructor
     }
 
-    public AFunctionDeclarationFunctionDeclaration(
+    public AFunctionDeclarationHeaderFunctionDeclaration(
         @SuppressWarnings("hiding") PHeader _header_)
     {
         // Constructor
@@ -25,14 +25,14 @@ public final class AFunctionDeclarationFunctionDeclaration extends PFunctionDecl
     @Override
     public Object clone()
     {
-        return new AFunctionDeclarationFunctionDeclaration(
+        return new AFunctionDeclarationHeaderFunctionDeclaration(
             cloneNode(this._header_));
     }
 
     @Override
     public void apply(Switch sw)
     {
-        ((Analysis) sw).caseAFunctionDeclarationFunctionDeclaration(this);
+        ((Analysis) sw).caseAFunctionDeclarationHeaderFunctionDeclaration(this);
     }
 
     public PHeader getHeader()

@@ -26,7 +26,7 @@ public interface Analysis extends Switch
     void caseAIntegerDataType(AIntegerDataType node);
     void caseACharacterDataType(ACharacterDataType node);
     void caseATypeType(ATypeType node);
-    void caseAFunctionDeclarationFunctionDeclaration(AFunctionDeclarationFunctionDeclaration node);
+    void caseAFunctionDeclarationHeaderFunctionDeclaration(AFunctionDeclarationHeaderFunctionDeclaration node);
     void caseAFparTypeFparType(AFparTypeFparType node);
     void caseAVarDefinitionVarDefinition(AVarDefinitionVarDefinition node);
     void caseANextIdentifierNextIdentifier(ANextIdentifierNextIdentifier node);
@@ -121,8 +121,7 @@ public interface Analysis extends Switch
     void caseTStringLiteral(TStringLiteral node);
     void caseTErroneousNumber(TErroneousNumber node);
     void caseTWhitespace(TWhitespace node);
-    void caseTComment(TComment node);
-    void caseTComments(TComments node);
+    void caseTComm(TComm node);
     void caseEOF(EOF node);
     void caseInvalidToken(InvalidToken node);
 }

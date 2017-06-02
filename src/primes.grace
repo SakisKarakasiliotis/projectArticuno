@@ -1,5 +1,13 @@
 fun main () : nothing
-    fun prime (n : int) : int
+
+
+    fun prime (n ,j,i: int; a :char; b :int[]) : int;
+    fun prime (n ,j,i: int; a :char; b :int[]) : int{
+
+    }
+
+
+    fun prime (n ,j,i: int; a :char; b :int[]) : int
 
       var i : int;
     {
