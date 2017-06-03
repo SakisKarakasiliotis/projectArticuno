@@ -1,7 +1,6 @@
 fun main () : nothing
 
 
-    fun prime (n,j,i: int; a :char; b :int[]) : int;
 
 
 
@@ -37,7 +36,7 @@ fun main () : nothing
       counter <- counter + 1;
       geti(2);
       puts("\n");
-      "etst"[1]<-"4";
+      "etst"<-"4";
    }
    if limit >= 3 then {
       counter <- counter + 1;

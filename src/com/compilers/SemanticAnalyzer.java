@@ -11,6 +11,8 @@ import java.util.*;
 public class SemanticAnalyzer extends DepthFirstAdapter {
     int indentation = 0;
 
+    int arrayDimensions =0;
+
     List<symbolTableEntry> fParams = new LinkedList<>();
 
     Stack<symbolTableEntry> assignStack = new Stack<>();
@@ -64,12 +66,10 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
     }
 
     public void inAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node) {
-        //System.out.println("[FunctionDefinition]: "+node.toString());
         symbolTable.enter();
     }
 
     public void outAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node) {
-
         symbolTable.exit();
     }
 
@@ -150,6 +150,9 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 
 
     //removed block
+//    public void caseABlockBlock(ABlockBlock node){
+//        //System.out.println("block-> "+ node);
+//    }
 
     //new  st
     public void caseAFparDefinitionFparDefinition(AFparDefinitionFparDefinition node) {
@@ -180,6 +183,9 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
     //removed fpartype
 
     public void caseAVarDefinitionVarDefinition(AVarDefinitionVarDefinition node) {
+
+
+        System.out.println(node);
         inAVarDefinitionVarDefinition(node);
 //        System.out.println("in case var def");
         String parName = node.getIdentifier().toString();
@@ -218,6 +224,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 
     //check type on st
     public void caseAAssignmentStatement(AAssignmentStatement node) {
+        System.out.println(node);
         inAAssignmentStatement(node);
         if (node.getLValue() != null) {
             node.getLValue().apply(this);
@@ -243,9 +250,8 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             } else {
                 errorLog.add("Assignment type mismatch expecting " + lval.getRetType() + " found " + expr.getRetType());
             }
-        }else{
+        } else {
             System.out.println("LOL ");
-            return;
         }
 
         //check if lvalue type matches expression type
@@ -302,7 +308,6 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
     }
 
     public void outAIdentifierLValue(AIdentifierLValue node) {
-        printIndentation();
         String id = node.getIdentifier().toString();
         symbolTableEntry s = symbolTable.lookup(id, EntryType.IDENTIFIER); // new lookup needed
         if (s == null) {
@@ -314,20 +319,39 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             temp.setfParType(s.getfParType());
             assignStack.push(temp);
         }
-        addIndentationLevel();
     }
 
     public void outAStringLitLValue(AStringLitLValue node) {
-        printIndentation();
-        //  System.out.println("[StringLitLValue]: "+node.toString());
-        addIndentationLevel();
+        String id = node.getStringLiteral().toString();
+        System.out.println(id);
+        symbolTableEntry temp = new symbolTableEntry(id, EntryType.STRING_LIT);
+        assignStack.push(temp);
     }
 
-    public void outAArrayAssignLValue(AArrayAssignLValue node) {
-        printIndentation();
-        //  System.out.println("[ArrayAssignLValue]: "+node.toString());
-        addIndentationLevel();
+    public void inAArrayAssignLValue(AArrayAssignLValue node){
+        arrayDimensions++;
     }
+
+    public void outAArrayAssignLValue(AArrayAssignLValue node){
+        arrayDimensions--;
+        if(arrayDimensions==0){
+            List<symbolTableEntry> dimensions = new LinkedList<>();
+            symbolTableEntry temp = assignStack.pop();
+            while(temp.getType() != EntryType.IDENTIFIER){
+                dimensions.add(temp);
+                temp = assignStack.pop();
+            }
+            symbolTableEntry toAdd = new symbolTableEntry(temp.getId(),EntryType.ARRAY);
+            toAdd.setfParams(dimensions);
+            symbolTable.insert(toAdd);
+        }
+    }
+
+//    public void caseAArrayAssignLValue(AArrayAssignLValue node) {
+//        inAArrayAssignLValue(node);
+//
+//        outAArrayAssignLValue(node);
+//    }
 
     public void outAArrayExpression(AArrayExpression node) {
         printIndentation();
