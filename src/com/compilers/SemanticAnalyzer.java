@@ -13,6 +13,8 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 
     List<symbolTableEntry> fParams = new LinkedList<>();
 
+    Stack<symbolTableEntry> assignStack = new Stack<>();
+
     private void addIndentationLevel() {
         indentation++;
     }
@@ -44,12 +46,30 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
     * Function Defintition
     *
      */
+    public void caseAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node) {
+        inAFunctionDefinitionFunctionDefinition(node);
+        if (node.getHeader() != null) {
+            node.getHeader().apply(this);
+        }
+        {
+            List<PLocalDefinition> copy = new ArrayList<PLocalDefinition>(node.getLocalDefinition());
+            for (PLocalDefinition e : copy) {
+                e.apply(this);
+            }
+        }
+        if (node.getBlock() != null) {
+            node.getBlock().apply(this);
+        }
+        outAFunctionDefinitionFunctionDefinition(node);
+    }
+
     public void inAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node) {
         //System.out.println("[FunctionDefinition]: "+node.toString());
         symbolTable.enter();
     }
 
     public void outAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node) {
+
         symbolTable.exit();
     }
 
@@ -60,12 +80,12 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
      */
     public void caseAHeaderHeader(AHeaderHeader node) {
         inAHeaderHeader(node);
-        String id = node.getIdentifier().getText();
+        String id = node.getIdentifier().toString();
         String parentClass = node.parent().getClass().toString();
         EntryType et = EntryType.entryType;
         String retType = node.getRetType().toString();
         symbolTableEntry s = symbolTable.lookupWithScope(id);
-        System.out.println(s);
+        // System.out.println(s);
         if (s == null) {
             if (node.getFparDefinition() != null) {
                 node.getFparDefinition().apply(this);
@@ -92,7 +112,14 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
                         e.apply(this);
                     }
                 }
-                if (!s.getfParams().equals(fParams) || !s.getRetType().equals(retType)) {
+                List<symbolTableEntry> result = s.getfParams();
+                if (!result.equals(fParams) || !s.getRetType().equals(retType)) {
+                    System.out.println(result);
+                    System.out.println(fParams);
+                    System.out.println(result.size());
+                    System.out.println(fParams.size());
+//                    System.out.println(s.getfParams().equals(fParams));
+//                    System.out.println(s.getfParams() +" equals " + fParams +" type "+ s.getRetType()+"equals "+ retType);
                     errorLog.add("definition of " + id + " doesn't match declaration on line " + node.getIdentifier().getLine() + " " + node.getIdentifier().getPos());
                 } else {
                     symbolTableEntry temp = new symbolTableEntry(id, EntryType.FUNC_NAME, et.getEntryType(parentClass));
@@ -134,7 +161,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         fParams.add(temp);
         List<PNextIdentifier> copy = new ArrayList<PNextIdentifier>(node.getNextIdentifier());
         for (PNextIdentifier e : copy) {
-            symbolTableEntry nextTemp = new symbolTableEntry(parName, EntryType.FUNC_PARAM);
+            symbolTableEntry nextTemp = new symbolTableEntry(e.toString(), EntryType.FUNC_PARAM);
             nextTemp.setfParType(parType);
             fParams.add(nextTemp);
         }
@@ -154,11 +181,13 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 
     public void caseAVarDefinitionVarDefinition(AVarDefinitionVarDefinition node) {
         inAVarDefinitionVarDefinition(node);
+//        System.out.println("in case var def");
         String parName = node.getIdentifier().toString();
         String parType = node.getType().toString();
         symbolTableEntry temp = new symbolTableEntry(parName, EntryType.VAR);
         temp.setfParType(parType);
-        symbolTableEntry s = symbolTable.lookup() // need lookoup for vars
+        symbolTableEntry s = symbolTable.lookup(parName, EntryType.VAR); // need lookoup for vars
+//        System.out.println("returned "+ s);
         if (s == null) {
             symbolTable.insert(temp);
         } else {
@@ -169,7 +198,8 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         for (PNextIdentifier e : copy) {
             parName = e.toString();
 
-            symbolTableEntry s = symbolTable.lookup() // need lookoup for vars
+            s = symbolTable.lookup(e.toString(), EntryType.VAR); // need lookoup for vars
+//            System.out.println("returned "+ s);
             if (s == null) {
                 symbolTableEntry nextTemp = new symbolTableEntry(parName, EntryType.VAR);
                 nextTemp.setfParType(parType);
@@ -184,13 +214,43 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 
     //removed next identifier
 
-   //removed noop statement
+    //removed noop statement
 
     //check type on st
-    public void outAAssignmentStatement(AAssignmentStatement node) {
-        printIndentation();
-        //   System.out.println("[AssignmentStatement]: "+node.toString());
-        addIndentationLevel();
+    public void caseAAssignmentStatement(AAssignmentStatement node) {
+        inAAssignmentStatement(node);
+        if (node.getLValue() != null) {
+            node.getLValue().apply(this);
+
+        }
+        if (node.getExpression() != null) {
+            node.getExpression().apply(this);
+        }
+        symbolTableEntry lval, expr;
+        if (!assignStack.isEmpty()) {
+            expr = assignStack.pop();
+        } else {
+            expr = null;
+        }
+        if (!assignStack.isEmpty()) {
+            lval = assignStack.pop();
+        } else {
+            lval = null;
+        }
+        if (lval != null && expr != null && lval.getType() != null) {
+            if (expr.getRetType().equals(lval.getRetType())) {
+                symbolTable.insert(lval);
+            } else {
+                errorLog.add("Assignment type mismatch expecting " + lval.getRetType() + " found " + expr.getRetType());
+            }
+        }else{
+            System.out.println("LOL ");
+            return;
+        }
+
+        //check if lvalue type matches expression type
+
+        outAAssignmentStatement(node);
     }
 
     public void outANoElseStatement(ANoElseStatement node) {
@@ -243,7 +303,17 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 
     public void outAIdentifierLValue(AIdentifierLValue node) {
         printIndentation();
-        // System.out.println("[IdentifierLValue]: "+node.toString());
+        String id = node.getIdentifier().toString();
+        symbolTableEntry s = symbolTable.lookup(id, EntryType.IDENTIFIER); // new lookup needed
+        if (s == null) {
+            errorLog.add("lvalue " + id + " not initialized ");
+            symbolTableEntry temp = new symbolTableEntry(id, null);
+            assignStack.push(temp);
+        } else {
+            symbolTableEntry temp = new symbolTableEntry(id, EntryType.IDENTIFIER);
+            temp.setfParType(s.getfParType());
+            assignStack.push(temp);
+        }
         addIndentationLevel();
     }
 

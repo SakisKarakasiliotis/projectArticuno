@@ -1,16 +1,16 @@
 fun main () : nothing
 
 
-    fun prime (n ,j,i: int; a :char; b :int[]) : int;
-    fun prime (n ,j,i: int; a :char; b :int[]) : int{
-
-    }
+    fun prime (n,j,i: int; a :char; b :int[]) : int;
 
 
-    fun prime (n ,j,i: int; a :char; b :int[]) : int
 
-      var i : int;
+    fun prime (n,j,i: int; a :char; b :int[]) : int
+
+    var p : int;
     {
+
+
       if n<0              then return prime(-1);
       else if n<2         then return 0;
       else if n=2         then return 1;
@@ -37,6 +37,7 @@ fun main () : nothing
       counter <- counter + 1;
       geti(2);
       puts("\n");
+      "etst"[1]<-"4";
    }
    if limit >= 3 then {
       counter <- counter + 1;

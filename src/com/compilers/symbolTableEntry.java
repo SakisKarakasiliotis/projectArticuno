@@ -11,7 +11,34 @@ import java.util.List;
 public class symbolTableEntry {
 
     String id;
-    List<symbolTableEntry> fParams;
+    private List<symbolTableEntry> fParams;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        symbolTableEntry that = (symbolTableEntry) o;
+
+        if (!id.equals(that.id)) return false;
+        if (fParams != null ? !fParams.equals(that.fParams) : that.fParams != null) return false;
+        if (type != that.type) return false;
+        if (parent != that.parent) return false;
+        if (retType != null ? !retType.equals(that.retType) : that.retType != null) return false;
+        return fParType != null ? fParType.equals(that.fParType) : that.fParType == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + (fParams != null ? fParams.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (parent != null ? parent.hashCode() : 0);
+        result = 31 * result + (retType != null ? retType.hashCode() : 0);
+        result = 31 * result + (fParType != null ? fParType.hashCode() : 0);
+        return result;
+    }
+
     EntryType type;
     EntryType parent;
     String retType;
@@ -33,12 +60,16 @@ public class symbolTableEntry {
         this.retType = retType;
     }
 
+
     @Override
     public String toString() {
         return "symbolTableEntry{" +
                 "id='" + id + '\'' +
-                ", type='" + type + '\'' +
-                ", parent='" + parent + '\'' +
+                ", fParams=" + fParams +
+                ", type=" + type +
+                ", parent=" + parent +
+                ", retType='" + retType + '\'' +
+                ", fParType='" + fParType + '\'' +
                 '}';
     }
 
@@ -46,7 +77,9 @@ public class symbolTableEntry {
         this.id = id;
         this.type = type;
         this.parent = parent;
-        this.fParams = new LinkedList<>();
+        this.retType = "";
+        this.fParType = "";
+        this.fParams = null;
     }
 
     public List<symbolTableEntry> getfParams() {
@@ -54,7 +87,7 @@ public class symbolTableEntry {
     }
 
     public void setfParams(List<symbolTableEntry> fParams) {
-        this.fParams = fParams;
+        this.fParams = new LinkedList<>(fParams);
     }
 
     public EntryType getParent() {
