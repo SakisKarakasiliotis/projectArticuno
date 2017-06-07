@@ -13,6 +13,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 
     int arrayDimensions =0;
 
+
     List<symbolTableEntry> fParams = new LinkedList<>();
 
     Stack<symbolTableEntry> assignStack = new Stack<>();
@@ -271,11 +272,11 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         addIndentationLevel();
     }
 
-    public void outABlockStatement(ABlockStatement node) {
-        printIndentation();
-        //  System.out.println("[BlockStatement]: "+node.toString());
-        addIndentationLevel();
-    }
+//    public void outABlockStatement(ABlockStatement node) {
+//        printIndentation();
+//        //  System.out.println("[BlockStatement]: "+node.toString());
+//        addIndentationLevel();
+//    }
 
     public void outAFCallStatement(AFCallStatement node) {
         printIndentation();
@@ -354,27 +355,26 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 //    }
 
     public void outAArrayExpression(AArrayExpression node) {
-        printIndentation();
-        //  System.out.println("[ArrayExpression]: "+node.toString());
-        addIndentationLevel();
+//        symbolTableEntry temp = new symbolTableEntry(id, EntryType.STRING_LIT);
+//        assignStack.push(temp);
     }
 
     public void outAStringExpression(AStringExpression node) {
-        printIndentation();
-        //  System.out.println("[StringExpression]: "+node.toString());
-        addIndentationLevel();
+        String id = node.getStringLiteral().toString();
+        symbolTableEntry temp = new symbolTableEntry(id, EntryType.STRING_LIT);
+        temp.setRetType("char");
+        assignStack.push(temp);
     }
 
     public void outACharConstExpression(ACharConstExpression node) {
-        printIndentation();
-        //   System.out.println("[CharConstExpression]: "+node.toString());
-        addIndentationLevel();
+        String id = node.getCharConst().toString();
+        symbolTableEntry temp = new symbolTableEntry(id, EntryType.STRING_LIT);
+        temp.setRetType("char");
+        assignStack.push(temp);
     }
 
     public void outAFCallExpression(AFCallExpression node) {
-        printIndentation();
-        //   System.out.println("[FCallExpression]: "+node.toString());
-        addIndentationLevel();
+
     }
 
     public void outAParenExpressionExpression(AParenExpressionExpression node) {
