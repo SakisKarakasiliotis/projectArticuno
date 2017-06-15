@@ -16,7 +16,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 
     List<symbolTableEntry> fParams = new LinkedList<>();
 
-    Stack<symbolTableEntry> assignStack = new Stack<>();
+    Stack<symbolTableEntry> assignStack = new Stack<>(); //keep track of stack size on entry to know your stack limits
 
     private void addIndentationLevel() {
         indentation++;
@@ -247,6 +247,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         }
         if (lval != null && expr != null && lval.getType() != null) {
             if (expr.getRetType().equals(lval.getRetType())) {
+                lval.setInitialized(true);
                 symbolTable.insert(lval);
             } else {
                 errorLog.add("Assignment type mismatch expecting " + lval.getRetType() + " found " + expr.getRetType());
@@ -303,9 +304,31 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
     }
 
     public void outAFuncCallFuncCall(AFuncCallFuncCall node) {
-        printIndentation();
-        //  System.out.println("[FuncCallFuncCall]: "+node.toString());
-        addIndentationLevel();
+        String id = node.getIdentifier().toString();
+        symbolTableEntry s = symbolTable.lookup(id, EntryType.FUNC_NAME);
+        if(s == null){
+            errorLog.add("undeclared function call "+id);
+        }
+        else{
+            List<symbolTableEntry> params = s.getfParams();
+            int iter=0;
+            while(!assignStack.isEmpty()){
+                symbolTableEntry temp = assignStack.pop();
+                if(params.size()<=iter){
+                    errorLog.add("unmatched function parameters in "+id+" call");
+                    break;
+                }
+                if(!params.get(iter).getRetType().equals(temp.getRetType())){
+                    errorLog.add("unmatched function parameters in "+id+" call");
+                    break;
+                }
+                iter++;
+
+            }
+            symbolTableEntry temp = new symbolTableEntry(id, EntryType.STRING_LIT);
+            temp.setRetType(s.getRetType());
+            assignStack.push(temp);
+        }
     }
 
     public void outAIdentifierLValue(AIdentifierLValue node) {
@@ -339,11 +362,16 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             List<symbolTableEntry> dimensions = new LinkedList<>();
             symbolTableEntry temp = assignStack.pop();
             while(temp.getType() != EntryType.IDENTIFIER){
+                if(!temp.getRetType().equals("int")){
+                    errorLog.add("array dimension must be of type int ");
+                    break;
+                }
                 dimensions.add(temp);
                 temp = assignStack.pop();
             }
             symbolTableEntry toAdd = new symbolTableEntry(temp.getId(),EntryType.ARRAY);
             toAdd.setfParams(dimensions);
+            toAdd.setInitialized(true);
             symbolTable.insert(toAdd);
         }
     }
@@ -354,10 +382,10 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 //        outAArrayAssignLValue(node);
 //    }
 
-    public void outAArrayExpression(AArrayExpression node) {
+//    public void outAArrayExpression(AArrayExpression node) {
 //        symbolTableEntry temp = new symbolTableEntry(id, EntryType.STRING_LIT);
 //        assignStack.push(temp);
-    }
+//    }
 
     public void outAStringExpression(AStringExpression node) {
         String id = node.getStringLiteral().toString();
@@ -372,16 +400,16 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         temp.setRetType("char");
         assignStack.push(temp);
     }
+//
+//    public void outAFCallExpression(AFCallExpression node) {
+//
+//    }
 
-    public void outAFCallExpression(AFCallExpression node) {
-
-    }
-
-    public void outAParenExpressionExpression(AParenExpressionExpression node) {
-        printIndentation();
+   // public void outAParenExpressionExpression(AParenExpressionExpression node) {
+     //   printIndentation();
         //   System.out.println("[ParenExpressionExpression]: "+node.toString());
-        addIndentationLevel();
-    }
+       // addIndentationLevel();
+    //}
 
     public void outASignedExpressionExpression(ASignedExpressionExpression node) {
         printIndentation();
@@ -390,99 +418,127 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
     }
 
     public void outANumOperExpression(ANumOperExpression node) {
-        printIndentation();
-        //    System.out.println("[NumOperExpression]: "+node.toString());
-        addIndentationLevel();
+
+//        symbolTableEntry temp = new symbolTableEntry(, EntryType.STRING_LIT);
+//        temp.setRetType("int");
+//        assignStack.push(temp);
     }
 
     public void outACondExpCondition(ACondExpCondition node) {
-        printIndentation();
+        //printIndentation();
         //   System.out.println("[CondExpCondition]: "+node.toString());
-        addIndentationLevel();
+        //addIndentationLevel();
     }
 
     public void outAPlusSign(APlusSign node) {
-        printIndentation();
-        //   System.out.println("[PlusSign]: "+node.toString());
-        addIndentationLevel();
+//        printIndentation();
+//        //   System.out.println("[PlusSign]: "+node.toString());
+//        addIndentationLevel();
     }
 
     public void outAMinusSign(AMinusSign node) {
-        printIndentation();
-        //   System.out.println("[MinusSign]: "+node.toString());
-        addIndentationLevel();
+//        printIndentation();
+//        //   System.out.println("[MinusSign]: "+node.toString());
+//        addIndentationLevel();
     }
 
     public void outAArraySizeArraySize(AArraySizeArraySize node) {
-        printIndentation();
-        //    System.out.println("[ArraySizeArraySize]: "+node.toString());
-        addIndentationLevel();
+
     }
 
     public void outAEmptyBrackets(AEmptyBrackets node) {
-        printIndentation();
-        //   System.out.println("[EmptyBrackets]: "+node.toString());
-        addIndentationLevel();
+//        printIndentation();
+//        //   System.out.println("[EmptyBrackets]: "+node.toString());
+//        addIndentationLevel();
     }
 
-    public void outAArrayArray(AArrayArray node) {
-        printIndentation();
-        //    System.out.println("[ArrayArray]: "+node.toString());
-        addIndentationLevel();
+    public void caseAArrayArray(AArrayArray node) {
+        inAArrayArray(node);
+        if(node.getIdentifier() != null)
+        {
+            node.getIdentifier().apply(this);
+        }
+        {
+            List<PExpression> copy = new ArrayList<PExpression>(node.getExpression());
+            for(PExpression e : copy)
+            {
+                e.apply(this);
+            }
+        }
+        String id = node.getIdentifier().toString();
+        symbolTableEntry s = symbolTable.lookup(id,EntryType.VAR);
+        if(s == null){
+            errorLog.add("array " + id + " has not been declared ");
+        }
+        else{
+            symbolTableEntry temp = new symbolTableEntry(id, EntryType.ARRAY);
+            temp.setRetType(s.getRetType());
+            assignStack.push(temp);
+        }
+        outAArrayArray(node);
     }
 
-    public void outAPlusExpNExp(APlusExpNExp node) {
-        printIndentation();
-        //    System.out.println("[PlusExpNExp]: "+node.toString());
-        addIndentationLevel();
-    }
+//    public void caseAPlusExpNExp(APlusExpNExp node) {
+//        inAPlusExpNExp(node);
+//        if(node.getNExp1() != null)
+//        {
+//            node.getNExp1().apply(this);
+//        }
+//        if(node.getNExp2() != null)
+//        {
+//            node.getNExp2().apply(this);
+//        }
+//
+//
+//        outAPlusExpNExp(node);
+//    }
 
     public void outAMinusExpNExp(AMinusExpNExp node) {
-        printIndentation();
-        //    System.out.println("[MinusExpNExp]: "+node.toString());
-        addIndentationLevel();
+
     }
 
     public void outATermMultNExp(ATermMultNExp node) {
-        printIndentation();
-        //    System.out.println("[TermMultNExp]: "+node.toString());
-        addIndentationLevel();
+
     }
 
     public void outATermDivNExp(ATermDivNExp node) {
-        printIndentation();
-        //    System.out.println("[TermDivNExp]: "+node.toString());
-        addIndentationLevel();
+
     }
 
     public void outATermModNExp(ATermModNExp node) {
-        printIndentation();
-        //    System.out.println("[TermModNExp]: "+node.toString());
-        addIndentationLevel();
+
     }
 
     public void outAExponentNExp(AExponentNExp node) {
-        printIndentation();
-        //    System.out.println("[ExponentNExp]: "+node.toString());
-        addIndentationLevel();
+
     }
 
     public void outANonParenFinal(ANonParenFinal node) {
-        printIndentation();
-        //    System.out.println("[NonParenFinal]: "+node.toString());
-        addIndentationLevel();
+
     }
 
     public void outAParenExpFinal(AParenExpFinal node) {
-        printIndentation();
-        //    System.out.println("[ParenExpFinal]: "+node.toString());
-        addIndentationLevel();
+
     }
 
-    public void outAIdenFinal(AIdenFinal node) {
-        printIndentation();
-        //    System.out.println("[IdenFinal]: "+node.toString());
-        addIndentationLevel();
+    public void caseAIdenFinal(AIdenFinal node) {
+        inAIdenFinal(node);
+        if(node.getIdentifier() != null)
+        {
+            node.getIdentifier().apply(this);
+        }
+        String id = node.getIdentifier().toString();
+        symbolTableEntry s = symbolTable.lookup(id,EntryType.VAR);
+        if(s == null ){
+            errorLog.add("undeclared variable "+id);
+        }
+        else if(s.getfParType().contains("char")){
+            errorLog.add("variable "+id+" is of wrong type");
+        }
+        else if(!s.isInitialized()){
+            errorLog.add("variable "+id+" has not been initialized");
+        }
+        outAIdenFinal(node);
     }
 
     public void outAOrExpCompExp(AOrExpCompExp node) {

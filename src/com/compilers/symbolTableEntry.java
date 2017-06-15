@@ -20,7 +20,8 @@ public class symbolTableEntry {
 
         symbolTableEntry that = (symbolTableEntry) o;
 
-        if (!id.equals(that.id)) return false;
+        if (initialized != that.initialized) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (fParams != null ? !fParams.equals(that.fParams) : that.fParams != null) return false;
         if (type != that.type) return false;
         if (parent != that.parent) return false;
@@ -30,12 +31,13 @@ public class symbolTableEntry {
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (fParams != null ? fParams.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (parent != null ? parent.hashCode() : 0);
         result = 31 * result + (retType != null ? retType.hashCode() : 0);
         result = 31 * result + (fParType != null ? fParType.hashCode() : 0);
+        result = 31 * result + (initialized ? 1 : 0);
         return result;
     }
 
@@ -43,6 +45,7 @@ public class symbolTableEntry {
     EntryType parent;
     String retType;
     String fParType;
+    boolean initialized;
 
     public String getfParType() {
         return fParType;
@@ -73,6 +76,14 @@ public class symbolTableEntry {
                 '}';
     }
 
+    public boolean isInitialized() {
+        return initialized;
+    }
+
+    public void setInitialized(boolean initialized) {
+        this.initialized = initialized;
+    }
+
     public symbolTableEntry(String id, EntryType type, EntryType parent) {
         this.id = id;
         this.type = type;
@@ -80,6 +91,8 @@ public class symbolTableEntry {
         this.retType = "";
         this.fParType = "";
         this.fParams = null;
+        this.initialized = false;
+
     }
 
     public List<symbolTableEntry> getfParams() {
