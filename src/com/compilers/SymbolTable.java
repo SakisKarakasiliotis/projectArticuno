@@ -77,6 +77,18 @@ public class SymbolTable {
         return null;
     }
 
+    public symbolTableEntry getFunctionEntry(){
+        Stack latestScope = scopes.get(scopes.size()-1);
+        while(!latestScope.isEmpty()){
+            symbolTableEntry temp = (symbolTableEntry) latestScope.pop();
+            if(temp.getType().equals(EntryType.FUNC_NAME) && temp.getParent().equals(EntryType.FUNC_DEF)){
+                return temp;
+            }
+        }
+        return null;
+
+    }
+
     public symbolTableEntry lookup(String name, EntryType type) {
 
         int scopeCounter = scopes.size() - 1;

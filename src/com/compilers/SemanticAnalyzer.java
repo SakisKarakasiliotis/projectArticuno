@@ -11,36 +11,25 @@ import java.util.*;
 public class SemanticAnalyzer extends DepthFirstAdapter {
     int indentation = 0;
 
-    int arrayDimensions =0;
+    int arrayDimensions = 0;
+
+    int assignStackLimit = 0;
 
 
     List<symbolTableEntry> fParams = new LinkedList<>();
 
     Stack<symbolTableEntry> assignStack = new Stack<>(); //keep track of stack size on entry to know your stack limits
 
-    private void addIndentationLevel() {
-        indentation++;
-    }
+    Stack<symbolTableEntry> returnStack = new Stack<>(); //keep track of stack size on entry to know your stack limits
 
-    private void removeIndentationLevel() {
-        indentation--;
-    }
-
-
-    private void printIndentation() {
-        //System.out.print(String.join("", Collections.nCopies(indentation, " ")));
-    }
 
     List<String> errorLog = new LinkedList<>();
 
     SymbolTable symbolTable = new SymbolTable();
 
     public void outAProgramProgram(AProgramProgram node) {
-        printIndentation();
-        //System.out.println("[ProgramProgram]: "+node.toString());
-        addIndentationLevel();
         for (String e : errorLog) {
-            System.out.println(e);
+            System.out.println("ERROR: " + e);
         }
     }
 
@@ -49,29 +38,22 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
     * Function Defintition
     *
      */
-    public void caseAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node) {
-        inAFunctionDefinitionFunctionDefinition(node);
-        if (node.getHeader() != null) {
-            node.getHeader().apply(this);
-        }
-        {
-            List<PLocalDefinition> copy = new ArrayList<PLocalDefinition>(node.getLocalDefinition());
-            for (PLocalDefinition e : copy) {
-                e.apply(this);
-            }
-        }
-        if (node.getBlock() != null) {
-            node.getBlock().apply(this);
-        }
-        outAFunctionDefinitionFunctionDefinition(node);
-    }
+
 
     public void inAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node) {
         symbolTable.enter();
     }
 
     public void outAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node) {
+        symbolTableEntry s = symbolTable.getFunctionEntry();
+        String sRetType = s.getRetType();
+        for (symbolTableEntry e : returnStack) {
+            if(!e.getRetType().equals(sRetType)){
+                errorLog.add("Invalid return type on "+s.getId());
+            }
+        }
         symbolTable.exit();
+
     }
 
     /*
@@ -227,6 +209,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
     public void caseAAssignmentStatement(AAssignmentStatement node) {
         System.out.println(node);
         inAAssignmentStatement(node);
+
         if (node.getLValue() != null) {
             node.getLValue().apply(this);
 
@@ -262,15 +245,11 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
     }
 
     public void outANoElseStatement(ANoElseStatement node) {
-        printIndentation();
-        //  System.out.println("[NoElseStatement]: "+node.toString());
-        addIndentationLevel();
+
     }
 
     public void outAWithElseStatement(AWithElseStatement node) {
-        printIndentation();
-        //  System.out.println("[WithElseStatement]: "+node.toString());
-        addIndentationLevel();
+
     }
 
 //    public void outABlockStatement(ABlockStatement node) {
@@ -280,46 +259,57 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 //    }
 
     public void outAFCallStatement(AFCallStatement node) {
-        printIndentation();
-        //  System.out.println("[FCallStatement]: "+node.toString());
-        addIndentationLevel();
+
     }
 
     public void outAWhileDoStatement(AWhileDoStatement node) {
-        printIndentation();
-        //  System.out.println("[WhileDoStatement]: "+node.toString());
-        addIndentationLevel();
+
     }
 
     public void outAReturnStatement(AReturnStatement node) {
-        printIndentation();
-        //  System.out.println("[ReturnStatement]: "+node.toString());
-        addIndentationLevel();
+        if(assignStack.isEmpty()){
+            symbolTableEntry temp = new symbolTableEntry(node.toString(), EntryType.NOTHING);
+            temp.setRetType("nothing");
+            returnStack.push(temp);
+        }else{
+            returnStack.push(assignStack.pop());//IDEA KIMWNA
+        }
     }
 
     public void outAStatementWithElseStatement(AStatementWithElseStatement node) {
-        printIndentation();
-        //  System.out.println("[StatementWithElseStatement]: "+node.toString());
-        addIndentationLevel();
+
     }
 
-    public void outAFuncCallFuncCall(AFuncCallFuncCall node) {
+    public void caseAFuncCallFuncCall(AFuncCallFuncCall node) {
+        inAFuncCallFuncCall(node);
+
         String id = node.getIdentifier().toString();
-        symbolTableEntry s = symbolTable.lookup(id, EntryType.FUNC_NAME);
-        if(s == null){
-            errorLog.add("undeclared function call "+id);
+        assignStackLimit = assignStack.size();
+        if (node.getIdentifier() != null) {
+            node.getIdentifier().apply(this);
         }
-        else{
+        {
+            List<PExpression> copy = new ArrayList<PExpression>(node.getExpression());
+            for (PExpression e : copy) {
+                e.apply(this);
+            }
+        }
+
+        symbolTableEntry s = symbolTable.lookup(id, EntryType.FUNC_NAME);
+        if (s == null) {
+            errorLog.add("undeclared function call " + id);
+        } else {
             List<symbolTableEntry> params = s.getfParams();
-            int iter=0;
-            while(!assignStack.isEmpty()){
+            int iter = 0;
+            int currSize = assignStack.size();
+            while (!assignStack.isEmpty() && iter >= (currSize - assignStackLimit)) {
                 symbolTableEntry temp = assignStack.pop();
-                if(params.size()<=iter){
-                    errorLog.add("unmatched function parameters in "+id+" call");
+                if (params.size() <= iter) {
+                    errorLog.add("unmatched function parameters in " + id + " call");
                     break;
                 }
-                if(!params.get(iter).getRetType().equals(temp.getRetType())){
-                    errorLog.add("unmatched function parameters in "+id+" call");
+                if (!params.get(iter).getRetType().equals(temp.getRetType())) {
+                    errorLog.add("unmatched function parameters in " + id + " call");
                     break;
                 }
                 iter++;
@@ -329,6 +319,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             temp.setRetType(s.getRetType());
             assignStack.push(temp);
         }
+        outAFuncCallFuncCall(node);
     }
 
     public void outAIdentifierLValue(AIdentifierLValue node) {
@@ -352,24 +343,25 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         assignStack.push(temp);
     }
 
-    public void inAArrayAssignLValue(AArrayAssignLValue node){
+    public void inAArrayAssignLValue(AArrayAssignLValue node) {
         arrayDimensions++;
     }
 
-    public void outAArrayAssignLValue(AArrayAssignLValue node){
+    public void outAArrayAssignLValue(AArrayAssignLValue node) {
         arrayDimensions--;
-        if(arrayDimensions==0){
+        if (arrayDimensions == 0) {
             List<symbolTableEntry> dimensions = new LinkedList<>();
+
             symbolTableEntry temp = assignStack.pop();
-            while(temp.getType() != EntryType.IDENTIFIER){
-                if(!temp.getRetType().equals("int")){
+            while (temp.getType() != EntryType.IDENTIFIER) {
+                if (!temp.getRetType().equals("int")) {
                     errorLog.add("array dimension must be of type int ");
                     break;
                 }
                 dimensions.add(temp);
                 temp = assignStack.pop();
             }
-            symbolTableEntry toAdd = new symbolTableEntry(temp.getId(),EntryType.ARRAY);
+            symbolTableEntry toAdd = new symbolTableEntry(temp.getId(), EntryType.ARRAY);
             toAdd.setfParams(dimensions);
             toAdd.setInitialized(true);
             symbolTable.insert(toAdd);
@@ -405,16 +397,16 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 //
 //    }
 
-   // public void outAParenExpressionExpression(AParenExpressionExpression node) {
-     //   printIndentation();
-        //   System.out.println("[ParenExpressionExpression]: "+node.toString());
-       // addIndentationLevel();
+    // public void outAParenExpressionExpression(AParenExpressionExpression node) {
+    //   printIndentation();
+    //   System.out.println("[ParenExpressionExpression]: "+node.toString());
+    // addIndentationLevel();
     //}
 
     public void outASignedExpressionExpression(ASignedExpressionExpression node) {
-        printIndentation();
+//        printIndentation();
         //    System.out.println("[SignedExpressionExpression]: "+node.toString());
-        addIndentationLevel();
+//        addIndentationLevel();
     }
 
     public void outANumOperExpression(ANumOperExpression node) {
@@ -454,23 +446,20 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 
     public void caseAArrayArray(AArrayArray node) {
         inAArrayArray(node);
-        if(node.getIdentifier() != null)
-        {
+        if (node.getIdentifier() != null) {
             node.getIdentifier().apply(this);
         }
         {
             List<PExpression> copy = new ArrayList<PExpression>(node.getExpression());
-            for(PExpression e : copy)
-            {
+            for (PExpression e : copy) {
                 e.apply(this);
             }
         }
         String id = node.getIdentifier().toString();
-        symbolTableEntry s = symbolTable.lookup(id,EntryType.VAR);
-        if(s == null){
+        symbolTableEntry s = symbolTable.lookup(id, EntryType.VAR);
+        if (s == null) {
             errorLog.add("array " + id + " has not been declared ");
-        }
-        else{
+        } else {
             symbolTableEntry temp = new symbolTableEntry(id, EntryType.ARRAY);
             temp.setRetType(s.getRetType());
             assignStack.push(temp);
@@ -523,94 +512,201 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 
     public void caseAIdenFinal(AIdenFinal node) {
         inAIdenFinal(node);
-        if(node.getIdentifier() != null)
-        {
+        if (node.getIdentifier() != null) {
             node.getIdentifier().apply(this);
         }
         String id = node.getIdentifier().toString();
-        symbolTableEntry s = symbolTable.lookup(id,EntryType.VAR);
-        if(s == null ){
-            errorLog.add("undeclared variable "+id);
-        }
-        else if(s.getfParType().contains("char")){
-            errorLog.add("variable "+id+" is of wrong type");
-        }
-        else if(!s.isInitialized()){
-            errorLog.add("variable "+id+" has not been initialized");
+        symbolTableEntry s = symbolTable.lookup(id, EntryType.VAR);
+        if (s == null) {
+            errorLog.add("undeclared variable " + id);
+        } else if (s.getfParType().contains("char")) {
+            errorLog.add("variable " + id + " is of wrong type");
+        } else if (!s.isInitialized()) {
+            errorLog.add("variable " + id + " has not been initialized");
         }
         outAIdenFinal(node);
     }
 
-    public void outAOrExpCompExp(AOrExpCompExp node) {
-        printIndentation();
-        //    System.out.println("[OrExpCompExp]: "+node.toString());
-        addIndentationLevel();
+    public void caseAOrExpCompExp(AOrExpCompExp node) {
+        inAOrExpCompExp(node);
+        if (node.getCompExp1() != null) {
+            node.getCompExp1().apply(this);
+        }
+        if (node.getCompExp2() != null) {
+            node.getCompExp2().apply(this);
+        }
+        if (assignStack.isEmpty()) {
+            System.out.println("fuck this im out OR");
+            return;
+        }
+        symbolTableEntry temp1 = assignStack.pop();
+        symbolTableEntry temp2 = assignStack.pop();
+
+        outAOrExpCompExp(node);
     }
 
-    public void outAAndExpCompExp(AAndExpCompExp node) {
-        printIndentation();
-        //    System.out.println("[AndExpCompExp]: "+node.toString());
-        addIndentationLevel();
+    public void caseAAndExpCompExp(AAndExpCompExp node) {
+        inAAndExpCompExp(node);
+        if (node.getCompExp1() != null) {
+            node.getCompExp1().apply(this);
+        }
+        if (node.getCompExp2() != null) {
+            node.getCompExp2().apply(this);
+        }
+        if (assignStack.isEmpty()) {
+            System.out.println("fuck this im out AND");
+            return;
+        }
+        symbolTableEntry temp1 = assignStack.pop();
+        symbolTableEntry temp2 = assignStack.pop();
+
+        outAAndExpCompExp(node);
     }
 
-    public void outANotExpCompExp(ANotExpCompExp node) {
-        printIndentation();
-        //    System.out.println("[NotExpCompExp]: "+node.toString());
-        addIndentationLevel();
+    public void caseANotExpCompExp(ANotExpCompExp node) {
+        inANotExpCompExp(node);
+        if (node.getCompExp() != null) {
+            node.getCompExp().apply(this);
+        }
+        if (assignStack.isEmpty()) {
+            System.out.println("fuck this im out NOT");
+            return;
+        }
+        symbolTableEntry temp = assignStack.pop();
+        if (!temp.getType().equals(EntryType.BOOLEAN)) {
+            errorLog.add("not opperant on non-boolean expression " + node.toString());
+        }
+        outANotExpCompExp(node);
     }
 
-    public void outAPlainExpCompExp(APlainExpCompExp node) {
-        printIndentation();
-        //    System.out.println("[PlainExpCompExp]: "+node.toString());
-        addIndentationLevel();
+    public void caseAPlainExpCompExp(APlainExpCompExp node) {
+//        printIndentation();
+//        //    System.out.println("[PlainExpCompExp]: "+node.toString());
+//        addIndentationLevel();
     }
 
-    public void outAEqualsCompVal(AEqualsCompVal node) {
-        printIndentation();
-        //    System.out.println("[EqualsCompVal]: "+node.toString());
-        addIndentationLevel();
+    public void caseAEqualsCompVal(AEqualsCompVal node) {
+        inAEqualsCompVal(node);
+        if (node.getCompVal1() != null) {
+            node.getCompVal1().apply(this);
+        }
+        if (node.getCompVal2() != null) {
+            node.getCompVal2().apply(this);
+        }
+        if (assignStack.isEmpty()) {
+            System.out.println("fuck this im out Equals");
+            return;
+        }
+        symbolTableEntry temp1 = assignStack.pop();
+        symbolTableEntry temp2 = assignStack.pop();
+        if (!temp1.getType().equals(temp2.getType())) {
+            errorLog.add("mismatch types in comparison " + node.toString());
+        }
+        //this is sakis fault!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        assignStack.push(temp1);
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        outAEqualsCompVal(node);
     }
 
-    public void outANotEqualsCompVal(ANotEqualsCompVal node) {
-        printIndentation();
-        //   System.out.println("[NotEqualsCompVal]: "+node.toString());
-        addIndentationLevel();
+    public void caseANotEqualsCompVal(ANotEqualsCompVal node) {
+        inANotEqualsCompVal(node);
+        if (node.getCompVal1() != null) {
+            node.getCompVal1().apply(this);
+        }
+        if (node.getCompVal2() != null) {
+            node.getCompVal2().apply(this);
+        }
+        symbolTableEntry temp1 = assignStack.pop();
+        symbolTableEntry temp2 = assignStack.pop();
+        if (!temp1.getType().equals(temp2.getType())) {
+            errorLog.add("mismatch types in comparison " + node.toString());
+        }
+        assignStack.push(temp1);
+        outANotEqualsCompVal(node);
     }
 
-    public void outALessThanCompVal(ALessThanCompVal node) {
-        printIndentation();
-        //    System.out.println("[LessThanCompVal]: "+node.toString());
-        addIndentationLevel();
+    public void caseALessThanCompVal(ALessThanCompVal node) {
+        inALessThanCompVal(node);
+        if (node.getCompVal1() != null) {
+            node.getCompVal1().apply(this);
+        }
+        if (node.getCompVal2() != null) {
+            node.getCompVal2().apply(this);
+        }
+        symbolTableEntry temp1 = assignStack.pop();
+        symbolTableEntry temp2 = assignStack.pop();
+        if (!temp1.getType().equals(temp2.getType())) {
+            errorLog.add("mismatch types in comparison " + node.toString());
+        }
+        assignStack.push(temp1);
+        outALessThanCompVal(node);
     }
 
-    public void outAGreaterThanCompVal(AGreaterThanCompVal node) {
-        printIndentation();
-        //    System.out.println("[GreaterThanCompVal]: "+node.toString());
-        addIndentationLevel();
+    public void caseAGreaterThanCompVal(AGreaterThanCompVal node) {
+        inAGreaterThanCompVal(node);
+        if (node.getCompVal1() != null) {
+            node.getCompVal1().apply(this);
+        }
+        if (node.getCompVal2() != null) {
+            node.getCompVal2().apply(this);
+        }
+        symbolTableEntry temp1 = assignStack.pop();
+        symbolTableEntry temp2 = assignStack.pop();
+        if (!temp1.getType().equals(temp2.getType())) {
+            errorLog.add("mismatch types in comparison " + node.toString());
+        }
+        assignStack.push(temp1);
+        outAGreaterThanCompVal(node);
     }
 
-    public void outAGreaterOrEqualCompVal(AGreaterOrEqualCompVal node) {
-        printIndentation();
-        //    System.out.println("[GreaterOrEqualCompVal]: "+node.toString());
-        addIndentationLevel();
+    public void caseAGreaterOrEqualCompVal(AGreaterOrEqualCompVal node) {
+        inAGreaterOrEqualCompVal(node);
+        if (node.getCompVal1() != null) {
+            node.getCompVal1().apply(this);
+        }
+        if (node.getCompVal2() != null) {
+            node.getCompVal2().apply(this);
+        }
+        symbolTableEntry temp1 = assignStack.pop();
+        symbolTableEntry temp2 = assignStack.pop();
+        if (!temp1.getType().equals(temp2.getType())) {
+            errorLog.add("mismatch types in comparison " + node.toString());
+        }
+        assignStack.push(temp1);
+        outAGreaterOrEqualCompVal(node);
     }
 
-    public void outALessOrEqualCompVal(ALessOrEqualCompVal node) {
-        printIndentation();
-        //    System.out.println("[LessOrEqualCompVal]: "+node.toString());
-        addIndentationLevel();
+    public void caseALessOrEqualCompVal(ALessOrEqualCompVal node) {
+        inALessOrEqualCompVal(node);
+        if (node.getCompVal1() != null) {
+            node.getCompVal1().apply(this);
+        }
+        if (node.getCompVal2() != null) {
+            node.getCompVal2().apply(this);
+        }
+        symbolTableEntry temp1 = assignStack.pop();
+        symbolTableEntry temp2 = assignStack.pop();
+        if (!temp1.getType().equals(temp2.getType())) {
+            errorLog.add("mismatch types in comparison " + node.toString());
+        }
+        assignStack.push(temp1);
+        outALessOrEqualCompVal(node);
     }
 
-    public void outACompFinalCompVal(ACompFinalCompVal node) {
-        printIndentation();
-        //    System.out.println("[CompFinalCompVal]: "+node.toString());
-        addIndentationLevel();
+    public void caseACompFinalCompVal(ACompFinalCompVal node) {
+        inACompFinalCompVal(node);
+        if (node.getCompFinal() != null) {
+            node.getCompFinal().apply(this);
+        }
+        outACompFinalCompVal(node);
     }
 
-    public void outAExprCompFinal(AExprCompFinal node) {
-        printIndentation();
-        //   System.out.println("[ExprCompFinal]: "+node.toString());
-        addIndentationLevel();
+    public void caseAExprCompFinal(AExprCompFinal node) {
+        inAExprCompFinal(node);
+        if (node.getExpression() != null) {
+            node.getExpression().apply(this);
+        }
+        outAExprCompFinal(node);
     }
 
 
