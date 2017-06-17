@@ -133,6 +133,7 @@ public class symbolTableEntry {
 
         this.id = id;
         this.type = type;
+        this.parent = EntryType.NOTHING;
 
     }
 

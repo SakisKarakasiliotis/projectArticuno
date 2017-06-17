@@ -45,13 +45,19 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
     }
 
     public void outAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node) {
+
         symbolTableEntry s = symbolTable.getFunctionEntry();
+        System.out.println("new function returned: "+s);
         String sRetType = s.getRetType();
-        for (symbolTableEntry e : returnStack) {
+        while(!returnStack.isEmpty()){
+            symbolTableEntry e = returnStack.pop();
+            System.out.println("s == "+ s.getRetType());
+            System.out.println("e == "+ e.getRetType()+" "+e.getId());
             if(!e.getRetType().equals(sRetType)){
                 errorLog.add("Invalid return type on "+s.getId());
             }
         }
+
         symbolTable.exit();
 
     }

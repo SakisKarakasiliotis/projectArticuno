@@ -78,7 +78,13 @@ public class SymbolTable {
     }
 
     public symbolTableEntry getFunctionEntry(){
-        Stack latestScope = scopes.get(scopes.size()-1);
+        Stack latestScope ;
+
+        if (scopes.size() > 1) {
+            latestScope = scopes.get(scopes.size() - 2);
+        } else {
+            latestScope = scopes.get(scopes.size() - 1);
+        }
         while(!latestScope.isEmpty()){
             symbolTableEntry temp = (symbolTableEntry) latestScope.pop();
             if(temp.getType().equals(EntryType.FUNC_NAME) && temp.getParent().equals(EntryType.FUNC_DEF)){
