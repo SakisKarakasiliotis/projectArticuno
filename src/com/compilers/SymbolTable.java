@@ -14,9 +14,60 @@ public class SymbolTable {
 
     private List<Stack<symbolTableEntry>> scopes = new LinkedList<>();
 
+    public void loadLibraries() {
+        if (scopes.size() == 1) {
+            String[] names = {"puti", "putc", "puts", "geti", "getc", "gets", "abs", "ord", "chr", "strlen", "strcmp", "strcpy", "strcat"};
+            String[] returns = {"nothing", "nothing", "nothing", "int", "char", "nothing", "int", "int", "char", "int", "int", "nothing", "nothing"};
+            String[][] params = {
+                    {"n"},
+                    {"c"},
+                    {"s"},
+                    {""},
+                    {""},
+                    {"n", "s"},
+                    {"n"},
+                    {"c"},
+                    {"n"},
+                    {"s"},
+                    {"s1", "s2"},
+                    {"trg", "src"},
+                    {"trg", "src"}
+            };
+            String[][] paramtype = {
+                    {"int"},
+                    {"char"},
+                    {"char[]"},
+                    {""},
+                    {""},
+                    {"int", "char[]"},
+                    {"int"},
+                    {"char"},
+                    {"int"},
+                    {"char[]"},
+                    {"char[]", "char[]"},
+                    {"char[]", "char[]"},
+                    {"char[]", "char[]"}
+            };
+            for (int i=0; i<names.length; i++){
+                symbolTableEntry s = new symbolTableEntry(names[i], EntryType.FUNC_NAME, EntryType.FUNC_DEF);
+                s.setRetType(returns[i]);
+                List<symbolTableEntry> fParams = new LinkedList<>();
+                for (int j = 0; j < params[i].length; j++) {
+                    symbolTableEntry temp = new symbolTableEntry(params[i][j], EntryType.FUNC_PARAM, EntryType.FUNC_DEF);
+                    temp.setRetType(paramtype[i][j]);
+                    temp.setfParType(paramtype[i][j]);
+                    fParams.add(temp);
+                }
+                s.setfParams(fParams);
+                Stack latestScope = scopes.get(0);
+                latestScope.push(s);
+            }
+        }
+    }
 
     public void enter() {
         scopes.add(new Stack<symbolTableEntry>());
+        loadLibraries();
         System.out.println("Enter scope: " + (scopes.size() - 1));
     }
 
@@ -31,6 +82,7 @@ public class SymbolTable {
     }
 
     public int insert(symbolTableEntry input) {
+        // System.out.println(input);
 
         Stack latestScope = scopes.get(scopes.size() - 1);
 
@@ -39,6 +91,7 @@ public class SymbolTable {
     }
 
     public int insertToParent(String name, EntryType type, EntryType parent) {
+
         Stack latestScope;
         if (scopes.size() > 1) {
             latestScope = scopes.get(scopes.size() - 2);
@@ -53,6 +106,7 @@ public class SymbolTable {
     }
 
     public int insertToParent(symbolTableEntry input) {
+        // System.out.println(input);
         Stack latestScope;
         if (scopes.size() > 1) {
             latestScope = scopes.get(scopes.size() - 2);
@@ -77,17 +131,17 @@ public class SymbolTable {
         return null;
     }
 
-    public symbolTableEntry getFunctionEntry(){
-        Stack latestScope ;
+    public symbolTableEntry getFunctionEntry() {
+        Stack latestScope;
 
         if (scopes.size() > 1) {
             latestScope = scopes.get(scopes.size() - 2);
         } else {
             latestScope = scopes.get(scopes.size() - 1);
         }
-        while(!latestScope.isEmpty()){
+        while (!latestScope.isEmpty()) {
             symbolTableEntry temp = (symbolTableEntry) latestScope.pop();
-            if(temp.getType().equals(EntryType.FUNC_NAME) && temp.getParent().equals(EntryType.FUNC_DEF)){
+            if (temp.getType().equals(EntryType.FUNC_NAME) && temp.getParent().equals(EntryType.FUNC_DEF)) {
                 return temp;
             }
         }
@@ -123,6 +177,23 @@ public class SymbolTable {
         return null;
     }
 
+    public void print() {
+        System.out.println("----------------------------------------------------");
+        System.out.println("START SYMBOL TABLE");
+        System.out.println("----------------------------------------------------");
+        for (int j = 0; j < scopes.size(); j++) {
+            Stack<symbolTableEntry> st = scopes.get(j);
+            System.out.println(j);
+            for (int i = 0; i < st.size(); i++) {
+                System.out.println("^^^^^^");
+                System.out.println(st.get(i));
+            }
+        }
+        System.out.println("----------------------------------------------------");
+        System.out.println("END SYMBOL TABLE");
+        System.out.println("----------------------------------------------------");
+    }
+
     public int getLastElementPos() {
         return scopes.get(scopes.size() - 1).size() - 1;
     }
@@ -136,7 +207,7 @@ public class SymbolTable {
         if (scopes.isEmpty()) {
             return null;
         }
-        System.out.println(scopes.size());
+        // System.out.println(scopes.size());
         for (int i = scopes.size() - 1; i >= 0; i--) {
             //    System.out.println(i);
             Stack latestScope = scopes.get(i);
@@ -157,7 +228,7 @@ public class SymbolTable {
     public int exit() {
         System.out.println("exiting scope " + (scopes.size() - 1));
         scopes.remove(scopes.size() - 1);
-        System.out.println("scopes" + scopes.size());
+        //System.out.println("scopes" + scopes.size());
 
         return 0;
     }

@@ -28,7 +28,7 @@ fun main () : nothing
     var limit, number, counter : int;
 
 {
-   puts("Limit: ");
+
    limit <- geti();
    puts("Primes:\n");
    counter <- 0;
@@ -36,7 +36,7 @@ fun main () : nothing
       counter <- counter + 1;
       geti(2);
       puts("\n");
-      "etst"<-"4";
+
    }
    if limit >= 3 then {
       counter <- counter + 1;

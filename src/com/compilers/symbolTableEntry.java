@@ -73,6 +73,7 @@ public class symbolTableEntry {
                 ", parent=" + parent +
                 ", retType='" + retType + '\'' +
                 ", fParType='" + fParType + '\'' +
+                ", Initialized='"+ initialized+'\''+
                 '}';
     }
 
