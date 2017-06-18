@@ -45,7 +45,6 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
     }
 
     public void outAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node) {
-
         symbolTableEntry s = symbolTable.getFunctionEntry();
         //System.out.println("new function returned: "+s);
         String sRetType = s.getRetType();
@@ -155,12 +154,14 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         symbolTableEntry temp = new symbolTableEntry(parName, EntryType.FUNC_PARAM);
         temp.setfParType(parType);
         temp.setRetType(parType);
+        temp.setInitialized(true);
         fParams.add(temp);
         List<PNextIdentifier> copy = new ArrayList<PNextIdentifier>(node.getNextIdentifier());
         for (PNextIdentifier e : copy) {
             symbolTableEntry nextTemp = new symbolTableEntry(e.toString(), EntryType.FUNC_PARAM);
             nextTemp.setfParType(parType);
             nextTemp.setRetType(parType);
+            nextTemp.setInitialized(true);
             fParams.add(nextTemp);
         }
         outAFparDefinitionFparDefinition(node);
@@ -241,7 +242,6 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         }
         if (!assignStack.isEmpty()) {
             lval = assignStack.pop();
-      //    System.out.println("lval =="+lval.toString());
         } else {
             lval = null;
         }
@@ -249,16 +249,19 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             if (lval.getRetType().contains(expr.getRetType()) || expr.getRetType().contains(lval.getRetType())) {
 //                lval.setInitialized(true);
 //                symbolTable.insert(lval);
-                System.out.println(lval);
+//                System.out.println("lval: "+lval);
+//                System.out.println("expe: "+expr);
                 symbolTableEntry s = symbolTable.lookup(lval.getId(), EntryType.entryType);
-
+//                System.out.println("s: "+s);
+//                symbolTable.print();
                 s.setInitialized(true);
+
 
             } else {
                 errorLog.add("Assignment type mismatch expecting " + lval.getRetType() + " found " + expr.getRetType());
             }
         } else {
-            System.out.println("500 Internal server error "+lval+" "+expr);
+            System.out.println("500 Internal server error "+lval+"  "+expr);
         }
 
         //check if lvalue type matches expression type
@@ -266,31 +269,32 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         outAAssignmentStatement(node);
     }
 
-    public void outANoElseStatement(ANoElseStatement node) {
-
-    }
-
-    public void outAWithElseStatement(AWithElseStatement node) {
-
-    }
-
-//    public void outABlockStatement(ABlockStatement node) {
-//        printIndentation();
-//        //  System.out.println("[BlockStatement]: "+node.toString());
-//        addIndentationLevel();
+//    public void outANoElseStatement(ANoElseStatement node) {
+//
+//    }
+//
+//    public void outAWithElseStatement(AWithElseStatement node) {
+//
+//    }
+//
+////    public void outABlockStatement(ABlockStatement node) {
+////        printIndentation();
+////        //  System.out.println("[BlockStatement]: "+node.toString());
+////        addIndentationLevel();
+////    }
+//
+//    public void outAFCallStatement(AFCallStatement node) {
+//
+//    }
+//
+//    public void outAWhileDoStatement(AWhileDoStatement node) {
+//
 //    }
 
-    public void outAFCallStatement(AFCallStatement node) {
-
-    }
-
-    public void outAWhileDoStatement(AWhileDoStatement node) {
-
-    }
-
     public void outAReturnStatement(AReturnStatement node) {
+
         if(assignStack.isEmpty()){
-            symbolTableEntry temp = new symbolTableEntry(node.toString(), EntryType.NOTHING);
+            symbolTableEntry temp = new symbolTableEntry("return statement", EntryType.NOTHING);
             temp.setRetType("nothing");
             returnStack.push(temp);
         }else{
@@ -298,15 +302,16 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         }
     }
 
-    public void outAStatementWithElseStatement(AStatementWithElseStatement node) {
-
-    }
+//    public void outAStatementWithElseStatement(AStatementWithElseStatement node) {
+//
+//    }
 
     public void caseAFuncCallFuncCall(AFuncCallFuncCall node) {
         inAFuncCallFuncCall(node);
 
         String id = node.getIdentifier().toString();
         assignStackLimit = assignStack.size();
+        System.out.println("assignStackLimit is: "+assignStackLimit);
         if (node.getIdentifier() != null) {
             node.getIdentifier().apply(this);
         }
@@ -318,14 +323,17 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         }
 
         symbolTableEntry s = symbolTable.lookup(id, EntryType.FUNC_NAME);
+        System.out.println("func call: "+ id+" found "+s);
         if (s == null) {
             errorLog.add("undeclared function call " + id);
         } else {
             List<symbolTableEntry> params = s.getfParams();
             int iter = 0;
             int currSize = assignStack.size();
-            while (!assignStack.isEmpty() && iter >= (currSize - assignStackLimit)) {
+            System.out.println("cursize: "+ currSize);
+            while (!assignStack.isEmpty() && iter < (currSize - assignStackLimit)) {
                 symbolTableEntry temp = assignStack.pop();
+                System.out.println("FUNC CALL ON TEMP: "+temp);
                 if (params.size() <= iter) {
                     errorLog.add("unmatched function parameters in " + id + " call");
                     break;
@@ -337,8 +345,9 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
                 iter++;
 
             }
-            symbolTableEntry temp = new symbolTableEntry(id, EntryType.STRING_LIT);
+            symbolTableEntry temp = new symbolTableEntry(id, EntryType.FUNC_CALL);
             temp.setRetType(s.getRetType());
+            System.out.println();
             assignStack.push(temp);
         }
         outAFuncCallFuncCall(node);
@@ -406,7 +415,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
     public void outAStringExpression(AStringExpression node) {
         String id = node.getStringLiteral().toString();
         symbolTableEntry temp = new symbolTableEntry(id, EntryType.STRING_LIT);
-        temp.setRetType("char");
+        temp.setRetType("char[]");
         assignStack.push(temp);
     }
 
@@ -427,46 +436,46 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
     // addIndentationLevel();
     //}
 
-    public void outASignedExpressionExpression(ASignedExpressionExpression node) {
-//        printIndentation();
-        //    System.out.println("[SignedExpressionExpression]: "+node.toString());
-//        addIndentationLevel();
-    }
-
-    public void outANumOperExpression(ANumOperExpression node) {
-
-//        symbolTableEntry temp = new symbolTableEntry(, EntryType.STRING_LIT);
-//        temp.setRetType("int");
-//        assignStack.push(temp);
-    }
-
-    public void outACondExpCondition(ACondExpCondition node) {
-        //printIndentation();
-        //   System.out.println("[CondExpCondition]: "+node.toString());
-        //addIndentationLevel();
-    }
-
-    public void outAPlusSign(APlusSign node) {
-//        printIndentation();
-//        //   System.out.println("[PlusSign]: "+node.toString());
-//        addIndentationLevel();
-    }
-
-    public void outAMinusSign(AMinusSign node) {
-//        printIndentation();
-//        //   System.out.println("[MinusSign]: "+node.toString());
-//        addIndentationLevel();
-    }
-
-    public void outAArraySizeArraySize(AArraySizeArraySize node) {
-
-    }
-
-    public void outAEmptyBrackets(AEmptyBrackets node) {
-//        printIndentation();
-//        //   System.out.println("[EmptyBrackets]: "+node.toString());
-//        addIndentationLevel();
-    }
+//    public void outASignedExpressionExpression(ASignedExpressionExpression node) {
+////        printIndentation();
+//        //    System.out.println("[SignedExpressionExpression]: "+node.toString());
+////        addIndentationLevel();
+//    }
+//
+//    public void outANumOperExpression(ANumOperExpression node) {
+//
+////        symbolTableEntry temp = new symbolTableEntry(, EntryType.STRING_LIT);
+////        temp.setRetType("int");
+////        assignStack.push(temp);
+//    }
+//
+//    public void outACondExpCondition(ACondExpCondition node) {
+//        //printIndentation();
+//        //   System.out.println("[CondExpCondition]: "+node.toString());
+//        //addIndentationLevel();
+//    }
+//
+//    public void outAPlusSign(APlusSign node) {
+////        printIndentation();
+////        //   System.out.println("[PlusSign]: "+node.toString());
+////        addIndentationLevel();
+//    }
+//
+//    public void outAMinusSign(AMinusSign node) {
+////        printIndentation();
+////        //   System.out.println("[MinusSign]: "+node.toString());
+////        addIndentationLevel();
+//    }
+//
+//    public void outAArraySizeArraySize(AArraySizeArraySize node) {
+//
+//    }
+//
+//    public void outAEmptyBrackets(AEmptyBrackets node) {
+////        printIndentation();
+////        //   System.out.println("[EmptyBrackets]: "+node.toString());
+////        addIndentationLevel();
+//    }
 
     public void caseAArrayArray(AArrayArray node) {
         inAArrayArray(node);
@@ -504,7 +513,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 
         assignStack.pop();
         assignStack.pop();
-        symbolTableEntry temp = new symbolTableEntry(node.toString(),EntryType.NOTHING);
+        symbolTableEntry temp = new symbolTableEntry("+",EntryType.NOTHING);
         temp.setRetType("int");
         assignStack.push(temp);
         outAPlusExpNExp(node);
@@ -513,7 +522,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
     public void outAMinusExpNExp(AMinusExpNExp node) {
         assignStack.pop();
         assignStack.pop();
-        symbolTableEntry temp = new symbolTableEntry(node.toString(),EntryType.NOTHING);
+        symbolTableEntry temp = new symbolTableEntry("-",EntryType.NOTHING);
         temp.setRetType("int");
         assignStack.push(temp);
     }
@@ -521,7 +530,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
     public void outATermMultNExp(ATermMultNExp node) {
         assignStack.pop();
         assignStack.pop();
-        symbolTableEntry temp = new symbolTableEntry(node.toString(),EntryType.NOTHING);
+        symbolTableEntry temp = new symbolTableEntry("*",EntryType.NOTHING);
         temp.setRetType("int");
         assignStack.push(temp);
     }
@@ -529,7 +538,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
     public void outATermDivNExp(ATermDivNExp node) {
         assignStack.pop();
         assignStack.pop();
-        symbolTableEntry temp = new symbolTableEntry(node.toString(),EntryType.NOTHING);
+        symbolTableEntry temp = new symbolTableEntry("/",EntryType.NOTHING);
         temp.setRetType("int");
         assignStack.push(temp);
     }
@@ -537,17 +546,17 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
     public void outATermModNExp(ATermModNExp node) {
         assignStack.pop();
         assignStack.pop();
-        symbolTableEntry temp = new symbolTableEntry(node.toString(),EntryType.NOTHING);
+        symbolTableEntry temp = new symbolTableEntry("%",EntryType.NOTHING);
         temp.setRetType("int");
         assignStack.push(temp);
     }
 
-    public void outAExponentNExp(AExponentNExp node) {
-
-    }
+//    public void outAExponentNExp(AExponentNExp node) {
+//
+//    }
 
     public void outANonParenFinal(ANonParenFinal node) {
-        symbolTableEntry temp = new symbolTableEntry(node.toString(),EntryType.NOTHING);
+        symbolTableEntry temp = new symbolTableEntry("final",EntryType.NOTHING);
         temp.setRetType("int");
         assignStack.push(temp);
     }
@@ -569,9 +578,9 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         } else if (s.getfParType().contains("char")) {
             errorLog.add("variable " + id + " is of wrong type");
         } else if (!s.isInitialized()) {
-            errorLog.add("variable " + id + " has not been initialized"+node.getIdentifier().getLine());
+            errorLog.add("variable " + id + " has not been initialized on line "+node.getIdentifier().getLine());
         }
-        symbolTableEntry temp = new symbolTableEntry(node.toString(),EntryType.NOTHING);
+        symbolTableEntry temp = new symbolTableEntry("idenFinal",EntryType.NOTHING);
         temp.setRetType("int");
         assignStack.push(temp);
         outAIdenFinal(node);
@@ -628,12 +637,12 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         }
         outANotExpCompExp(node);
     }
-
-    public void caseAPlainExpCompExp(APlainExpCompExp node) {
-//        printIndentation();
-//        //    System.out.println("[PlainExpCompExp]: "+node.toString());
-//        addIndentationLevel();
-    }
+//
+//    public void caseAPlainExpCompExp(APlainExpCompExp node) {
+////        printIndentation();
+////        //    System.out.println("[PlainExpCompExp]: "+node.toString());
+////        addIndentationLevel();
+//    }
 
     public void caseAEqualsCompVal(AEqualsCompVal node) {
         inAEqualsCompVal(node);

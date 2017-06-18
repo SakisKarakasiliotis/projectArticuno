@@ -93,7 +93,7 @@ Productions
 
   block {-> block}={block} lbrace statement* rbrace{-> New block.block( [statement])};
 
-  fpar_definition {-> fpar_definition}={fpar_definition} kw_ref? identifier  next_identifier* colon fpar_type {-> New fpar_definition.fpar_definition(kw_ref, identifier, [next_identifier], fpar_type)};
+  fpar_definition {-> fpar_definition}={fpar_definition} kw_ref? identifier next_identifier* colon fpar_type {-> New fpar_definition.fpar_definition(kw_ref, identifier, [next_identifier], fpar_type)};
 
   next_fpar_definition {-> next_fpar_definition}={ next_fpar_definition} semicolon fpar_definition{-> New next_fpar_definition.next_fpar_definition(fpar_definition)};
 

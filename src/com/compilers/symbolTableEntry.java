@@ -52,7 +52,7 @@ public class symbolTableEntry {
     }
 
     public void setfParType(String fParType) {
-        this.fParType = fParType;
+        this.fParType = fParType.trim();
     }
 
     public String getRetType() {
@@ -60,7 +60,7 @@ public class symbolTableEntry {
     }
 
     public void setRetType(String retType) {
-        this.retType = retType;
+        this.retType = retType.trim();
     }
 
 
@@ -86,7 +86,7 @@ public class symbolTableEntry {
     }
 
     public symbolTableEntry(String id, EntryType type, EntryType parent) {
-        this.id = id;
+        this.id = id.trim();
         this.type = type;
         this.parent = parent;
         this.retType = "";
@@ -132,7 +132,7 @@ public class symbolTableEntry {
 
     public symbolTableEntry(String id, EntryType type) {
 
-        this.id = id;
+        this.id = id.trim();
         this.type = type;
         this.parent = EntryType.NOTHING;
 

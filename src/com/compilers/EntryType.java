@@ -4,6 +4,8 @@ package com.compilers;
  * Created by Windows 8 on 01-Jun-17.
  */
 public enum EntryType {
+    LIBRARY_FUNCTION,
+    FUNC_CALL,
     NOTHING,
     BOOLEAN,
     FUNC_DECL,

@@ -48,8 +48,8 @@ public class SymbolTable {
                     {"char[]", "char[]"},
                     {"char[]", "char[]"}
             };
-            for (int i=0; i<names.length; i++){
-                symbolTableEntry s = new symbolTableEntry(names[i], EntryType.FUNC_NAME, EntryType.FUNC_DEF);
+            for (int i = 0; i < names.length; i++) {
+                symbolTableEntry s = new symbolTableEntry(names[i], EntryType.LIBRARY_FUNCTION, EntryType.FUNC_DEF);
                 s.setRetType(returns[i]);
                 List<symbolTableEntry> fParams = new LinkedList<>();
                 for (int j = 0; j < params[i].length; j++) {
@@ -72,7 +72,7 @@ public class SymbolTable {
     }
 
     public int insert(String name, EntryType type, EntryType parent) {
-
+        name = name.trim();
         Stack latestScope = scopes.get(scopes.size() - 1);
 
         symbolTableEntry symbolTableEntry = new symbolTableEntry(name, type, parent);
@@ -83,7 +83,7 @@ public class SymbolTable {
 
     public int insert(symbolTableEntry input) {
         // System.out.println(input);
-
+        input.setId(input.getId().trim());
         Stack latestScope = scopes.get(scopes.size() - 1);
 
         latestScope.push(input);
@@ -91,7 +91,7 @@ public class SymbolTable {
     }
 
     public int insertToParent(String name, EntryType type, EntryType parent) {
-
+        name = name.trim();
         Stack latestScope;
         if (scopes.size() > 1) {
             latestScope = scopes.get(scopes.size() - 2);
@@ -106,7 +106,7 @@ public class SymbolTable {
     }
 
     public int insertToParent(symbolTableEntry input) {
-        // System.out.println(input);
+        input.setId(input.getId().trim());
         Stack latestScope;
         if (scopes.size() > 1) {
             latestScope = scopes.get(scopes.size() - 2);
@@ -119,17 +119,6 @@ public class SymbolTable {
         return 0;
     }
 
-    public symbolTableEntry lookup(String name) {
-        Stack latestScope = scopes.get(scopes.size() - 1);
-        for (int i = latestScope.size() - 1; i >= 0; i--) {
-            symbolTableEntry temp = (symbolTableEntry) latestScope.get(i);
-            if (name.equals(temp.getId())) {
-                return temp;
-            }
-        }
-
-        return null;
-    }
 
     public symbolTableEntry getFunctionEntry() {
         Stack latestScope;
@@ -150,30 +139,21 @@ public class SymbolTable {
     }
 
     public symbolTableEntry lookup(String name, EntryType type) {
-
-        int scopeCounter = scopes.size() - 1;
-        for (Stack latestScope : scopes
-                ) {
+        name = name.trim();
+        for (Stack latestScope : scopes) {
             for (int i = latestScope.size() - 1; i >= 0; i--) {
                 symbolTableEntry temp = (symbolTableEntry) latestScope.get(i);
-//                System.out.println("scope "+ scopeCounter + " " + i+" "+temp.getId());
-//                System.out.println("comparing with " +temp.getId()+" "+temp.getType());
                 if (name.equals(temp.getId())) {
-
                     return temp;
                 } else if (temp.getType().equals(EntryType.FUNC_NAME)) {
-//                    System.out.println("im hgere"+temp.getfParams().size());
                     for (symbolTableEntry a : temp.getfParams()) {
-//                        System.out.println("in list comparing "+ a.getId());
                         if (a.getId().equals(name)) {
                             return a;
                         }
                     }
                 }
             }
-            scopeCounter++;
         }
-
         return null;
     }
 
@@ -194,13 +174,7 @@ public class SymbolTable {
         System.out.println("----------------------------------------------------");
     }
 
-    public int getLastElementPos() {
-        return scopes.get(scopes.size() - 1).size() - 1;
-    }
 
-    public symbolTableEntry getLastElement(int pos) {
-        return scopes.get(scopes.size() - 1).get(pos);
-    }
 
 
     public symbolTableEntry lookupWithScope(String name) {
