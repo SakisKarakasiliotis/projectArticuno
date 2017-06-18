@@ -30,7 +30,7 @@ fun main () : nothing
 {
 
    limit <- geti();
-   puts("Primes:\n\" ");
+   puts("Primes:\n ");
    counter <- 0;
    if limit >= 2 then {
       counter <- counter + 1;

@@ -14,15 +14,19 @@ Helpers
   number = ['0'..'9'];
   backslash = '\';
   underscore = '_';
+  esc_dq = backslash dq;
+  esc_sq = backslash sq;
   alpha_num = lowercase_ch | uppercase_ch | number;
   any = [0 .. 0xFFFF];
   string_lit = [any - [0x0022+0x0027]];
-  escape_char = eos|tab|cr|lf;
+  escape_char = eos|tab|cr|lf|esc_dq|esc_sq;
+  str = string_lit|escape_char;
   eol = cr lf | cr | lf;
   not_cr_lf = [any - [cr + lf]];
   not_dollar = [not_cr_lf - dollar];
   comments = doubledollar any* doubledollar;
   comment = dollar not_dollar not_cr_lf* eol;
+
 Tokens
 //Keywords Definitions
   kw_fun = 'fun';
@@ -70,7 +74,7 @@ Tokens
   identifier = (lowercase_ch|uppercase_ch) (alpha_num|underscore)*;
   int_const = (number)*;
   char_const = sq (escape_char | alpha_num) sq;
-  string_literal = dq string_lit* dq;
+  string_literal = dq str* dq;
   erroneous_number = (number)+ (alpha_num|'_'|escape_char)+;
 
 //Ignored and Comments
@@ -163,7 +167,7 @@ Productions
                               {num_oper} n_exp {-> New expression.num_oper(n_exp)};
 
   expression_b{->expression } = {array} array {-> New expression.array(array)}|
-                                {string}string_literal {-> New expression.string(string_literal)}|
+                                {string} string_literal {-> New expression.string(string_literal)}|
                                 {char_const} char_const  {-> New expression.char_const(char_const)}|
                                 {f_call} func_call {-> New expression.f_call(func_call)}|
                                 {signed_expression} sign expression {-> New expression.signed_expression(sign,expression)};
