@@ -16,7 +16,8 @@ Helpers
   underscore = '_';
   alpha_num = lowercase_ch | uppercase_ch | number;
   any = [0 .. 0xFFFF];
-  escape_char = eos|sq|dq|tab|cr|lf;
+  string_lit = [any - [0x0022+0x0027]];
+  escape_char = eos|tab|cr|lf;
   eol = cr lf | cr | lf;
   not_cr_lf = [any - [cr + lf]];
   not_dollar = [not_cr_lf - dollar];
@@ -69,7 +70,7 @@ Tokens
   identifier = (lowercase_ch|uppercase_ch) (alpha_num|underscore)*;
   int_const = (number)*;
   char_const = sq (escape_char | alpha_num) sq;
-  string_literal = dq (escape_char | alpha_num | any)+ dq;
+  string_literal = dq string_lit* dq;
   erroneous_number = (number)+ (alpha_num|'_'|escape_char)+;
 
 //Ignored and Comments
@@ -277,7 +278,7 @@ Abstract Syntax Tree
               {statement_with_else}  condition  [then_stmt]:statement  [else_stmt]:statement;
 
 
-  func_call ={func_call} identifier  expression* ;
+  func_call ={func_call} identifier expression* ;
 
 
   l_value = {identifier} identifier |

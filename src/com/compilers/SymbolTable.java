@@ -128,8 +128,14 @@ public class SymbolTable {
         } else {
             latestScope = scopes.get(scopes.size() - 1);
         }
-        while (!latestScope.isEmpty()) {
-            symbolTableEntry temp = (symbolTableEntry) latestScope.pop();
+//        while (!latestScope.isEmpty()) {
+//            symbolTableEntry temp = (symbolTableEntry) latestScope.pop();
+//            if (temp.getType().equals(EntryType.FUNC_NAME) && temp.getParent().equals(EntryType.FUNC_DEF)) {
+//                return temp;
+//            }
+//        }
+        for (int i =latestScope.size()-1; i >= 0 ; i--) {
+            symbolTableEntry temp = (symbolTableEntry) latestScope.get(i);
             if (temp.getType().equals(EntryType.FUNC_NAME) && temp.getParent().equals(EntryType.FUNC_DEF)) {
                 return temp;
             }

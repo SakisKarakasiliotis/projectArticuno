@@ -30,17 +30,17 @@ fun main () : nothing
 {
 
    limit <- geti();
-   puts("Primes:\n");
+   puts("Primes:\n\" ");
    counter <- 0;
    if limit >= 2 then {
       counter <- counter + 1;
-      geti(2);
+      geti();
       puts("\n");
 
    }
    if limit >= 3 then {
       counter <- counter + 1;
-      geti(3);
+      geti();
       puts("\n");
    }
    number <- 6;

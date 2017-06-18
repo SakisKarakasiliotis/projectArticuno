@@ -325,6 +325,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         symbolTableEntry s = symbolTable.lookup(id, EntryType.FUNC_NAME);
         System.out.println("func call: "+ id+" found "+s);
         if (s == null) {
+            symbolTable.print();
             errorLog.add("undeclared function call " + id);
         } else {
             List<symbolTableEntry> params = s.getfParams();
@@ -333,7 +334,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             System.out.println("cursize: "+ currSize);
             while (!assignStack.isEmpty() && iter < (currSize - assignStackLimit)) {
                 symbolTableEntry temp = assignStack.pop();
-                System.out.println("FUNC CALL ON TEMP: "+temp);
+               // System.out.println("FUNC CALL ON TEMP: "+temp);
                 if (params.size() <= iter) {
                     errorLog.add("unmatched function parameters in " + id + " call");
                     break;
@@ -347,7 +348,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             }
             symbolTableEntry temp = new symbolTableEntry(id, EntryType.FUNC_CALL);
             temp.setRetType(s.getRetType());
-            System.out.println();
+           // System.out.println();
             assignStack.push(temp);
         }
         outAFuncCallFuncCall(node);
@@ -658,8 +659,9 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         }
         symbolTableEntry temp1 = assignStack.pop();
         symbolTableEntry temp2 = assignStack.pop();
-        if (!temp1.getType().equals(temp2.getType())) {
-            errorLog.add("mismatch types in comparison " + node.toString());
+        System.out.println(temp1.getType() + "    "+temp2.getType());
+        if (!temp1.getRetType().equals(temp2.getRetType())) {
+            errorLog.add(node.getClass() +" mismatch types in comparison " + node.toString());
         }
         //this is sakis fault!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         assignStack.push(temp1);
@@ -677,8 +679,8 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         }
         symbolTableEntry temp1 = assignStack.pop();
         symbolTableEntry temp2 = assignStack.pop();
-        if (!temp1.getType().equals(temp2.getType())) {
-            errorLog.add("mismatch types in comparison " + node.toString());
+        if (!temp1.getRetType().equals(temp2.getRetType())) {
+            errorLog.add(node.getClass() +" mismatch types in comparison " + node.toString());
         }
         assignStack.push(temp1);
         outANotEqualsCompVal(node);
@@ -694,8 +696,8 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         }
         symbolTableEntry temp1 = assignStack.pop();
         symbolTableEntry temp2 = assignStack.pop();
-        if (!temp1.getType().equals(temp2.getType())) {
-            errorLog.add("mismatch types in comparison " + node.toString());
+        if (!temp1.getRetType().equals(temp2.getRetType())) {
+            errorLog.add(node.getClass() +" mismatch types in comparison " + node.toString());
         }
         assignStack.push(temp1);
         outALessThanCompVal(node);
@@ -711,8 +713,8 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         }
         symbolTableEntry temp1 = assignStack.pop();
         symbolTableEntry temp2 = assignStack.pop();
-        if (!temp1.getType().equals(temp2.getType())) {
-            errorLog.add("mismatch types in comparison " + node.toString());
+        if (!temp1.getRetType().equals(temp2.getRetType())) {
+            errorLog.add(node.getClass() +" mismatch types in comparison " + node.toString());
         }
         assignStack.push(temp1);
         outAGreaterThanCompVal(node);
@@ -728,8 +730,8 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         }
         symbolTableEntry temp1 = assignStack.pop();
         symbolTableEntry temp2 = assignStack.pop();
-        if (!temp1.getType().equals(temp2.getType())) {
-            errorLog.add("mismatch types in comparison " + node.toString());
+        if (!temp1.getRetType().equals(temp2.getRetType())) {
+            errorLog.add(node.getClass() +" mismatch types in comparison " + node.toString());
         }
         assignStack.push(temp1);
         outAGreaterOrEqualCompVal(node);
@@ -745,8 +747,8 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         }
         symbolTableEntry temp1 = assignStack.pop();
         symbolTableEntry temp2 = assignStack.pop();
-        if (!temp1.getType().equals(temp2.getType())) {
-            errorLog.add("mismatch types in comparison " + node.toString());
+        if (!temp1.getRetType().equals(temp2.getRetType())) {
+            errorLog.add(node.getClass() +" mismatch types in comparison " + node.toString());
         }
         assignStack.push(temp1);
         outALessOrEqualCompVal(node);
