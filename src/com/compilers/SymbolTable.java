@@ -56,7 +56,10 @@ public class SymbolTable {
                     symbolTableEntry temp = new symbolTableEntry(params[i][j], EntryType.FUNC_PARAM, EntryType.FUNC_DEF);
                     temp.setRetType(paramtype[i][j]);
                     temp.setfParType(paramtype[i][j]);
-                    fParams.add(temp);
+                    if(!names[i].equals("geti") && !names[i].equals("getc")){
+                        fParams.add(temp);
+                    }
+
                 }
                 s.setfParams(fParams);
                 Stack latestScope = scopes.get(0);

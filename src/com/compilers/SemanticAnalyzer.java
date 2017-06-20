@@ -8,6 +8,8 @@ import java.util.*;
 /**
  * Created by Windows 8 on 09-Apr-17.
  */
+
+//todo: carriage return + bsort + arrays
 public class SemanticAnalyzer extends DepthFirstAdapter {
     int indentation = 0;
 
@@ -49,16 +51,16 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         //System.out.println("new function returned: "+s);
         //symbolTable.print();
         String sRetType = s.getRetType();
-        while(!returnStack.isEmpty()){
+        while (!returnStack.isEmpty()) {
             symbolTableEntry e = returnStack.pop();
 //            System.out.println("s == "+ sRetType);
 //            System.out.println("e == "+ e.getRetType()+" "+e.getId());
 //            System.out.println("s: "+s.toString());
 //            System.out.println("e: "+e.toString());
 
-            if(!sRetType.contains(e.getRetType())){
+            if (!sRetType.contains(e.getRetType())) {
 
-                errorLog.add("Invalid return type on "+s.getId());
+                errorLog.add("Invalid return type on " + s.getId());
             }
         }
 
@@ -237,7 +239,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         //System.out.println(assignStack.size()+" size of assign stack");
         if (!assignStack.isEmpty()) {
             expr = assignStack.pop();
-       //     System.out.println("expression ==" + expr.toString());
+            //     System.out.println("expression ==" + expr.toString());
         } else {
             expr = null;
         }
@@ -253,6 +255,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 //                System.out.println("lval: "+lval);
 //                System.out.println("expe: "+expr);
                 symbolTableEntry s = symbolTable.lookup(lval.getId(), EntryType.entryType);
+                System.out.println(node);
 //                System.out.println("s: "+s);
 //                symbolTable.print();
                 s.setInitialized(true);
@@ -262,7 +265,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
                 errorLog.add("Assignment type mismatch expecting " + lval.getRetType() + " found " + expr.getRetType());
             }
         } else {
-            System.out.println("500 Internal server error "+lval+"  "+expr);
+            System.out.println("500 Internal server error " + lval + "  " + expr);
         }
 
         //check if lvalue type matches expression type
@@ -294,11 +297,11 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 
     public void outAReturnStatement(AReturnStatement node) {
 
-        if(assignStack.isEmpty()){
+        if (assignStack.isEmpty()) {
             symbolTableEntry temp = new symbolTableEntry("return statement", EntryType.NOTHING);
             temp.setRetType("nothing");
             returnStack.push(temp);
-        }else{
+        } else {
             returnStack.push(assignStack.pop());//IDEA KIMWNA
         }
     }
@@ -312,7 +315,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 
         String id = node.getIdentifier().toString();
         assignStackLimit = assignStack.size();
-        System.out.println("assignStackLimit is: "+assignStackLimit);
+        System.out.println("assignStackLimit is: " + assignStackLimit);
         if (node.getIdentifier() != null) {
             node.getIdentifier().apply(this);
         }
@@ -324,41 +327,46 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         }
 
         symbolTableEntry s = symbolTable.lookup(id, EntryType.FUNC_NAME);
-        System.out.println("func call: "+ id+" found "+s);
+        System.out.println("func call: " + id + " found " + s);
         if (s == null) {
             symbolTable.print();
             errorLog.add("undeclared function call " + id);
         } else {
             List<symbolTableEntry> params = s.getfParams();
 
-            System.out.println("first param == "+params);
+            System.out.println("first param == " + params);
 
             Collections.reverse(params);
-            System.out.println("second param == "+ params);
+            System.out.println("second param == " + params);
 
             int iter = 0;
             int currSize = assignStack.size();
-            System.out.println("cursize: "+ currSize);
+            System.out.println("cursize: " + currSize);
             while (!assignStack.isEmpty() && iter < (currSize - assignStackLimit)) {
                 symbolTableEntry temp = assignStack.pop();
-               // System.out.println("FUNC CALL ON TEMP: "+temp);
+                // System.out.println("FUNC CALL ON TEMP: "+temp);
 
                 if (params.size() <= iter) {
                     errorLog.add("1 unmatched function parameters in " + id + " call");
+                    iter++;
                     break;
                 }
                 if (!params.get(iter).getRetType().equals(temp.getRetType())) {
-                    errorLog.add("2 unmatched function parameters in " + node + " call -> param= "+params.get(iter).getId()+" as "+params.get(iter).getRetType()+" ## temp as "+temp.getId()+" as "+temp.getRetType());
+                    errorLog.add("2 unmatched function parameters in " + node + " call -> param= " + params.get(iter).getId() + " as " + params.get(iter).getRetType() + " ## temp as " + temp.getId() + " as " + temp.getRetType());
+                    iter++;
                     break;
                 }
                 iter++;
 
             }
+            if (iter < params.size()) {
+                errorLog.add("To few arguments in " + id + " call");
+            }
             symbolTableEntry temp = new symbolTableEntry(id, EntryType.FUNC_CALL);
             temp.setRetType(s.getRetType());
-           // System.out.println();
+            // System.out.println();
             assignStack.push(temp);
-            Collections.reverse(params); // check if it can be done in a decent way 
+            Collections.reverse(params); // check if it can be done in a decent way
         }
 
         outAFuncCallFuncCall(node);
@@ -368,7 +376,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         String id = node.getIdentifier().toString();
         symbolTableEntry s = symbolTable.lookup(id, EntryType.IDENTIFIER); // new lookup needed
         if (s == null) {
-            errorLog.add("lvalue " + id + " not initialized ");
+            errorLog.add("$ lvalue " + id + " undeclared "); //used to be uninitialized
             symbolTableEntry temp = new symbolTableEntry(id, null);
             temp.setRetType("undefined");
             assignStack.push(temp);
@@ -382,7 +390,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 
     public void outAStringLitLValue(AStringLitLValue node) {
         String id = node.getStringLiteral().toString();
-     //   System.out.println(id);
+        //   System.out.println(id);
         symbolTableEntry temp = new symbolTableEntry(id, EntryType.STRING_LIT);
         assignStack.push(temp);
     }
@@ -407,8 +415,10 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             }
             symbolTableEntry toAdd = new symbolTableEntry(temp.getId(), EntryType.ARRAY);
             toAdd.setfParams(dimensions);
+            toAdd.setRetType(temp.getRetType());
             toAdd.setInitialized(true);
-            symbolTable.insert(toAdd);
+//            symbolTable.insert(toAdd);
+            assignStack.push(toAdd);
         }
     }
 
@@ -513,21 +523,19 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 
     public void caseAPlusExpNExp(APlusExpNExp node) {
         inAPlusExpNExp(node);
-        if(node.getNExp1() != null)
-        {
+        if (node.getNExp1() != null) {
             node.getNExp1().apply(this);
         }
-        if(node.getNExp2() != null)
-        {
+        if (node.getNExp2() != null) {
             node.getNExp2().apply(this);
         }
 
         symbolTableEntry temp1 = assignStack.pop();
         symbolTableEntry temp2 = assignStack.pop();
-        if(temp1.getRetType().contains("char") || temp2.getRetType().contains("char")){
-            errorLog.add("expression mismatch -> " +temp1 +" and " +temp2);
+        if (temp1.getRetType().contains("char") || temp2.getRetType().contains("char")) {
+            errorLog.add("expression mismatch -> " + temp1 + " and " + temp2);
         }
-        symbolTableEntry temp = new symbolTableEntry("+",EntryType.NOTHING);
+        symbolTableEntry temp = new symbolTableEntry("+", EntryType.NOTHING);
         temp.setRetType("int");
         assignStack.push(temp);
         outAPlusExpNExp(node);
@@ -536,10 +544,10 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
     public void outAMinusExpNExp(AMinusExpNExp node) {
         symbolTableEntry temp1 = assignStack.pop();
         symbolTableEntry temp2 = assignStack.pop();
-        if(temp1.getRetType().contains("char") || temp2.getRetType().contains("char")){
-            errorLog.add("expression mismatch -> " +temp1 +" and " +temp2);
+        if (temp1.getRetType().contains("char") || temp2.getRetType().contains("char")) {
+            errorLog.add("expression mismatch -> " + temp1 + " and " + temp2);
         }
-        symbolTableEntry temp = new symbolTableEntry("-",EntryType.NOTHING);
+        symbolTableEntry temp = new symbolTableEntry("-", EntryType.NOTHING);
         temp.setRetType("int");
         assignStack.push(temp);
     }
@@ -547,10 +555,10 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
     public void outATermMultNExp(ATermMultNExp node) {
         symbolTableEntry temp1 = assignStack.pop();
         symbolTableEntry temp2 = assignStack.pop();
-        if(temp1.getRetType().contains("char") || temp2.getRetType().contains("char")){
-            errorLog.add("expression mismatch -> " +temp1 +" and " +temp2);
+        if (temp1.getRetType().contains("char") || temp2.getRetType().contains("char")) {
+            errorLog.add("expression mismatch -> " + temp1 + " and " + temp2);
         }
-        symbolTableEntry temp = new symbolTableEntry("*",EntryType.NOTHING);
+        symbolTableEntry temp = new symbolTableEntry("*", EntryType.NOTHING);
         temp.setRetType("int");
         assignStack.push(temp);
     }
@@ -558,10 +566,10 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
     public void outATermDivNExp(ATermDivNExp node) {
         symbolTableEntry temp1 = assignStack.pop();
         symbolTableEntry temp2 = assignStack.pop();
-        if(temp1.getRetType().contains("char") || temp2.getRetType().contains("char")){
-            errorLog.add("expression mismatch -> " +temp1 +" and " +temp2);
+        if (temp1.getRetType().contains("char") || temp2.getRetType().contains("char")) {
+            errorLog.add("expression mismatch -> " + temp1 + " and " + temp2);
         }
-        symbolTableEntry temp = new symbolTableEntry("/",EntryType.NOTHING);
+        symbolTableEntry temp = new symbolTableEntry("/", EntryType.NOTHING);
         temp.setRetType("int");
         assignStack.push(temp);
     }
@@ -569,10 +577,10 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
     public void outATermModNExp(ATermModNExp node) {
         symbolTableEntry temp1 = assignStack.pop();
         symbolTableEntry temp2 = assignStack.pop();
-        if(temp1.getRetType().contains("char") || temp2.getRetType().contains("char")){
-            errorLog.add("expression mismatch -> " +temp1 +" and " +temp2);
+        if (temp1.getRetType().contains("char") || temp2.getRetType().contains("char")) {
+            errorLog.add("expression mismatch -> " + temp1 + " and " + temp2);
         }
-        symbolTableEntry temp = new symbolTableEntry("%",EntryType.NOTHING);
+        symbolTableEntry temp = new symbolTableEntry("%", EntryType.NOTHING);
         temp.setRetType("int");
         assignStack.push(temp);
 
@@ -583,7 +591,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 //    }
 
     public void outANonParenFinal(ANonParenFinal node) {
-        symbolTableEntry temp = new symbolTableEntry("final",EntryType.NOTHING);
+        symbolTableEntry temp = new symbolTableEntry("final", EntryType.NOTHING);
         temp.setRetType("int");
         assignStack.push(temp);
     }
@@ -599,7 +607,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         }
         String id = node.getIdentifier().toString();
         symbolTableEntry s = symbolTable.lookup(id, EntryType.VAR);
-     //   System.out.println("identifier thing"+s.toString());
+        //   System.out.println("identifier thing"+s.toString());
         if (s == null) {
             errorLog.add("undeclared variable " + id);
         }
@@ -607,10 +615,14 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 //            errorLog.add("variable " + id + " is of wrong type -> " +s.getfParType());
 //        }
         else if (!s.isInitialized()) {
-            errorLog.add("variable " + id + " has not been initialized on line "+node.getIdentifier().getLine());
+            errorLog.add("variable " + id + " has not been initialized on line " + node.getIdentifier().getLine());
         }
-        symbolTableEntry temp = new symbolTableEntry("idenFinal",EntryType.NOTHING);
-        temp.setRetType(s.getfParType());
+        symbolTableEntry temp = new symbolTableEntry("idenFinal", EntryType.NOTHING);
+        if (s != null) {
+            temp.setRetType(s.getfParType());
+        } else {
+            temp.setRetType("uninitialized");
+        }
         assignStack.push(temp);
         outAIdenFinal(node);
     }
@@ -642,7 +654,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             node.getCompExp2().apply(this);
         }
         if (assignStack.isEmpty()) {
-    //        System.out.println("fuck this im out AND");
+            //        System.out.println("fuck this im out AND");
             return;
         }
         symbolTableEntry temp1 = assignStack.pop();
@@ -657,7 +669,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             node.getCompExp().apply(this);
         }
         if (assignStack.isEmpty()) {
-     //       System.out.println("fuck this im out NOT");
+            //       System.out.println("fuck this im out NOT");
             return;
         }
         symbolTableEntry temp = assignStack.pop();
@@ -682,14 +694,15 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             node.getCompVal2().apply(this);
         }
         if (assignStack.isEmpty()) {
-     //       System.out.println("fuck this im out Equals");
+            //       System.out.println("fuck this im out Equals");
             return;
         }
         symbolTableEntry temp1 = assignStack.pop();
         symbolTableEntry temp2 = assignStack.pop();
-       // System.out.println(temp1.getType() + "    "+temp2.getType());
+        // System.out.println(temp1.getType() + "    "+temp2.getType());
+
         if (!temp1.getRetType().equals(temp2.getRetType())) {
-            errorLog.add(node.getClass() +" mismatch types in comparison " + node.toString());
+            errorLog.add(node.getClass() + " mismatch types in comparison " + node.toString());
         }
         //this is sakis fault!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         assignStack.push(temp1);
@@ -708,7 +721,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         symbolTableEntry temp1 = assignStack.pop();
         symbolTableEntry temp2 = assignStack.pop();
         if (!temp1.getRetType().equals(temp2.getRetType())) {
-            errorLog.add(node.getClass() +" mismatch types in comparison " + node.toString());
+            errorLog.add(node.getClass() + " mismatch types in comparison " + node.toString());
         }
         assignStack.push(temp1);
         outANotEqualsCompVal(node);
@@ -725,7 +738,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         symbolTableEntry temp1 = assignStack.pop();
         symbolTableEntry temp2 = assignStack.pop();
         if (!temp1.getRetType().equals(temp2.getRetType())) {
-            errorLog.add(node.getClass() +" mismatch types in comparison " + node.toString());
+            errorLog.add(node.getClass() + " mismatch types in comparison " + node.toString());
         }
         assignStack.push(temp1);
         outALessThanCompVal(node);
@@ -742,7 +755,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         symbolTableEntry temp1 = assignStack.pop();
         symbolTableEntry temp2 = assignStack.pop();
         if (!temp1.getRetType().equals(temp2.getRetType())) {
-            errorLog.add(node.getClass() +" mismatch types in comparison " + node.toString());
+            errorLog.add(node.getClass() + " mismatch types in comparison " + node.toString());
         }
         assignStack.push(temp1);
         outAGreaterThanCompVal(node);
@@ -759,7 +772,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         symbolTableEntry temp1 = assignStack.pop();
         symbolTableEntry temp2 = assignStack.pop();
         if (!temp1.getRetType().equals(temp2.getRetType())) {
-            errorLog.add(node.getClass() +" mismatch types in comparison " + node.toString());
+            errorLog.add(node.getClass() + " mismatch types in comparison " + node.toString());
         }
         assignStack.push(temp1);
         outAGreaterOrEqualCompVal(node);
@@ -776,7 +789,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         symbolTableEntry temp1 = assignStack.pop();
         symbolTableEntry temp2 = assignStack.pop();
         if (!temp1.getRetType().equals(temp2.getRetType())) {
-            errorLog.add(node.getClass() +" mismatch types in comparison " + node.toString());
+            errorLog.add(node.getClass() + " mismatch types in comparison " + node.toString());
         }
         assignStack.push(temp1);
         outALessOrEqualCompVal(node);

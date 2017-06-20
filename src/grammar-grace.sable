@@ -73,7 +73,7 @@ Tokens
 //Names
   identifier = (lowercase_ch|uppercase_ch) (alpha_num|underscore)*;
   int_const = (number)*;
-  char_const = sq (escape_char | alpha_num) sq;
+  char_const = sq (str) sq;
   string_literal = dq str* dq;
   erroneous_number = (number)+ (alpha_num|'_'|escape_char)+;
 
