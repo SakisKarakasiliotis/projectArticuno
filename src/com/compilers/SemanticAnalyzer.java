@@ -296,14 +296,20 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 //    }
 
     public void outAReturnStatement(AReturnStatement node) {
-
-        if (assignStack.isEmpty()) {
+        if (node.getExpression() == null) {
             symbolTableEntry temp = new symbolTableEntry("return statement", EntryType.NOTHING);
             temp.setRetType("nothing");
             returnStack.push(temp);
         } else {
-            returnStack.push(assignStack.pop());//IDEA KIMWNA
+            if (assignStack.isEmpty()) {
+                symbolTableEntry temp = new symbolTableEntry("return statement", EntryType.NOTHING);
+                temp.setRetType("nothing");
+                returnStack.push(temp);
+            } else {
+                returnStack.push(assignStack.pop());//IDEA KIMWNA
+            }
         }
+
     }
 
 //    public void outAStatementWithElseStatement(AStatementWithElseStatement node) {
@@ -754,7 +760,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         }
         symbolTableEntry temp1 = assignStack.pop();
         symbolTableEntry temp2 = assignStack.pop();
-        if (!temp1.getRetType().equals(temp2.getRetType())) {
+        if (!temp1.getRetType().contains(temp2.getRetType()) && !temp2.getRetType().contains(temp1.getRetType())) {
             errorLog.add(node.getClass() + " mismatch types in comparison " + node.toString());
         }
         assignStack.push(temp1);
