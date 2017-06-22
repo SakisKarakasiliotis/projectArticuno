@@ -88,6 +88,12 @@ public class Quads {
         ASSIGN,
         ARRAY,
         RELOP,
+        LT,
+        GT,
+        LET,
+        GET,
+        EQ,
+        NEQ,
         IFB,
         JUMP,
         LABEL,
@@ -120,6 +126,18 @@ public class Quads {
                     return "array";
                 case RELOP:
                     return "relop";
+                case LT:
+                    return "<";
+                case GT:
+                    return ">";
+                case LET:
+                    return "<=";
+                case GET:
+                    return ">=";
+                case EQ:
+                    return "=";
+                case NEQ:
+                    return "!=";
                 case IFB:
                     return "ifb";
                 case JUMP:

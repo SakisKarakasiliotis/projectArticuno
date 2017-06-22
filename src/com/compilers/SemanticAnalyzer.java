@@ -9,7 +9,7 @@ import java.util.*;
  * Created by Windows 8 on 09-Apr-17.
  */
 
-//todo: carriage return + bsort + arrays
+//todo: bsort + arrays
 public class SemanticAnalyzer extends DepthFirstAdapter {
     int indentation = 0;
 
@@ -17,12 +17,15 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 
     int assignStackLimit = 0;
 
+    Map<String,Integer> varLocations = new HashMap<>();
+
+    IntermidiateCode InterCode = new IntermidiateCode();
 
     List<symbolTableEntry> fParams = new LinkedList<>();
 
-    Stack<symbolTableEntry> assignStack = new Stack<>(); //keep track of stack size on entry to know your stack limits
+    Stack<symbolTableEntry> assignStack = new Stack<>();
 
-    Stack<symbolTableEntry> returnStack = new Stack<>(); //keep track of stack size on entry to know your stack limits
+    Stack<symbolTableEntry> returnStack = new Stack<>();
 
 
     List<String> errorLog = new LinkedList<>();
@@ -44,25 +47,23 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 
     public void inAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node) {
         symbolTable.enter();
+
     }
 
     public void outAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node) {
         symbolTableEntry s = symbolTable.getFunctionEntry();
-        //System.out.println("new function returned: "+s);
-        //symbolTable.print();
+
         String sRetType = s.getRetType();
         while (!returnStack.isEmpty()) {
             symbolTableEntry e = returnStack.pop();
-//            System.out.println("s == "+ sRetType);
-//            System.out.println("e == "+ e.getRetType()+" "+e.getId());
-//            System.out.println("s: "+s.toString());
-//            System.out.println("e: "+e.toString());
+
 
             if (!sRetType.contains(e.getRetType())) {
 
                 errorLog.add("Invalid return type on " + s.getId());
             }
         }
+        InterCode.merge();
 
         symbolTable.exit();
 
@@ -80,8 +81,12 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         EntryType et = EntryType.entryType;
         String retType = node.getRetType().toString();
         symbolTableEntry s = symbolTable.lookupWithScope(id);
-        // System.out.println(s);
+        if( et.getEntryType(parentClass) == EntryType.FUNC_DEF){
+            InterCode.newList();
+            InterCode.genQuad(Quads.Operand.UNIT,node.getIdentifier().getText(),"-",-1);
+        }
         if (s == null) {
+
             if (node.getFparDefinition() != null) {
                 node.getFparDefinition().apply(this);
             }
@@ -109,12 +114,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
                 }
                 List<symbolTableEntry> result = s.getfParams();
                 if (!result.equals(fParams) || !s.getRetType().equals(retType)) {
-//                    System.out.println(result);
-//                    System.out.println(fParams);
-//                    System.out.println(result.size());
-//                    System.out.println(fParams.size());
-//                    System.out.println(s.getfParams().equals(fParams));
-//                    System.out.println(s.getfParams() +" equals " + fParams +" type "+ s.getRetType()+"equals "+ retType);
+
                     errorLog.add("definition of " + id + " doesn't match declaration on line " + node.getIdentifier().getLine() + " " + node.getIdentifier().getPos());
                 } else {
                     symbolTableEntry temp = new symbolTableEntry(id, EntryType.FUNC_NAME, et.getEntryType(parentClass));
@@ -544,6 +544,10 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         symbolTableEntry temp = new symbolTableEntry("+", EntryType.NOTHING);
         temp.setRetType("int");
         assignStack.push(temp);
+        int place = InterCode.newTemp();
+
+        InterCode.genQuad(Quads.Operand.PLUS,"$"+(place-2),"$"+(place-1),place);
+
         outAPlusExpNExp(node);
     }
 
@@ -556,6 +560,9 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         symbolTableEntry temp = new symbolTableEntry("-", EntryType.NOTHING);
         temp.setRetType("int");
         assignStack.push(temp);
+        int place = InterCode.newTemp();
+
+        InterCode.genQuad(Quads.Operand.MINUS,"$"+(place-2),"$"+(place-1),place);
     }
 
     public void outATermMultNExp(ATermMultNExp node) {
@@ -567,6 +574,9 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         symbolTableEntry temp = new symbolTableEntry("*", EntryType.NOTHING);
         temp.setRetType("int");
         assignStack.push(temp);
+        int place = InterCode.newTemp();
+
+        InterCode.genQuad(Quads.Operand.TIMES,"$"+(place-2),"$"+(place-1),place);
     }
 
     public void outATermDivNExp(ATermDivNExp node) {
@@ -578,6 +588,9 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         symbolTableEntry temp = new symbolTableEntry("/", EntryType.NOTHING);
         temp.setRetType("int");
         assignStack.push(temp);
+        int place = InterCode.newTemp();
+
+        InterCode.genQuad(Quads.Operand.DIV,"$"+(place-2),"$"+(place-1),place);
     }
 
     public void outATermModNExp(ATermModNExp node) {
@@ -589,6 +602,9 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         symbolTableEntry temp = new symbolTableEntry("%", EntryType.NOTHING);
         temp.setRetType("int");
         assignStack.push(temp);
+        int place = InterCode.newTemp();
+
+        InterCode.genQuad(Quads.Operand.MOD,"$"+(place-2),"$"+(place-1),place);
 
     }
 
@@ -600,6 +616,8 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         symbolTableEntry temp = new symbolTableEntry("final", EntryType.NOTHING);
         temp.setRetType("int");
         assignStack.push(temp);
+        int place = InterCode.newTemp();
+        InterCode.genQuad(Quads.Operand.ASSIGN,node.getIntConst().getText(),"-",place);
     }
 
 //    public void outAParenExpFinal(AParenExpFinal node) {
@@ -630,6 +648,15 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             temp.setRetType("uninitialized");
         }
         assignStack.push(temp);
+        //we have a map to get values
+        Integer place = varLocations.get(node.getIdentifier().getText());
+        if(place != null){
+            int place2 = InterCode.newTemp();
+            InterCode.genQuad(Quads.Operand.ASSIGN,"$"+place.toString(),"-",place2);
+            varLocations.put(node.getIdentifier().getText(),place2);
+        }else{
+            System.out.println("Error: 500 it appears we lost your variable "+node.getClass());
+        }
         outAIdenFinal(node);
     }
 
@@ -642,7 +669,6 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             node.getCompExp2().apply(this);
         }
         if (assignStack.isEmpty()) {
-            System.out.println("fuck this im out OR");
             return;
         }
         symbolTableEntry temp1 = assignStack.pop();
