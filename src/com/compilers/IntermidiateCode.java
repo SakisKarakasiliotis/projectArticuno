@@ -47,34 +47,33 @@ public class IntermidiateCode {
         this.temp = temp;
     }
 
-    public void genTrueList(){
-     trueStack.push(new LinkedList<Integer>());
+    public void genTrueList() {
+        trueStack.push(new LinkedList<Integer>());
     }
 
-    public void genFalseList(){
-     falseStack.push(new LinkedList<Integer>());
+    public void genFalseList() {
+        falseStack.push(new LinkedList<Integer>());
     }
 
-    public void addTrue(int label){
-        trueStack.get(trueStack.size()-1).add(label);
+    public void addTrue(int label) {
+        trueStack.get(trueStack.size() - 1).add(label);
     }
 
-    public void addFalse(int label){
-        falseStack.get(falseStack.size()-1).add(label);
+    public void addFalse(int label) {
+        falseStack.get(falseStack.size() - 1).add(label);
     }
 
-    public void backpatch(boolean instack,int goalId){
-        if(instack){
+    public void backpatch(boolean instack, int goalId) {
+        if (instack) {
             List<Integer> trueList = trueStack.pop();
-            List<Quads> nextList = nextStack.get(nextStack.size()-1);
-            for (int label: trueList) {
+            List<Quads> nextList = nextStack.get(nextStack.size() - 1);
+            for (int label : trueList) {
                 nextList.get(label).setRet(Integer.toString(goalId));
             }
-        }
-        else{
+        } else {
             List<Integer> falseList = falseStack.pop();
-            List<Quads> nextList = nextStack.get(nextStack.size()-1);
-            for (int label: falseList) {
+            List<Quads> nextList = nextStack.get(nextStack.size() - 1);
+            for (int label : falseList) {
                 nextList.get(label).setRet(Integer.toString(goalId));
             }
         }
@@ -100,10 +99,10 @@ public class IntermidiateCode {
     }
 
     public void genQuad(Quads.Operand op, String arg1, String arg2, int ret) {
-        int label = nextStack.get(nextStack.size()-1).size();
+        int label = nextStack.get(nextStack.size() - 1).size();
         String retReg = "-";
 
-        if (ret!=-1) {
+        if (ret != -1) {
             retReg = "$" + ret;
         }
         if (arg1.equals("")) {
@@ -114,44 +113,44 @@ public class IntermidiateCode {
         }
         String operand = Quads.Operand.operand.getOperand(op);
         Quads q = new Quads(label, operand, arg1, arg2, retReg);
-        this.nextStack.get(nextStack.size()-1).add(q);
+        this.nextStack.get(nextStack.size() - 1).add(q);
     }
 
     public int nextQuad() {
-        return nextStack.get(nextStack.size()-1).size();
+        return nextStack.get(nextStack.size() - 1).size();
     }
 
     public int newTemp() {
         return ++temp;
     }
 
-    public void newList(){
+    public void newList() {
         nextStack.push(new LinkedList<Quads>());
     }
 
-    public void merge(){
-         List<Quads> toBeMerged = nextStack.pop();
-         String name = toBeMerged.get(0).getArg1();
-         genQuad(Quads.Operand.ENDU,name,"-",-1);
-         int size=quads.size();
-        for (Quads q: toBeMerged) {
-            q.setLabel(q.getLabel()+size);
+    public void merge() {
+        List<Quads> toBeMerged = nextStack.pop();
+        String name = toBeMerged.get(0).getArg1();
+        genQuad(Quads.Operand.ENDU, name, "-", -1);
+        int size = quads.size();
+        for (Quads q : toBeMerged) {
+            q.setLabel(q.getLabel() + size);
             quads.add(q);
         }
         String operand = Quads.Operand.operand.getOperand(Quads.Operand.ENDU);
-        quads.add(new Quads(quads.size(),operand,name,"-","-"));
+        quads.add(new Quads(quads.size(), operand, name, "-", "-"));
     }
 
-    public void falseMerge(){
-        List<Integer> a=falseStack.pop();
-        List<Integer> b=falseStack.pop();
+    public void falseMerge() {
+        List<Integer> a = falseStack.pop();
+        List<Integer> b = falseStack.pop();
         a.addAll(b);
         falseStack.push(a);
     }
 
-    public void trueMerge(){
-        List<Integer> a=trueStack.pop();
-        List<Integer> b=trueStack.pop();
+    public void trueMerge() {
+        List<Integer> a = trueStack.pop();
+        List<Integer> b = trueStack.pop();
         a.addAll(b);
         trueStack.push(a);
     }
