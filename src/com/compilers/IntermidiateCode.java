@@ -7,9 +7,9 @@ public class IntermidiateCode {
 
     private List<Quads> quads;
 
-    private List<Integer> trueList;
+    private Stack<List<Integer>> trueStack;
 
-    private List<Integer> falseList;
+    private Stack<List<Integer>> falseStack;
 
     private Stack<List<Quads>> nextStack = new Stack<>();
 
@@ -17,16 +17,16 @@ public class IntermidiateCode {
 
     public IntermidiateCode() {
         this.quads = new LinkedList<>();
-        trueList = new LinkedList<>();
-        falseList = new LinkedList<>();
+        trueStack = new Stack<>();
+        falseStack = new Stack<>();
 
         this.temp = 0;
     }
 
     public IntermidiateCode(List<Quads> quads) {
         this.quads = new LinkedList<>();
-        trueList = new LinkedList<>();
-        falseList = new LinkedList<>();
+        trueStack = new Stack<>();
+        falseStack = new Stack<>();
         this.quads = quads;
         this.temp = 0;
     }
@@ -47,36 +47,37 @@ public class IntermidiateCode {
         this.temp = temp;
     }
 
-    public List<Integer> getTrueList() {
-        return trueList;
+    public void genTrueList(){
+     trueStack.push(new LinkedList<Integer>());
     }
 
-    public void setTrueList(List<Integer> trueList) {
-        this.trueList = trueList;
+    public void genFalseList(){
+     falseStack.push(new LinkedList<Integer>());
     }
 
-    public List<Integer> getFalseList() {
-        return falseList;
+    public void addTrue(int label){
+        trueStack.get(trueStack.size()-1).add(label);
     }
 
-    public void setFalseList(List<Integer> falseList) {
-        this.falseList = falseList;
+    public void addFalse(int label){
+        falseStack.get(falseStack.size()-1).add(label);
     }
 
-    public int getTrueListSize() {
-        return trueList.size();
-    }
-
-    public void addTrueList(int x) {
-        this.trueList.add(new Integer(x));
-    }
-
-    public int getFalseListSize() {
-        return falseList.size();
-    }
-
-    public void addFalseList(int x) {
-        this.falseList.add(new Integer(x));
+    public void backpatch(boolean instack,int goalId){
+        if(instack){
+            List<Integer> trueList = trueStack.pop();
+            List<Quads> nextList = nextStack.get(nextStack.size()-1);
+            for (int label: trueList) {
+                nextList.get(label).setRet(Integer.toString(goalId));
+            }
+        }
+        else{
+            List<Integer> falseList = falseStack.pop();
+            List<Quads> nextList = nextStack.get(nextStack.size()-1);
+            for (int label: falseList) {
+                nextList.get(label).setRet(Integer.toString(goalId));
+            }
+        }
     }
 
     @Override
@@ -86,9 +87,22 @@ public class IntermidiateCode {
                 '}';
     }
 
+    public Stack<List<Integer>> getTrueStack() {
+        return trueStack;
+    }
+
+    public Stack<List<Integer>> getFalseStack() {
+        return falseStack;
+    }
+
+    public Stack<List<Quads>> getNextStack() {
+        return nextStack;
+    }
+
     public void genQuad(Quads.Operand op, String arg1, String arg2, int ret) {
-        int label = quads.size();
+        int label = nextStack.get(nextStack.size()-1).size();
         String retReg = "-";
+
         if (ret!=-1) {
             retReg = "$" + ret;
         }
@@ -104,7 +118,7 @@ public class IntermidiateCode {
     }
 
     public int nextQuad() {
-        return quads.size();
+        return nextStack.get(nextStack.size()-1).size();
     }
 
     public int newTemp() {
@@ -126,5 +140,19 @@ public class IntermidiateCode {
         }
         String operand = Quads.Operand.operand.getOperand(Quads.Operand.ENDU);
         quads.add(new Quads(quads.size(),operand,name,"-","-"));
+    }
+
+    public void falseMerge(){
+        List<Integer> a=falseStack.pop();
+        List<Integer> b=falseStack.pop();
+        a.addAll(b);
+        falseStack.push(a);
+    }
+
+    public void trueMerge(){
+        List<Integer> a=trueStack.pop();
+        List<Integer> b=trueStack.pop();
+        a.addAll(b);
+        trueStack.push(a);
     }
 }

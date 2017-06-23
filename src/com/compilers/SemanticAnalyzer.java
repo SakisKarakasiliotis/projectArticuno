@@ -259,6 +259,9 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 //                System.out.println("s: "+s);
 //                symbolTable.print();
                 s.setInitialized(true);
+                int place = InterCode.newTemp();
+                InterCode.genQuad(Quads.Operand.ASSIGN,"$"+(place-1),"-",place);
+                varLocations.put(lval.getId(),place);
 
 
             } else {
@@ -268,7 +271,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             System.out.println("500 Internal server error " + lval + "  " + expr);
         }
 
-        //check if lvalue type matches expression type
+
 
         outAAssignmentStatement(node);
     }
@@ -439,7 +442,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 //        assignStack.push(temp);
 //    }
 
-    public void outAStringExpression(AStringExpression node) {
+    public void outAStringExpression(AStringExpression node) { //TODO
         String id = node.getStringLiteral().toString();
         symbolTableEntry temp = new symbolTableEntry(id, EntryType.STRING_LIT);
         temp.setRetType("char[]");
@@ -450,6 +453,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         String id = node.getCharConst().toString();
         symbolTableEntry temp = new symbolTableEntry(id, EntryType.STRING_LIT);
         temp.setRetType("char");
+        InterCode.genQuad(Quads.Operand.ASSIGN, node.getCharConst().getText(),"-",InterCode.newTemp());
         assignStack.push(temp);
     }
 //
@@ -515,7 +519,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
                 e.apply(this);
             }
         }
-        String id = node.getIdentifier().toString();
+        String id = node.getIdentifier().getText();// last change!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         symbolTableEntry s = symbolTable.lookup(id, EntryType.VAR);
         if (s == null) {
             errorLog.add("array " + id + " has not been declared ");
@@ -524,6 +528,8 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             temp.setRetType(s.getRetType());
             assignStack.push(temp);
         }
+        int place = InterCode.newTemp();
+        InterCode.genQuad(Quads.Operand.ARRAY,node.getIdentifier().getText(),"$"+(place-1),place);
         outAArrayArray(node);
     }
 
@@ -665,9 +671,11 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         if (node.getCompExp1() != null) {
             node.getCompExp1().apply(this);
         }
+        InterCode.backpatch(false,InterCode.nextQuad());
         if (node.getCompExp2() != null) {
             node.getCompExp2().apply(this);
         }
+        InterCode.trueMerge();
         if (assignStack.isEmpty()) {
             return;
         }
@@ -682,9 +690,11 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         if (node.getCompExp1() != null) {
             node.getCompExp1().apply(this);
         }
+        InterCode.backpatch(true,InterCode.nextQuad());
         if (node.getCompExp2() != null) {
             node.getCompExp2().apply(this);
         }
+        InterCode.falseMerge();
         if (assignStack.isEmpty()) {
             //        System.out.println("fuck this im out AND");
             return;
@@ -708,6 +718,10 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         if (!temp.getType().equals(EntryType.BOOLEAN)) {
             errorLog.add("not opperant on non-boolean expression " + node.toString());
         }
+        List<Integer> trueList = InterCode.getTrueStack().pop();
+        List<Integer> falseList = InterCode.getFalseStack().pop();
+        InterCode.getFalseStack().push(trueList);
+        InterCode.getTrueStack().push(falseList);
         outANotExpCompExp(node);
     }
 //
@@ -726,19 +740,24 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             node.getCompVal2().apply(this);
         }
         if (assignStack.isEmpty()) {
-            //       System.out.println("fuck this im out Equals");
+
             return;
         }
         symbolTableEntry temp1 = assignStack.pop();
         symbolTableEntry temp2 = assignStack.pop();
-        // System.out.println(temp1.getType() + "    "+temp2.getType());
+
 
         if (!temp1.getRetType().equals(temp2.getRetType())) {
             errorLog.add(node.getClass() + " mismatch types in comparison " + node.toString());
         }
-        //this is sakis fault!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
         assignStack.push(temp1);
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        int place = InterCode.getTemp();
+        InterCode.addTrue(InterCode.nextQuad());
+        InterCode.genQuad(Quads.Operand.EQ,"$"+(place-1),"$"+place,-1);
+        InterCode.addFalse(InterCode.nextQuad());
+        InterCode.genQuad(Quads.Operand.JUMP,"-","-",-1);
+
         outAEqualsCompVal(node);
     }
 
@@ -756,6 +775,11 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             errorLog.add(node.getClass() + " mismatch types in comparison " + node.toString());
         }
         assignStack.push(temp1);
+        int place = InterCode.getTemp();
+        InterCode.addTrue(InterCode.nextQuad());
+        InterCode.genQuad(Quads.Operand.NEQ,"$"+(place-1),"$"+place,-1);
+        InterCode.addFalse(InterCode.nextQuad());
+        InterCode.genQuad(Quads.Operand.JUMP,"-","-",-1);
         outANotEqualsCompVal(node);
     }
 
@@ -773,6 +797,11 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             errorLog.add(node.getClass() + " mismatch types in comparison " + node.toString());
         }
         assignStack.push(temp1);
+        int place = InterCode.getTemp();
+        InterCode.addTrue(InterCode.nextQuad());
+        InterCode.genQuad(Quads.Operand.LT,"$"+(place-1),"$"+place,-1);
+        InterCode.addFalse(InterCode.nextQuad());
+        InterCode.genQuad(Quads.Operand.JUMP,"-","-",-1);
         outALessThanCompVal(node);
     }
 
@@ -790,6 +819,11 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             errorLog.add(node.getClass() + " mismatch types in comparison " + node.toString());
         }
         assignStack.push(temp1);
+        int place = InterCode.getTemp();
+        InterCode.addTrue(InterCode.nextQuad());
+        InterCode.genQuad(Quads.Operand.GT,"$"+(place-1),"$"+place,-1);
+        InterCode.addFalse(InterCode.nextQuad());
+        InterCode.genQuad(Quads.Operand.JUMP,"-","-",-1);
         outAGreaterThanCompVal(node);
     }
 
@@ -807,6 +841,11 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             errorLog.add(node.getClass() + " mismatch types in comparison " + node.toString());
         }
         assignStack.push(temp1);
+        int place = InterCode.getTemp();
+        InterCode.addTrue(InterCode.nextQuad());
+        InterCode.genQuad(Quads.Operand.GET,"$"+(place-1),"$"+place,-1);
+        InterCode.addFalse(InterCode.nextQuad());
+        InterCode.genQuad(Quads.Operand.JUMP,"-","-",-1);
         outAGreaterOrEqualCompVal(node);
     }
 
@@ -824,6 +863,11 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             errorLog.add(node.getClass() + " mismatch types in comparison " + node.toString());
         }
         assignStack.push(temp1);
+        int place = InterCode.getTemp();
+        InterCode.addTrue(InterCode.nextQuad());
+        InterCode.genQuad(Quads.Operand.LET,"$"+(place-1),"$"+place,-1);
+        InterCode.addFalse(InterCode.nextQuad());
+        InterCode.genQuad(Quads.Operand.JUMP,"-","-",-1);
         outALessOrEqualCompVal(node);
     }
 
