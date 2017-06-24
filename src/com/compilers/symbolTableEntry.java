@@ -46,6 +46,7 @@ public class symbolTableEntry {
     String retType;
     String fParType;
     boolean initialized;
+    int place;
 
     public String getfParType() {
         return fParType;
@@ -85,6 +86,14 @@ public class symbolTableEntry {
         this.initialized = initialized;
     }
 
+    public int getPlace() {
+        return place;
+    }
+
+    public void setPlace(int place) {
+        this.place = place;
+    }
+
     public symbolTableEntry(String id, EntryType type, EntryType parent) {
         this.id = id.trim();
         this.type = type;
@@ -93,6 +102,7 @@ public class symbolTableEntry {
         this.fParType = "";
         this.fParams = null;
         this.initialized = false;
+        this.place = -1;
 
     }
 
@@ -135,7 +145,7 @@ public class symbolTableEntry {
         this.id = id.trim();
         this.type = type;
         this.parent = EntryType.NOTHING;
-
+        this.place = -1;
     }
 
 }

@@ -20,6 +20,7 @@ fun main () : nothing
     var limit, number, counter : int;
 
 {
+
    puts("Limit: ");
    limit <- geti();
    puts("Primes:\n");
@@ -35,6 +36,7 @@ fun main () : nothing
       puts("\n");
    }
    number <- 6;
+
    while number <= limit do {
       if prime(number - 1) = 1 then {
          counter <- counter + 1;

@@ -98,12 +98,19 @@ public class IntermidiateCode {
         return nextStack;
     }
 
-    public void genQuad(Quads.Operand op, String arg1, String arg2, int ret) {
+    public void genQuad(Quads.Operand op, String arg1, String arg2, Integer ret) {
         int label = nextStack.get(nextStack.size() - 1).size();
         String retReg = "-";
 
         if (ret != -1) {
-            retReg = "$" + ret;
+            if(ret == -2){
+                retReg="$$";
+            }else{
+                retReg = "$" + ret;
+            }
+        }
+        if(op.equals(Quads.Operand.JUMP)){
+            retReg = ret.toString();
         }
         if (arg1.equals("")) {
             arg1 = "-";
@@ -131,7 +138,6 @@ public class IntermidiateCode {
     public void merge() {
         List<Quads> toBeMerged = nextStack.pop();
         String name = toBeMerged.get(0).getArg1();
-        genQuad(Quads.Operand.ENDU, name, "-", -1);
         int size = quads.size();
         for (Quads q : toBeMerged) {
             q.setLabel(q.getLabel() + size);
