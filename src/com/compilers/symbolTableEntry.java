@@ -47,6 +47,7 @@ public class symbolTableEntry {
     String fParType;
     boolean initialized;
     int place;
+    boolean isReference;
 
     public String getfParType() {
         return fParType;
@@ -94,6 +95,14 @@ public class symbolTableEntry {
         this.place = place;
     }
 
+    public boolean isReference() {
+        return isReference;
+    }
+
+    public void setReference(boolean reference) {
+        isReference = reference;
+    }
+
     public symbolTableEntry(String id, EntryType type, EntryType parent) {
         this.id = id.trim();
         this.type = type;
@@ -103,6 +112,7 @@ public class symbolTableEntry {
         this.fParams = null;
         this.initialized = false;
         this.place = -1;
+        this.isReference = false;
 
     }
 
@@ -146,6 +156,8 @@ public class symbolTableEntry {
         this.type = type;
         this.parent = EntryType.NOTHING;
         this.place = -1;
+        this.isReference = false;
+
     }
 
 }

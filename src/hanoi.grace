@@ -9,8 +9,8 @@ fun solve () : nothing
             puts(".\n");
          }
       {
-         if rings >= 1 and rings > 3 then {
-            hanoi(-1, source, auxiliary, target);
+         if rings >= 1 then {
+            hanoi(rings-1, source, auxiliary, target);
             move(source, target);
             hanoi(rings-1, auxiliary, target, source);
          }

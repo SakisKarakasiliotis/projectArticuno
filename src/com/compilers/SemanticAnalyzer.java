@@ -36,6 +36,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         for (String e : errorLog) {
             System.out.println("ERROR: " + e);
         }
+        InterCode.print();
     }
 
     /*
@@ -158,6 +159,9 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         temp.setfParType(parType);
         temp.setRetType(parType);
         temp.setInitialized(true);
+        if (node.getKwRef() != null) {
+            temp.setReference(true);
+        }
         fParams.add(temp);
         varLocations.put(parName.trim(), -666);
         List<PNextIdentifier> copy = new ArrayList<PNextIdentifier>(node.getNextIdentifier());
@@ -166,6 +170,9 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             nextTemp.setfParType(parType);
             nextTemp.setRetType(parType);
             nextTemp.setInitialized(true);
+            if (node.getKwRef() != null) {
+                nextTemp.setReference(true);
+            }
             fParams.add(nextTemp);
             varLocations.put(e.toString().trim(), -666);
         }
@@ -277,13 +284,49 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         outAAssignmentStatement(node);
     }
 
-    //    public void outANoElseStatement(ANoElseStatement node) {
-//
-//    }
-//
-//    public void outAWithElseStatement(AWithElseStatement node) {
-//
-//    }
+    public void caseANoElseStatement(ANoElseStatement node) {
+        inANoElseStatement(node);
+        if(node.getCondition() != null)
+        {
+            node.getCondition().apply(this);
+        }
+        InterCode.backpatch(true,InterCode.nextQuad());
+        if(node.getThenStmt() != null)
+        {
+            node.getThenStmt().apply(this);
+        }
+        InterCode.backpatch(false,InterCode.nextQuad());
+        outANoElseStatement(node);
+    }
+
+    public void caseAWithElseStatement(AWithElseStatement node) {
+        inAWithElseStatement(node);
+        if(node.getCondition() != null)
+        {
+            node.getCondition().apply(this);
+        }
+
+        InterCode.backpatch(true,InterCode.nextQuad());
+
+        if(node.getThenStmt() != null)
+        {
+            node.getThenStmt().apply(this);
+        }
+
+        InterCode.genTrueList();
+        InterCode.addTrue(InterCode.nextQuad());
+        InterCode.genQuad(Quads.Operand.JUMP,"-","-",-1);
+        InterCode.backpatch(false,InterCode.nextQuad());
+
+        if(node.getElseStmt() != null)
+        {
+            node.getElseStmt().apply(this);
+        }
+
+        InterCode.backpatch(true,InterCode.nextQuad());
+
+        outAWithElseStatement(node);
+    }
 //
 ////    public void outABlockStatement(ABlockStatement node) {
 ////        printIndentation();
@@ -363,10 +406,11 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 
             Collections.reverse(params);
             System.out.println("second param == " + params);
-
+            Stack<Quads> parameterReverser = new Stack<>();
             int iter = 0;
             int currSize = assignStack.size();
             System.out.println("cursize: " + currSize);
+
             while (!assignStack.isEmpty() && iter < (currSize - assignStackLimit)) {
                 symbolTableEntry temp = assignStack.pop();
                 // System.out.println("FUNC CALL ON TEMP: "+temp);
@@ -381,28 +425,42 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
                     iter++;
                     break;
                 }
-//                if(params.get(iter).)
                 Integer search = varLocations.get(temp.getId());
                 int place;
-
+                String parameterType = "VAR";
+                if(params.get(iter).isReference()){
+                    parameterType = "REF";
+                }
                 if (search == null) {
                     place = temp.getPlace();
                     if (place < 0) {
                         System.out.println("500 :: Error we done goofed ...Sorry " + node.getClass());
 
                     } else {
-                        InterCode.genQuad(Quads.Operand.PAR, "$" + place, "VAR", -1);
+                        Quads parameter = new Quads(1, "PAR", "$" + place,parameterType, "-" );
+                        parameterReverser.push(parameter);
+//                        InterCode.genQuad(Quads.Operand.PAR, "$" + place, parameterType, -1);
                     }
                 } else {
                     if (search == -666) {
-                        InterCode.genQuad(Quads.Operand.PAR, temp.getId(), "VAR", -1);
+                        Quads parameter = new Quads(1, "PAR", "PARAM"+temp.getId(),parameterType, "-" );
+                        parameterReverser.push(parameter);
+
+//                        InterCode.genQuad(Quads.Operand.PAR, "PARAM"+temp.getId(), parameterType, -1);
                     } else {
-                        InterCode.genQuad(Quads.Operand.PAR, "$" + search, "VAR", -1);
+                        Quads parameter = new Quads(1, "PAR", "$" + search,parameterType, "-" );
+                        parameterReverser.push(parameter);
+
+//                        InterCode.genQuad(Quads.Operand.PAR, "$" + search, parameterType, -1);
                     }
                 }
 
                 iter++;
 
+            }
+            while (!parameterReverser.isEmpty()){
+                Quads parameter = parameterReverser.pop();
+                InterCode.genQuad(Quads.Operand.PAR, parameter.getArg1(), parameter.getArg2(), -1);
             }
             if (iter < params.size()) {
                 errorLog.add("To few arguments in " + id + " call");
@@ -741,6 +799,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         }
         symbolTableEntry temp1 = assignStack.pop();
         symbolTableEntry temp2 = assignStack.pop();
+        assignStack.push(temp1);
 
         outAOrExpCompExp(node);
     }
@@ -765,7 +824,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         }
         symbolTableEntry temp1 = assignStack.pop();
         symbolTableEntry temp2 = assignStack.pop();
-
+        assignStack.push(temp1);
         outAAndExpCompExp(node);
     }
 

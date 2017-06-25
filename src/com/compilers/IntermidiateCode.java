@@ -103,13 +103,13 @@ public class IntermidiateCode {
         String retReg = "-";
 
         if (ret != -1) {
-            if(ret == -2){
-                retReg="$$";
-            }else{
+            if (ret == -2) {
+                retReg = "$$";
+            } else {
                 retReg = "$" + ret;
             }
         }
-        if(op.equals(Quads.Operand.JUMP)){
+        if (op.equals(Quads.Operand.JUMP)) {
             retReg = ret.toString();
         }
         if (arg1.equals("")) {
@@ -159,5 +159,17 @@ public class IntermidiateCode {
         List<Integer> b = trueStack.pop();
         a.addAll(b);
         trueStack.push(a);
+    }
+
+    public void print() {
+        System.out.println("===============================================================================");
+        System.out.println("=====================PRINTING INTERMEDIATE CODE================================");
+        System.out.println("===============================================================================");
+        for (Quads q : this.quads) {
+            System.out.println(q.getLabel() + ": " + q.getOp() + " " + q.getArg1() + " " + q.getArg2() + " " + q.getRet());
+        }
+        System.out.println("===============================================================================");
+        System.out.println("===============================================================================");
+
     }
 }
