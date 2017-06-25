@@ -40,7 +40,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         for (String e : errorLog) {
             System.out.println("ERROR: " + e);
         }
-        if(errorLog.isEmpty()){
+        if (errorLog.isEmpty()) {
             InterCode.print();
         }
     }
@@ -55,7 +55,6 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         while (!returnStack.isEmpty()) {
             symbolTableEntry e = returnStack.pop();
             if (!sRetType.contains(e.getRetType())) {
-
                 errorLog.add("Invalid return type on " + s.getId());
             }
         }
@@ -219,39 +218,34 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 
     public void caseANoElseStatement(ANoElseStatement node) {
         inANoElseStatement(node);
-        if(node.getCondition() != null)
-        {
+        if (node.getCondition() != null) {
             node.getCondition().apply(this);
         }
-        InterCode.backpatch(true,InterCode.nextQuad());
-        if(node.getThenStmt() != null)
-        {
+        InterCode.backpatch(true, InterCode.nextQuad());
+        if (node.getThenStmt() != null) {
             node.getThenStmt().apply(this);
         }
-        InterCode.backpatch(false,InterCode.nextQuad());
+        InterCode.backpatch(false, InterCode.nextQuad());
         outANoElseStatement(node);
     }
 
     public void caseAWithElseStatement(AWithElseStatement node) {
         inAWithElseStatement(node);
-        if(node.getCondition() != null)
-        {
+        if (node.getCondition() != null) {
             node.getCondition().apply(this);
         }
-        InterCode.backpatch(true,InterCode.nextQuad());
-        if(node.getThenStmt() != null)
-        {
+        InterCode.backpatch(true, InterCode.nextQuad());
+        if (node.getThenStmt() != null) {
             node.getThenStmt().apply(this);
         }
         InterCode.genTrueList();
         InterCode.addTrue(InterCode.nextQuad());
-        InterCode.genQuad(Quads.Operand.JUMP,"-","-",-1);
-        InterCode.backpatch(false,InterCode.nextQuad());
-        if(node.getElseStmt() != null)
-        {
+        InterCode.genQuad(Quads.Operand.JUMP, "-", "-", -1);
+        InterCode.backpatch(false, InterCode.nextQuad());
+        if (node.getElseStmt() != null) {
             node.getElseStmt().apply(this);
         }
-        InterCode.backpatch(true,InterCode.nextQuad());
+        InterCode.backpatch(true, InterCode.nextQuad());
         outAWithElseStatement(node);
     }
 
@@ -306,7 +300,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         }
         symbolTableEntry s = symbolTable.lookup(id, EntryType.FUNC_NAME);
         if (s == null) {
-            symbolTable.print();
+//            symbolTable.print();
             errorLog.add("undeclared function call " + id);
         } else {
             List<symbolTableEntry> params = s.getfParams();
@@ -329,7 +323,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
                 Integer search = varLocations.get(temp.getId());
                 int place;
                 String parameterType = "VAR";
-                if(params.get(iter).isReference()){
+                if (params.get(iter).isReference()) {
                     parameterType = "REF";
                 }
                 if (search == null) {
@@ -338,21 +332,21 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
                         System.out.println("500 :: Error we done goofed ...Sorry " + node.getClass());
 
                     } else {
-                        Quads parameter = new Quads(1, "PAR", "$" + place,parameterType, "-" );
+                        Quads parameter = new Quads(1, "PAR", "$" + place, parameterType, "-");
                         parameterReverser.push(parameter);
                     }
                 } else {
                     if (search == -666) {
-                        Quads parameter = new Quads(1, "PAR", "PARAM"+temp.getId(),parameterType, "-" );
+                        Quads parameter = new Quads(1, "PAR", "PARAM" + temp.getId(), parameterType, "-");
                         parameterReverser.push(parameter);
                     } else {
-                        Quads parameter = new Quads(1, "PAR", "$" + search,parameterType, "-" );
+                        Quads parameter = new Quads(1, "PAR", "$" + search, parameterType, "-");
                         parameterReverser.push(parameter);
                     }
                 }
                 iter++;
             }
-            while (!parameterReverser.isEmpty()){
+            while (!parameterReverser.isEmpty()) {
                 Quads parameter = parameterReverser.pop();
                 InterCode.genQuad(Quads.Operand.PAR, parameter.getArg1(), parameter.getArg2(), -1);
             }
@@ -444,7 +438,6 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
     }
 
 
-
 //    public void outAArraySizeArraySize(AArraySizeArraySize node) {
 //
 //    }
@@ -464,6 +457,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             List<PExpression> copy = new ArrayList<PExpression>(node.getExpression());
             for (PExpression e : copy) {
                 e.apply(this);
+                assignStack.pop();
             }
         }
         String id = node.getIdentifier().getText();// last change!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -473,7 +467,16 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             errorLog.add("array " + id + " has not been declared ");
         } else {
             symbolTableEntry temp = new symbolTableEntry(id, EntryType.ARRAY);
-            temp.setRetType(s.getRetType());
+            // we made changes here ============================================================================
+            if(s.getRetType().contains("int")){
+                temp.setRetType("int");
+            }
+            else if(s.getRetType().contains("char")){
+                temp.setRetType("char");
+            }
+           // temp.setRetType(s.getRetType());
+            //==================================================================================================
+
             temp.setPlace(place);
             assignStack.push(temp);
         }
@@ -579,8 +582,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         symbolTableEntry s = symbolTable.lookup(id, EntryType.VAR);
         if (s == null) {
             errorLog.add("undeclared variable " + id);
-        }
-        else if (!s.isInitialized()) {
+        } else if (!s.isInitialized()) {
             errorLog.add("variable " + id + " has not been initialized on line " + node.getIdentifier().getLine());
         }
         symbolTableEntry temp = new symbolTableEntry(id, EntryType.NOTHING);

@@ -12,6 +12,13 @@ public class symbolTableEntry {
 
     String id;
     private List<symbolTableEntry> fParams;
+    EntryType type;
+    EntryType parent;
+    String retType;
+    String fParType;
+    boolean initialized;
+    int place;
+    boolean isReference;
 
     @Override
     public boolean equals(Object o) {
@@ -40,14 +47,6 @@ public class symbolTableEntry {
         result = 31 * result + (initialized ? 1 : 0);
         return result;
     }
-
-    EntryType type;
-    EntryType parent;
-    String retType;
-    String fParType;
-    boolean initialized;
-    int place;
-    boolean isReference;
 
     public String getfParType() {
         return fParType;

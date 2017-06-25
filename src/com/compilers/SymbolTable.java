@@ -14,64 +14,11 @@ public class SymbolTable {
 
     private List<Stack<symbolTableEntry>> scopes = new LinkedList<>();
 
-    public void loadLibraries() {
-        if (scopes.size() == 1) {
-            String[] names = {"puti", "putc", "puts", "geti", "getc", "gets", "abs", "ord", "chr", "strlen", "strcmp", "strcpy", "strcat"};
-            String[] returns = {"nothing", "nothing", "nothing", "int", "char", "nothing", "int", "int", "char", "int", "int", "nothing", "nothing"};
-            String[][] params = {
-                    {"n"},
-                    {"c"},
-                    {"s"},
-                    {""},
-                    {""},
-                    {"n", "s"},
-                    {"n"},
-                    {"c"},
-                    {"n"},
-                    {"s"},
-                    {"s1", "s2"},
-                    {"trg", "src"},
-                    {"trg", "src"}
-            };
-            String[][] paramtype = {
-                    {"int"},
-                    {"char"},
-                    {"char[]"},
-                    {""},
-                    {""},
-                    {"int", "char[]"},
-                    {"int"},
-                    {"char"},
-                    {"int"},
-                    {"char[]"},
-                    {"char[]", "char[]"},
-                    {"char[]", "char[]"},
-                    {"char[]", "char[]"}
-            };
-            for (int i = 0; i < names.length; i++) {
-                symbolTableEntry s = new symbolTableEntry(names[i], EntryType.LIBRARY_FUNCTION, EntryType.FUNC_DEF);
-                s.setRetType(returns[i]);
-                List<symbolTableEntry> fParams = new LinkedList<>();
-                for (int j = 0; j < params[i].length; j++) {
-                    symbolTableEntry temp = new symbolTableEntry(params[i][j], EntryType.FUNC_PARAM, EntryType.FUNC_DEF);
-                    temp.setRetType(paramtype[i][j]);
-                    temp.setfParType(paramtype[i][j]);
-                    if(!names[i].equals("geti") && !names[i].equals("getc")){
-                        fParams.add(temp);
-                    }
 
-                }
-                s.setfParams(fParams);
-                Stack latestScope = scopes.get(0);
-                latestScope.push(s);
-            }
-        }
-    }
 
     public void enter() {
         scopes.add(new Stack<symbolTableEntry>());
         loadLibraries();
-        System.out.println("Enter scope: " + (scopes.size() - 1));
     }
 
     public int insert(String name, EntryType type, EntryType parent) {
@@ -85,7 +32,6 @@ public class SymbolTable {
     }
 
     public int insert(symbolTableEntry input) {
-        // System.out.println(input);
         input.setId(input.getId().trim());
         Stack latestScope = scopes.get(scopes.size() - 1);
 
@@ -116,9 +62,7 @@ public class SymbolTable {
         } else {
             latestScope = scopes.get(scopes.size() - 1);
         }
-
         latestScope.push(input);
-
         return 0;
     }
 
@@ -190,9 +134,7 @@ public class SymbolTable {
         if (scopes.isEmpty()) {
             return null;
         }
-        // System.out.println(scopes.size());
         for (int i = scopes.size() - 1; i >= 0; i--) {
-            //    System.out.println(i);
             Stack latestScope = scopes.get(i);
             if (latestScope.isEmpty()) {
                 continue;
@@ -209,10 +151,7 @@ public class SymbolTable {
     }
 
     public int exit() {
-        System.out.println("exiting scope " + (scopes.size() - 1));
         scopes.remove(scopes.size() - 1);
-        //System.out.println("scopes" + scopes.size());
-
         return 0;
     }
 
@@ -238,5 +177,59 @@ public class SymbolTable {
     }
 
     public SymbolTable() {
+    }
+
+    public void loadLibraries() {
+        if (scopes.size() == 1) {
+            String[] names = {"puti", "putc", "puts", "geti", "getc", "gets", "abs", "ord", "chr", "strlen", "strcmp", "strcpy", "strcat"};
+            String[] returns = {"nothing", "nothing", "nothing", "int", "char", "nothing", "int", "int", "char", "int", "int", "nothing", "nothing"};
+            String[][] params = {
+                    {"n"},
+                    {"c"},
+                    {"s"},
+                    {""},
+                    {""},
+                    {"n", "s"},
+                    {"n"},
+                    {"c"},
+                    {"n"},
+                    {"s"},
+                    {"s1", "s2"},
+                    {"trg", "src"},
+                    {"trg", "src"}
+            };
+            String[][] paramtype = {
+                    {"int"},
+                    {"char"},
+                    {"char[]"},
+                    {""},
+                    {""},
+                    {"int", "char[]"},
+                    {"int"},
+                    {"char"},
+                    {"int"},
+                    {"char[]"},
+                    {"char[]", "char[]"},
+                    {"char[]", "char[]"},
+                    {"char[]", "char[]"}
+            };
+            for (int i = 0; i < names.length; i++) {
+                symbolTableEntry s = new symbolTableEntry(names[i], EntryType.LIBRARY_FUNCTION, EntryType.FUNC_DEF);
+                s.setRetType(returns[i]);
+                List<symbolTableEntry> fParams = new LinkedList<>();
+                for (int j = 0; j < params[i].length; j++) {
+                    symbolTableEntry temp = new symbolTableEntry(params[i][j], EntryType.FUNC_PARAM, EntryType.FUNC_DEF);
+                    temp.setRetType(paramtype[i][j]);
+                    temp.setfParType(paramtype[i][j]);
+                    if(!names[i].equals("geti") && !names[i].equals("getc")){
+                        fParams.add(temp);
+                    }
+
+                }
+                s.setfParams(fParams);
+                Stack latestScope = scopes.get(0);
+                latestScope.push(s);
+            }
+        }
     }
 }
