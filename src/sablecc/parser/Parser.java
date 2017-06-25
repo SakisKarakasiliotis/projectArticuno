@@ -2011,8 +2011,8 @@ public class Parser
         PStatement pstatementNode3;
         PStatement pstatementNode4;
         pconditionNode2 = (PCondition)nodeArrayList2.get(0);
-        pstatementNode3 = (PStatement)nodeArrayList6.get(0);
-        pstatementNode4 = (PStatement)nodeArrayList4.get(0);
+        pstatementNode3 = (PStatement)nodeArrayList4.get(0);
+        pstatementNode4 = (PStatement)nodeArrayList6.get(0);
 
         pstatementNode1 = new AWithElseStatement(pconditionNode2, pstatementNode3, pstatementNode4);
         }

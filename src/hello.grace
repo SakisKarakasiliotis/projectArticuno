@@ -3,10 +3,11 @@ fun main() : nothing
     {
     x<-1;
    if 1<1 and x>0 then {
-    puti(x);
+    puti(1);
+    if 69#3 then{
+        puti(2);
+       }
    } else {
-
-    puti(2);
+    puti(999999);
    }
-
 }

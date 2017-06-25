@@ -137,7 +137,7 @@ Productions
                             {return} kw_return expression? semicolon {-> New statement.return(expression)};
 
   if_stmt {-> statement} = {no_else} kw_if condition kw_then  statement {-> New statement.no_else(condition, statement)}|
-                           {with_else} kw_if condition kw_then  stmt_with_else kw_else statement {-> New statement.with_else(condition,statement,stmt_with_else.statement)};
+                           {with_else} kw_if condition kw_then  stmt_with_else kw_else statement {-> New statement.with_else(condition,stmt_with_else.statement,statement)};
 
   stmt_with_else {-> statement} = {noop} semicolon {->New statement.noop(semicolon) }|
                                   {assignment} l_value assign expression semicolon {-> New statement.assignment(l_value, expression)}|
