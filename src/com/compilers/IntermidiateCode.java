@@ -1,5 +1,7 @@
 package com.compilers;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 
@@ -161,16 +163,23 @@ public class IntermidiateCode {
         trueStack.push(a);
     }
 
-    public void print() {
-        System.out.println("===============================================================================");
-        System.out.println("=====================PRINTING INTERMEDIATE CODE================================");
-        System.out.println("===============================================================================");
-        for (Quads q : this.quads) {
-            System.out.println(q.getLabel() + ": " + q.getOp() + " " + q.getArg1() + " " + q.getArg2() + " " + q.getRet());
+    public void print(boolean file) {
+        if (file) {
+            try {
+                PrintWriter writer = new PrintWriter("intermediate.o", "UTF-8");
+                for (Quads q : this.quads) {
+                    writer.println(q.getLabel() + ": " + q.getOp() + " " + q.getArg1() + " " + q.getArg2() + " " + q.getRet());
+                }
+                writer.close();
+            } catch (IOException e) {
+                System.err.printf("FILE I/O error: %s\n", e.getMessage());
+            }
+        } else {
+            System.out.println("=====================PRINTING INTERMEDIATE CODE================================");
+            for (Quads q : this.quads) {
+                System.out.println(q.getLabel() + ": " + q.getOp() + " " + q.getArg1() + " " + q.getArg2() + " " + q.getRet());
+            }
         }
-        System.out.println("===============================================================================");
-        System.out.println("===============================================================================");
-
     }
 
 }

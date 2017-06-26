@@ -232,4 +232,23 @@ public class SymbolTable {
             }
         }
     }
+
+    public int getVariableScope(String id){
+        if (scopes.isEmpty()) {
+            return -1;
+        }
+        for (int i = scopes.size() - 1; i >= 0; i--) {
+            Stack latestScope = scopes.get(i);
+            if (latestScope.isEmpty()) {
+                continue;
+            }
+            for (int j = latestScope.size() - 1; j >= 0; j--) {
+                symbolTableEntry temp = (symbolTableEntry) latestScope.get(j);
+                if (id.equals(temp.getId())) {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
 }

@@ -3,6 +3,8 @@ package com.compilers;
 import sablecc.analysis.DepthFirstAdapter;
 import sablecc.node.*;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 /**
@@ -43,7 +45,15 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             System.out.println("ERROR: " + e);
         }
         if (errorLog.isEmpty()) {
-            InterCode.print();
+            InterCode.print(true);
+            try {
+                PrintWriter writer = new PrintWriter("assembly.s", "UTF-8");
+                writer.println("The first line");
+                writer.println("The second line");
+                writer.close();
+            } catch (IOException e) {
+                System.err.printf("FILE I/O error: %s\n", e.getMessage());
+            }
         }
     }
 
@@ -334,10 +344,10 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
                         System.out.println("500 :: Error we done goofed ...Sorry " + node.getClass());
 
                     } else {
-                        if(temp.getType().equals(EntryType.STRING_LIT)){
-                            Quads parameter = new Quads(1, "PAR", "SLLabel"+temp.getPlace(), parameterType, "-");
+                        if (temp.getType().equals(EntryType.STRING_LIT)) {
+                            Quads parameter = new Quads(1, "PAR", "SLLabel" + temp.getPlace(), parameterType, "-");
                             parameterReverser.push(parameter);
-                        }else{
+                        } else {
                             Quads parameter = new Quads(1, "PAR", "$" + place, parameterType, "-");
                             parameterReverser.push(parameter);
                         }
@@ -345,7 +355,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
                     }
                 } else {
                     if (search == -666) {
-                        Quads parameter = new Quads(1, "PAR",  temp.getId(), parameterType, "-");
+                        Quads parameter = new Quads(1, "PAR", temp.getId(), parameterType, "-");
                         parameterReverser.push(parameter);
                     } else {
                         Quads parameter = new Quads(1, "PAR", "$" + search, parameterType, "-");
@@ -433,7 +443,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         symbolTableEntry temp = new symbolTableEntry(id, EntryType.STRING_LIT);
         temp.setRetType("char[]");
         int place = stringLiteral.size();
-        stringLiteral.put(id, "SLLabel"+place);
+        stringLiteral.put(id, "SLLabel" + place);
         temp.setPlace(place);
         assignStack.push(temp);
     }
@@ -479,13 +489,12 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         } else {
             symbolTableEntry temp = new symbolTableEntry(id, EntryType.ARRAY);
             // we made changes here ============================================================================
-            if(s.getRetType().contains("int")){
+            if (s.getRetType().contains("int")) {
                 temp.setRetType("int");
-            }
-            else if(s.getRetType().contains("char")){
+            } else if (s.getRetType().contains("char")) {
                 temp.setRetType("char");
             }
-           // temp.setRetType(s.getRetType());
+            // temp.setRetType(s.getRetType());
             //==================================================================================================
 
             temp.setPlace(place);
@@ -608,7 +617,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             place2 = InterCode.newTemp();
             InterCode.genQuad(Quads.Operand.ASSIGN, "$" + place.toString(), "-", place2);
             varLocations.put(node.getIdentifier().getText(), place2);
-        } else if(place != -666){
+        } else if (place != -666) {
             System.out.println("Error: 500 it appears we lost your variable " + node);
         }
         temp.setPlace(place2);
