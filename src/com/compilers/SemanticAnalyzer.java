@@ -20,6 +20,8 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
 
     Map<String, Integer> varLocations = new HashMap<>();
 
+    Map<String, String> stringLiteral = new HashMap<>();
+
     IntermidiateCode InterCode = new IntermidiateCode();
 
     List<symbolTableEntry> fParams = new LinkedList<>();
@@ -288,7 +290,6 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         inAFuncCallFuncCall(node);
         String id = node.getIdentifier().toString();
         assignStackLimit = assignStack.size();
-        System.out.println("assignStackLimit is: " + assignStackLimit);
         if (node.getIdentifier() != null) {
             node.getIdentifier().apply(this);
         }
@@ -329,15 +330,22 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
                 if (search == null) {
                     place = temp.getPlace();
                     if (place < 0) {
+
                         System.out.println("500 :: Error we done goofed ...Sorry " + node.getClass());
 
                     } else {
-                        Quads parameter = new Quads(1, "PAR", "$" + place, parameterType, "-");
-                        parameterReverser.push(parameter);
+                        if(temp.getType().equals(EntryType.STRING_LIT)){
+                            Quads parameter = new Quads(1, "PAR", "SLLabel"+temp.getPlace(), parameterType, "-");
+                            parameterReverser.push(parameter);
+                        }else{
+                            Quads parameter = new Quads(1, "PAR", "$" + place, parameterType, "-");
+                            parameterReverser.push(parameter);
+                        }
+
                     }
                 } else {
                     if (search == -666) {
-                        Quads parameter = new Quads(1, "PAR", "PARAM" + temp.getId(), parameterType, "-");
+                        Quads parameter = new Quads(1, "PAR",  temp.getId(), parameterType, "-");
                         parameterReverser.push(parameter);
                     } else {
                         Quads parameter = new Quads(1, "PAR", "$" + search, parameterType, "-");
@@ -424,6 +432,9 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         String id = node.getStringLiteral().toString();
         symbolTableEntry temp = new symbolTableEntry(id, EntryType.STRING_LIT);
         temp.setRetType("char[]");
+        int place = stringLiteral.size();
+        stringLiteral.put(id, "SLLabel"+place);
+        temp.setPlace(place);
         assignStack.push(temp);
     }
 
@@ -597,8 +608,8 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             place2 = InterCode.newTemp();
             InterCode.genQuad(Quads.Operand.ASSIGN, "$" + place.toString(), "-", place2);
             varLocations.put(node.getIdentifier().getText(), place2);
-        } else {
-            System.out.println("Error: 500 it appears we lost your variable " + node.getClass());
+        } else if(place != -666){
+            System.out.println("Error: 500 it appears we lost your variable " + node);
         }
         temp.setPlace(place2);
         assignStack.push(temp);
