@@ -46,14 +46,7 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         }
         if (errorLog.isEmpty()) {
             InterCode.print(true);
-            try {
-                PrintWriter writer = new PrintWriter("assembly.s", "UTF-8");
-                writer.println("The first line");
-                writer.println("The second line");
-                writer.close();
-            } catch (IOException e) {
-                System.err.printf("FILE I/O error: %s\n", e.getMessage());
-            }
+
         }
     }
 
@@ -70,6 +63,18 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
                 errorLog.add("Invalid return type on " + s.getId());
             }
         }
+        try {
+            PrintWriter writer = new PrintWriter("assembly.s", "UTF-8");
+            finalCode fCode = new finalCode(varLocations,stringLiteral,symbolTable);
+            List<Quads> quads = InterCode.getNextStack().peek();
+            for (Quads q: quads) {
+                fCode.genFinalCode(q,writer);
+            }
+            writer.close();
+        } catch (IOException e) {
+            System.err.printf("FILE I/O error: %s\n", e.getMessage());
+        }
+
         InterCode.merge();
         symbolTable.exit();
     }
