@@ -13,11 +13,9 @@ import java.util.*;
 
 //todo: bsort + arrays
 public class SemanticAnalyzer extends DepthFirstAdapter {
-    /**********************************************************************/
-    /********************VARIABLES**************************/
-    /**********************************************************************/
+    //used to extract how many dimensions an array has by raising every time we visit one
     int arrayDimensions = 0;
-
+    //How much to pop before entering someone elses expressions
     int assignStackLimit = 0;
 
     Map<String, Integer> varLocations = new HashMap<>();
@@ -35,12 +33,9 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
     List<String> errorLog = new LinkedList<>();
 
     SymbolTable symbolTable = new SymbolTable();
-    /**********************************************************************/
-    /**********************************************************************/
-    /**********************************************************************/
-
 
     public void outAProgramProgram(AProgramProgram node) {
+        //If there are errors print them
         for (String e : errorLog) {
             System.out.println("ERROR: " + e);
         }
@@ -51,18 +46,21 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
     }
 
     public void inAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node) {
+        //create new scope
         symbolTable.enter();
     }
 
     public void outAFunctionDefinitionFunctionDefinition(AFunctionDefinitionFunctionDefinition node) {
         symbolTableEntry s = symbolTable.getFunctionEntry();
         String sRetType = s.getRetType();
+        // check if all the returns are of the correct type
         while (!returnStack.isEmpty()) {
             symbolTableEntry e = returnStack.pop();
             if (!sRetType.contains(e.getRetType())) {
                 errorLog.add("Invalid return type on " + s.getId());
             }
         }
+        //Generate final code
         try {
             PrintWriter writer = new PrintWriter("assembly.s", "UTF-8");
             finalCode fCode = new finalCode(varLocations,stringLiteral,symbolTable);
@@ -76,9 +74,16 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         }
 
         InterCode.merge();
+        //Exit scope
         symbolTable.exit();
     }
 
+    /*
+    * Mainly checks for function definition and declaration errors as well as parameters by taking them out of
+    * the fparams list
+    * fparams enter as a list on the symbol table entry of the function name
+    *
+    * */
     public void caseAHeaderHeader(AHeaderHeader node) {
         inAHeaderHeader(node);
         String id = node.getIdentifier().toString();
@@ -141,6 +146,9 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         fParams.clear();
     }
 
+    /*
+    * fills the fparamas list with each parameter
+    * */
     public void caseAFparDefinitionFparDefinition(AFparDefinitionFparDefinition node) {
         inAFparDefinitionFparDefinition(node);
         String parName = node.getIdentifier().toString();
@@ -169,6 +177,10 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         outAFparDefinitionFparDefinition(node);
     }
 
+    /*
+    * Registers all variable definitions
+    *
+    * */
     public void caseAVarDefinitionVarDefinition(AVarDefinitionVarDefinition node) {
         inAVarDefinitionVarDefinition(node);
         String parName = node.getIdentifier().toString();
@@ -198,6 +210,9 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         outAVarDefinitionVarDefinition(node);
     }
 
+    /*
+    * Assignments feed of the assign stack in order to compare the return value of the lvalue and rvalue.
+    * */
     public void caseAAssignmentStatement(AAssignmentStatement node) {
         inAAssignmentStatement(node);
         if (node.getLValue() != null) {
@@ -432,18 +447,8 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         }
     }
 
-//    public void caseAArrayAssignLValue(AArrayAssignLValue node) {
-//        inAArrayAssignLValue(node);
-//
-//        outAArrayAssignLValue(node);
-//    }
 
-//    public void outAArrayExpression(AArrayExpression node) {
-//        symbolTableEntry temp = new symbolTableEntry(id, EntryType.STRING_LIT);
-//        assignStack.push(temp);
-//    }
-
-    public void outAStringExpression(AStringExpression node) { //TODO
+    public void outAStringExpression(AStringExpression node) {
         String id = node.getStringLiteral().toString();
         symbolTableEntry temp = new symbolTableEntry(id, EntryType.STRING_LIT);
         temp.setRetType("char[]");
@@ -462,17 +467,6 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
         temp.setPlace(place);
         assignStack.push(temp);
     }
-
-
-//    public void outAArraySizeArraySize(AArraySizeArraySize node) {
-//
-//    }
-//
-//    public void outAEmptyBrackets(AEmptyBrackets node) {
-////        printIndentation();
-////        //   System.out.println("[EmptyBrackets]: "+node.toString());
-////        addIndentationLevel();
-//    }
 
     public void caseAArrayArray(AArrayArray node) {
         inAArrayArray(node);
@@ -493,15 +487,11 @@ public class SemanticAnalyzer extends DepthFirstAdapter {
             errorLog.add("array " + id + " has not been declared ");
         } else {
             symbolTableEntry temp = new symbolTableEntry(id, EntryType.ARRAY);
-            // we made changes here ============================================================================
             if (s.getRetType().contains("int")) {
                 temp.setRetType("int");
             } else if (s.getRetType().contains("char")) {
                 temp.setRetType("char");
             }
-            // temp.setRetType(s.getRetType());
-            //==================================================================================================
-
             temp.setPlace(place);
             assignStack.push(temp);
         }
